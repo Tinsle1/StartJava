@@ -11,3 +11,5 @@
 1. SQL
 1. PostgreSQL
 1. psql
+
+Java is an good object language for begin but you need to know UML Diagram for design software befor code it
