@@ -82,6 +82,19 @@ public class IfElseStatementTheme {
         }
 
         System.out.println("\n5. ОПРЕДЕЛЕНИЕ СИМВОЛА ПО ЕГО КОДУ");
+        char charRandom = '\u0057';
+
+        if (Character.isDigit(charRandom)) {
+            System.out.println("'" + charRandom + "'" + " - это цифра");
+        } else if (Character.isLetter(charRandom)) {
+            if (Character.isUpperCase(charRandom)) {
+                System.out.println("'" + charRandom + "'" + " - это большая буква");
+            } else {
+                System.out.println("'" + charRandom + "'" + " - это маленькая буква");
+            }
+        } else {
+            System.out.println("'" + charRandom + "'" + " - это не буква и не цифра");
+        }
 
         System.out.println("\n6. ПОДСЧЕТ НАЧИСЛЕННЫХ БАНКОМ %");
         double depositSum = 321123.59;
