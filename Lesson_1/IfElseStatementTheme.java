@@ -47,53 +47,57 @@ public class IfElseStatementTheme {
         }
 
         System.out.println("\n3. ПРОВЕРКА ЧИСЛА");
-        int intNum = -71;
+        int originalNum = -71;
 
-        if (intNum == 0) {
-            System.out.println("Число intNum = 0");
-            return;
-        }
-        if (intNum % 2 == 0 && intNum > 0) {
-            System.out.println(intNum + " является четным и положительным");
-        } else if (intNum % 2 == 0 && intNum < 0) {
-            System.out.println(intNum + " является четным и отрицательным");
-        } else if (intNum % 2 != 0 && intNum > 0) {
-            System.out.println(intNum + " является нечетным и положительным");
+        if (originalNum == 0) {
+            System.out.println("Число = " + originalNum);
+        } else if (originalNum > 0) {
+            if (originalNum % 2 == 0) {
+                System.out.println(originalNum + " является положительным и четным");
+            } else {
+                System.out.println(originalNum + " является положительным и нечетным");
+            }
+        } else if (originalNum % 2 != 0) {
+            System.out.println(originalNum + " является отрицательным и нечетным");
         } else {
-            System.out.println(intNum + " является нечетным и отрицательным");
+            System.out.println(originalNum + " является отрицательным и четным");
         }
 
         System.out.println("\n4. ПОИСК ОДИНАКОВЫХ ЦИФР В ЧИСЛАХ");
-        int intNum1 = 123;
-        int intNum2 = 223;
-        System.out.println("Исходные числа: " + intNum1 + ", " + intNum2);
+        firstNum = 123;
+        secondNum = 223;
+        System.out.println("Исходные числа: " + firstNum + ", " + secondNum);
 
-        if (intNum1 / 100 == intNum2 / 100) {
-            System.out.println("Разряды сотен одинаковы = " + intNum2 / 100);
-        } 
-        if (intNum1 / 10 % 10 == intNum2 / 10 % 10) {
-            System.out.println("Разряды десяток одинаковы = " + intNum2 / 10 % 10);
-        } 
-        if (intNum1 % 10 == intNum2 % 10) {
-            System.out.println("Разряды единиц одинаковы = " + intNum2 % 10);
+        if (firstNum / 100 == secondNum / 100) {
+            System.out.println("Разряды сотен одинаковы = " + secondNum / 100);
+            if (firstNum / 10 % 10 == secondNum / 10 % 10) {
+                System.out.println("Разряды десяток одинаковы = " + secondNum / 10 % 10);
+                if (firstNum % 10 == secondNum % 10) {
+                    System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
+                }
+            }
+        } else if (firstNum / 10 % 10 == secondNum / 10 % 10) {
+            System.out.println("Разряды десяток одинаковы = " + secondNum / 10 % 10);
+            if (firstNum % 10 == secondNum % 10) {
+                System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
+            }
+        } else if (firstNum % 10 == secondNum % 10) {
+            System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
         } else {
             System.out.println("Равных цифр нет");
-            return;
         }
 
         System.out.println("\n5. ОПРЕДЕЛЕНИЕ СИМВОЛА ПО ЕГО КОДУ");
-        char charRandom = '\u0057';
+        char someChar = '\u0057';
 
-        if (Character.isDigit(charRandom)) {
-            System.out.println("'" + charRandom + "'" + " - это цифра");
-        } else if (Character.isLetter(charRandom)) {
-            if (Character.isUpperCase(charRandom)) {
-                System.out.println("'" + charRandom + "'" + " - это большая буква");
-            } else {
-                System.out.println("'" + charRandom + "'" + " - это маленькая буква");
-            }
+        if (Character.isDigit(someChar)) {
+            System.out.println("'" + someChar + "'" + " - это цифра");
+        } else if (Character.isUpperCase(someChar)) {
+            System.out.println("'" + someChar + "'" + " - это большая буква");
+        } else if (Character.isLowerCase(someChar)) {
+            System.out.println("'" + someChar + "'" + " - это маленькая буква");
         } else {
-            System.out.println("'" + charRandom + "'" + " - это не буква и не цифра");
+            System.out.println("'" + someChar + "'" + " - это не буква и не цифра");
         }
 
         System.out.println("\n6. ПОДСЧЕТ НАЧИСЛЕННЫХ БАНКОМ %");
@@ -103,7 +107,6 @@ public class IfElseStatementTheme {
         double depositInterestSum = 0;
         double generalSum = 0;
         double depositInterest = 0;
-
         if (depositSum > sumRangeTop) {
             depositInterest = 0.1;
             depositInterestSum = depositInterest * depositSum;
