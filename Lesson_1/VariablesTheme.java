@@ -32,13 +32,12 @@ public class VariablesTheme {
         double penPrice = 105.5;
         double bookPrice = 235.83;
         double discount = 0.11;       
-        double fullPriceSum = penPrice + bookPrice;
-        double discountSum = fullPriceSum * discount;
-        double discountPriceSum = fullPriceSum - discountSum;
-        System.out.println("Стоимость товаров без скидки = " +
-                fullPriceSum + " руб." + "\nСумма скидки = " +
-                discountSum + " руб." + "\nСтоимость товаров со скидкой = " +
-                discountPriceSum + " руб.\n");
+        double baseSum = penPrice + bookPrice;
+        double discountSum = baseSum * discount;
+        double discountPrice = baseSum - discountSum;
+        System.out.println("Стоимость товаров без скидки = " + baseSum + " руб." +
+                "\nСумма скидки = " + discountSum + " руб." +
+                "\nСтоимость товаров со скидкой = " + discountPrice + " руб.\n");
 
         System.out.println("3. ВЫВОД СЛОВА JAVA\n");
         System.out.println("    J    a  v     v  a\n" +
@@ -47,95 +46,94 @@ public class VariablesTheme {
                 "  JJ  a     a  V  a     a\n");
 
         System.out.println("4. ВЫВОД MIN И MAX ЗНАЧЕНИЙ ЦЕЛЫХ ЧИСЛОВЫХ ТИПОВ");
+        byte someByte = 127;
+        short someShort = 32_767;
+        int someInt = 2_147_483_647;
+        long someLong = 9_223_372_036_854_775_807L;
+        char someChar = 65_535;
+        System.out.println(someByte + ", " + ++someByte + ", " + --someByte);
+        System.out.println(someShort + ", " + ++someShort + ", " + --someShort);
+        System.out.println(someInt + ", " + ++someInt + ", " + --someInt);
+        System.out.println(someLong + ", " + ++someLong + ", " + --someLong);
+        System.out.println(someChar + ", " + ++someChar + ", " + --someChar);
 
         System.out.println("\n5. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ПЕРЕМЕННЫХ");
-        int firstNum = 10;
-        int secondNum = -5;
+        int firstNum = 0;
+        int secondNum = -8;
         System.out.println("Исходные значения переменных: firstNum = " +
                 firstNum + ", secondNum = " + secondNum);
-
+                
         int thirdNum = firstNum - secondNum;
-        int firstNum1 = firstNum - thirdNum;
-        int secondNum1 = secondNum + thirdNum;
+        firstNum -= thirdNum;
+        secondNum += thirdNum;
         System.out.println("\n5.1. Перестановка с помощью третей переменной thirdNum" + 
-                "\n" + "Новые значения: firstNum1 = " + firstNum1 +
-                ", secondNum1 = " + secondNum1);
-
-        int firstNum2 = firstNum - (firstNum - secondNum);
-        int secondNum2 = secondNum - (secondNum - firstNum);
-        System.out.println("\n5.2. Перестановка с помощью арифметических операций" + 
-                "\n" + "Новые значения: firstNum2 = " + firstNum2 +
-                ", secondNum2 = " + secondNum2);
+                "\n" + "Новые значения: firstNum = " + firstNum +
+                ", secondNum = " + secondNum);
+                
+        firstNum = (firstNum + secondNum) - firstNum;
+        secondNum -= thirdNum;
+        System.out.println("\n5.1. Перестановка с помощью арифметических операций" +
+                "\n" + "Новые значения: firstNum = " + firstNum +
+                ", secondNum = " + secondNum);
 
         System.out.println("\n6. ВЫВОД СИМВОЛОВ И ИХ КОДОВ");
-        char symbol36 = '$';
-        System.out.println("Символ с кодом 36 = " + symbol36);
+        char dollar = '$';
+        char asterisk = '*';
+        char at = '@';
+        char caret = '^';
+        char tilde = '~';
 
-        char symbol42 = '*';
-        System.out.println("Символ с кодом 42 = " + symbol42);
-
-        char symbol64 = '@';
-        System.out.println("Символ с кодом 64 = " + symbol64);
-
-        char symbol94 = '^';
-        System.out.println("Символ с кодом 94 = " + symbol94);
-
-        char symbol126 = '~';
-        System.out.println("Символ с кодом 126 = " + symbol126);
+        System.out.println("Символ dollar = " + dollar +
+                "\n" + "Символ asterisk = " + asterisk +
+                "\n" + "Символ at = " + at +
+                "\n" + "Символ caret = " + caret +
+                "\n" + "Символ tilde = " + tilde);
 
         System.out.println("\n7. ВЫВОД В КОНСОЛЬ ASCII-АРТ ДЮКА");
-        char symbol47 = '/';
-        char symbol92 = '\\';
-        char symbol95 = '_';
-        char symbol40 = '(';
-        char symbol41 = ')';
-        System.out.println("    " + symbol47 + symbol92 + "\n" +
-                "   " + symbol47 + "  " + symbol92 + "\n" +
-                "  " + symbol47 + symbol95 + symbol40 + " " +
-                symbol41 + symbol92 + "\n" + " " + symbol47 +
-                "      " + symbol92 + "\n" + symbol47 + symbol95 +
-                symbol95 + symbol95 + symbol95 + symbol47 + symbol92 +
-                symbol95 + symbol95 + symbol92);
+        char forwardSlash = '/';
+        char backSlash = '\\';
+        char underscore = '_';
+        char leftParenthesis = '(';
+        char rightParenthesis = ')';
+        System.out.println("    " + forwardSlash + backSlash + "\n" +
+                "   " + forwardSlash + "  " + backSlash + "\n" +
+                "  " + forwardSlash + underscore + leftParenthesis + " " +
+                rightParenthesis + backSlash + "\n" + " " + forwardSlash +
+                "      " + backSlash + "\n" + forwardSlash + underscore +
+                underscore + underscore + underscore + forwardSlash + backSlash +
+                underscore + underscore + backSlash);
 
         System.out.println("\n8. МАНИПУЛЯЦИИ С СОТНЯМИ, ДЕСЯТКАМИ И ЕДИНИЦАМИ ЧИСЛА");
         int originalNum = 123;
-        int countHundreds = originalNum / 100;
-        int countTen = originalNum / 10 % 10;
-        int countOnes = originalNum % 100 % 10;
-        int positionsSum = countHundreds + countTen + countOnes;
-        int positionsMultiplication = countHundreds * countTen * countOnes;
+        int hundredCount = originalNum / 100;
+        int tenCount = originalNum / 10 % 10;
+        int oneCount = originalNum % 100 % 10;
+        int sum = hundredCount + tenCount + oneCount;
+        int multiplication = hundredCount * tenCount * oneCount;
         System.out.println("Число 123 содержит:\n" +
-                "  сотен - " + countHundreds + "\n" +
-                "  десятков - " + countTen + "\n" +
-                "  единиц - " + countOnes + "\n" +
-                "Сумма разрядов = " + positionsSum +
-                "\n" + "Произведение разрядов = " +
-                positionsMultiplication);
+                "  сотен - " + hundredCount + "\n" +
+                "  десятков - " + tenCount + "\n" +
+                "  единиц - " + oneCount + "\n" +
+                "Сумма разрядов = " + sum +
+                "\n" + "Произведение разрядов = " + multiplication);
 
         System.out.println("\n9. ПЕРЕВОД СЕКУНД В ЧАСЫ, МИНУТЫ И СЕКУНДЫ");
         int allSeconds = 86399;
-
-        // вычисляем секунды
-        int seconds = allSeconds % 60;
-
-        // вычисляем минуты
-        int minutes = allSeconds / 60 % 60;
-
-        // вычисляем часы
-        int hours = allSeconds / 3600;
-        System.out.println(hours + ":" + minutes + ":" + seconds);
+        int ss = allSeconds % 60;
+        int mm = allSeconds / 60 % 60;
+        int hh = allSeconds / 3600;
+        System.out.println(hh + ":" + mm + ":" + ss);
 
         System.out.println("\n10. *РАСЧЕТ СТОИМОСТИ ТОВАРА СО СКИДКОЙ");
         BigDecimal penPrice2 = new BigDecimal("105.5");
         BigDecimal bookPrice2 = new BigDecimal("235.83");
         BigDecimal discount2 = new BigDecimal("0.11");
-        BigDecimal fullPriceSum2 = penPrice2.add(bookPrice2).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal discountSum2 = fullPriceSum2.multiply(discount2);
-        BigDecimal discountPriceSum2 = fullPriceSum2.subtract(discountSum2);
+        BigDecimal basePrice2 = penPrice2.add(bookPrice2).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountSum2 = basePrice2.multiply(discount2);
+        BigDecimal discountPrice2 = basePrice2.subtract(discountSum2);
 
-        System.out.println("Стоимость товаров без скидки = " +
-                fullPriceSum2 + " руб." + "\nСумма скидки = " +
-                discountSum2 + " руб." + "\nСтоимость товаров со скидкой = " +
-                discountPriceSum2 + " руб.\n");
+        System.out.println("Стоимость товаров без скидки = " + basePrice2 + " руб." +
+                "\nСумма скидки = " + discountSum2 + " руб." +
+                "\nСтоимость товаров со скидкой = " + discountPrice2 + " руб.\n");
     }
 }
