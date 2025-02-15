@@ -58,8 +58,8 @@ public class VariablesTheme {
         System.out.println(someChar + ", " + ++someChar + ", " + --someChar);
 
         System.out.println("\n5. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ПЕРЕМЕННЫХ");
-        int firstNum = 0;
-        int secondNum = -8;
+        int firstNum = 2;
+        int secondNum = 5;
         System.out.println("Исходные значения переменных: firstNum = " +
                 firstNum + ", secondNum = " + secondNum);
                 
@@ -73,6 +73,13 @@ public class VariablesTheme {
         firstNum = (firstNum + secondNum) - firstNum;
         secondNum -= thirdNum;
         System.out.println("\n5.1. Перестановка с помощью арифметических операций" +
+                "\n" + "Новые значения: firstNum = " + firstNum +
+                ", secondNum = " + secondNum);
+
+        int byteCompare = firstNum ^ secondNum;
+        firstNum = firstNum ^ byteCompare;
+        secondNum = secondNum ^ byteCompare;
+        System.out.println("\n5.3. Перестановка с помощью побитовой операции ^" +
                 "\n" + "Новые значения: firstNum = " + firstNum +
                 ", secondNum = " + secondNum);
 
