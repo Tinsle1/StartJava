@@ -51,38 +51,33 @@ public class IfElseStatementTheme {
 
         if (originalNum == 0) {
             System.out.println("Число = " + originalNum);
-        } else if (originalNum > 0) {
-            if (originalNum % 2 == 0) {
-                System.out.println(originalNum + " является положительным и четным");
-            } else {
-                System.out.println(originalNum + " является положительным и нечетным");
-            }
-        } else if (originalNum % 2 != 0) {
-            System.out.println(originalNum + " является отрицательным и нечетным");
+        } 
+        if (originalNum % 2 == 0) {
+            System.out.print(originalNum + " является четным и ");
         } else {
-            System.out.println(originalNum + " является отрицательным и четным");
+            System.out.print(originalNum + " является нечетным и ");
+        } 
+        if (originalNum > 0) {
+            System.out.println("положительным");
+        } else {
+            System.out.println("отрицательным");
         }
 
         System.out.println("\n4. ПОИСК ОДИНАКОВЫХ ЦИФР В ЧИСЛАХ");
         firstNum = 123;
         secondNum = 223;
         System.out.println("Исходные числа: " + firstNum + ", " + secondNum);
-
-        if (firstNum / 100 == secondNum / 100) {
-            System.out.println("Разряды сотен одинаковы = " + secondNum / 100);
+        if (firstNum / 100 == secondNum / 100 || firstNum / 10 % 10 == secondNum /
+                10 % 10 || (firstNum % 10 == secondNum % 10)) {
+            if (firstNum / 100 == secondNum / 100) {
+                System.out.println("Разряды сотен одинаковы = " + secondNum / 100);
+            }
             if (firstNum / 10 % 10 == secondNum / 10 % 10) {
                 System.out.println("Разряды десяток одинаковы = " + secondNum / 10 % 10);
-                if (firstNum % 10 == secondNum % 10) {
-                    System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
-                }
             }
-        } else if (firstNum / 10 % 10 == secondNum / 10 % 10) {
-            System.out.println("Разряды десяток одинаковы = " + secondNum / 10 % 10);
             if (firstNum % 10 == secondNum % 10) {
                 System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
             }
-        } else if (firstNum % 10 == secondNum % 10) {
-            System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
         } else {
             System.out.println("Равных цифр нет");
         }
@@ -107,29 +102,24 @@ public class IfElseStatementTheme {
         double depositInterestSum = 0;
         double generalSum = 0;
         double depositInterest = 0;
+
         if (depositSum > sumRangeTop) {
             depositInterest = 0.1;
-            depositInterestSum = depositInterest * depositSum;
-            generalSum = depositSum + depositInterestSum;
         } else if (depositSum < sumRangeTop && depositSum > sumRangeBottom) {
             depositInterest = 0.07;
-            depositInterestSum = depositInterest * depositSum;
-            generalSum = depositSum + depositInterestSum;
         } else if (depositSum < sumRangeBottom) {
             depositInterest = 0.05;
-            depositInterestSum = depositInterest * depositSum;
-            generalSum = depositSum + depositInterestSum;
         } 
+
+        depositInterestSum = depositInterest * depositSum;
+        generalSum = depositSum + depositInterestSum;
         System.out.println("Сумма вклада = " + depositSum + "\n" +
                 "Сумма начисленного % = " + depositInterestSum + "\n" +
                 "Итоговая сумма с % = " + generalSum);
 
         System.out.println("\n7. ОПРЕДЕЛЕНИЕ ОЦЕНКИ ПО ПРЕДМЕТАМ");
         int historyRate = 59;
-        int programmingRate = 92;
-        int historyGrade = 0;
-        int programmingGrade = 0;
-        double medianRate = (historyRate + programmingRate) / 2.0;
+        int historyGrade = 2;
 
         if (historyRate > 91) {
             historyGrade = 5;
@@ -137,9 +127,10 @@ public class IfElseStatementTheme {
             historyGrade = 4;
         } else if (historyRate > 60) {
             historyGrade = 3;
-        } else if (historyRate <= 60) {
-            historyGrade = 2;
-        }
+        } 
+
+        int programmingRate = 92;
+        int programmingGrade = 2;
 
         if (programmingRate > 91) {
             programmingGrade = 5;
@@ -147,21 +138,20 @@ public class IfElseStatementTheme {
             programmingGrade = 4;
         } else if (programmingRate > 60) {
             programmingGrade = 3;
-        } else if (programmingRate <= 60) {
-            programmingGrade = 2;
-        }
+        } 
 
+        double medianRate = (historyRate + programmingRate) / 2.0;
         double medianGrade = (historyGrade + programmingGrade) / 2.0;
         System.out.println("Оценка по истории = " + historyGrade +
-                "\n" + "Оценка по программированию = " + programmingGrade +
-                "\n" + "Средний балл оценок = " + medianGrade +
-                "\n" + "Средний % по предметам = " + medianRate);
+                "\nОценка по программированию = " + programmingGrade +
+                "\nСредний балл оценок = " + medianGrade +
+                "\nСредний % по предметам = " + medianRate);
 
         System.out.println("\n8. РАСЧЕТ ГОДОВОЙ ПРИБЫЛИ");
         double monthRevenue = 13025.233;
         double monthRentSum = 5123.018;
-        double monthCostPrice = 9001.729;
-        double yearProfit = (monthRevenue * 12) - (monthRentSum * 12) - (monthCostPrice * 12);
+        double monthlyProductionCost = 9001.729;
+        double yearProfit = 12 * (monthRevenue - monthRentSum - monthlyProductionCost);
 
         if (yearProfit > 0) {
             System.out.println("Прибыль за год: +" + yearProfit + " руб.");
@@ -172,14 +162,11 @@ public class IfElseStatementTheme {
         System.out.println("\n9. *РАСЧЕТ ГОДОВОЙ ПРИБЫЛИ С BigDecimal");
         BigDecimal monthRevenue2 = new BigDecimal("13025.233");
         BigDecimal monthRentSum2 = new BigDecimal("5123.018");
-        BigDecimal monthCostPrice2 = new BigDecimal("9001.729");
-        BigDecimal monthsCount = new BigDecimal("12");
+        BigDecimal monthlyProductionCost2 = new BigDecimal("9001.729");
+        BigDecimal monthsCount = BigDecimal.valueOf(12);
 
-        BigDecimal yearRevenue2 = monthRevenue2.multiply(monthsCount);
-        BigDecimal yearRentSum2 = monthRentSum2.multiply(monthsCount);
-        BigDecimal yearCostPrice2 = monthCostPrice2.multiply(monthsCount);
-        BigDecimal yearProfit2 = ((yearRevenue2.subtract(yearRentSum2)).subtract(
-                yearCostPrice2)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal yearProfit2 = ((monthRevenue2.subtract(monthRentSum2).subtract(
+                monthlyProductionCost2)).multiply(monthsCount)).setScale(2, RoundingMode.HALF_UP);
 
         if (yearProfit2.compareTo(BigDecimal.ZERO) > 0) {
             System.out.println("Прибыль за год: +" + yearProfit2 + " руб.");
@@ -191,23 +178,21 @@ public class IfElseStatementTheme {
         BigDecimal depositSum2 = new BigDecimal("321123.59");
         BigDecimal sumRangeTop2 = new BigDecimal("300000");
         BigDecimal sumRangeBottom2 = new BigDecimal("100000");
-        BigDecimal depositInterestSum2 = new BigDecimal(0);
+        BigDecimal depositInterest2 = new BigDecimal(0);
         BigDecimal generalSum2 = new BigDecimal(0);
+        BigDecimal depositInterestSum2 = new BigDecimal(0);
 
         if (depositSum2.compareTo(sumRangeTop2) == 1) {
-            BigDecimal depositInterest2 = new BigDecimal("0.1");
-            depositInterestSum2 = depositInterest2.multiply(depositSum2);
-            generalSum2 = depositSum2.add(depositInterestSum2);
+            depositInterest2 = new BigDecimal("0.1");
         } else if (depositSum2.compareTo(sumRangeTop2) == -1 &&
-                    depositSum2.compareTo(sumRangeBottom2) == 1) {
-            BigDecimal depositInterest2 = new BigDecimal("0.07");
-            depositInterestSum2 = depositInterest2.multiply(depositSum2);
-            generalSum2 = depositSum2.add(depositInterestSum2);
+                depositSum2.compareTo(sumRangeBottom2) == 1) {
+            depositInterest2 = new BigDecimal("0.07");
         } else if (depositSum2.compareTo(sumRangeBottom2) == -1) {
-            BigDecimal depositInterest2 = new BigDecimal("0.05");
-            depositInterestSum2 = depositInterest2.multiply(depositSum2);
-            generalSum2 = depositSum2.add(depositInterestSum2);
+            depositInterest2 = new BigDecimal("0.05");
         } 
+
+        depositInterestSum2 = depositInterest2.multiply(depositSum2);
+        generalSum2 = depositSum2.add(depositInterest2);
         System.out.println("Сумма вклада = " + depositSum2.setScale(2, RoundingMode.HALF_UP) +
                 "\n" + "Сумма начисленного % = " +
                 depositInterestSum2.setScale(2, RoundingMode.HALF_UP) +
