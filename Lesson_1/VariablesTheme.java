@@ -46,43 +46,53 @@ public class VariablesTheme {
                 "  JJ  a     a  V  a     a\n");
 
         System.out.println("4. ВЫВОД MIN И MAX ЗНАЧЕНИЙ ЦЕЛЫХ ЧИСЛОВЫХ ТИПОВ");
-        byte someByte = 127;
-        short someShort = 32_767;
-        int someInt = 2_147_483_647;
-        long someLong = 9_223_372_036_854_775_807L;
-        char someChar = 65_535;
-        System.out.println(someByte + ", " + ++someByte + ", " + --someByte);
-        System.out.println(someShort + ", " + ++someShort + ", " + --someShort);
-        System.out.println(someInt + ", " + ++someInt + ", " + --someInt);
-        System.out.println(someLong + ", " + ++someLong + ", " + --someLong);
-        System.out.println(someChar + ", " + ++someChar + ", " + --someChar);
+        byte maxByteValue = 127;
+        byte minByteValue = -128;
+        short maxShortValue = 32_767;
+        short minShortValue = -32_768;
+        int maxIntValue = 2_147_483_647;
+        int minIntValue = -2_147_483_648;
+        long maxLongValue = 9_223_372_036_854_775_807L;
+        long minLongValue = -9_223_372_036_854_775_808L;
+        char maxCharValue = 65_535;
+        char minCharValue = 0;
+        System.out.println(maxByteValue + ", " + ++maxByteValue + ", " + --maxByteValue);
+        System.out.println(minByteValue + ", " + ++minByteValue + ", " + --minByteValue);
+        System.out.println(maxShortValue + ", " + ++maxShortValue + ", " + --maxShortValue);
+        System.out.println(minShortValue + ", " + ++minShortValue + ", " + --minShortValue);
+        System.out.println(maxIntValue + ", " + ++maxIntValue + ", " + --maxIntValue);
+        System.out.println(minIntValue + ", " + ++minIntValue + ", " + --minIntValue);
+        System.out.println(maxLongValue + ", " + ++maxLongValue + ", " + --maxLongValue);
+        System.out.println(minLongValue + ", " + ++minLongValue + ", " + --minLongValue);
+        System.out.println((int) maxCharValue + ", " + (int) ++maxCharValue + ", " +
+                (int) --maxCharValue);
+        System.out.println((int) minCharValue + ", " + (int) ++minCharValue + ", " +
+                (int) --minCharValue);
 
         System.out.println("\n5. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ПЕРЕМЕННЫХ");
         int firstNum = 2;
         int secondNum = 5;
         System.out.println("Исходные значения переменных: firstNum = " +
                 firstNum + ", secondNum = " + secondNum);
-                
-        int thirdNum = firstNum - secondNum;
-        firstNum -= thirdNum;
-        secondNum += thirdNum;
-        System.out.println("\n5.1. Перестановка с помощью третей переменной thirdNum" + 
-                "\n" + "Новые значения: firstNum = " + firstNum +
-                ", secondNum = " + secondNum);
-                
-        firstNum = (firstNum + secondNum) - firstNum;
-        secondNum -= thirdNum;
-        System.out.println("\n5.1. Перестановка с помощью арифметических операций" +
-                "\n" + "Новые значения: firstNum = " + firstNum +
-                ", secondNum = " + secondNum);
 
-        int byteCompare = firstNum ^ secondNum;
-        firstNum = firstNum ^ byteCompare;
-        secondNum = secondNum ^ byteCompare;
-        System.out.println("\n5.3. Перестановка с помощью побитовой операции ^" +
-                "\n" + "Новые значения: firstNum = " + firstNum +
-                ", secondNum = " + secondNum);
+        System.out.println("\n5.1. Перестановка с помощью третей переменной thirdNum");        
+        int thirdNum = firstNum;
+        firstNum = secondNum;
+        secondNum = thirdNum;
+        System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
+                
+        System.out.println("\n5.2. Перестановка с помощью арифметических операций");       
+        firstNum = firstNum + secondNum;
+        secondNum = firstNum - secondNum;
+        firstNum = firstNum - secondNum;
+        System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
 
+        System.out.println("\n5.3. Перестановка с помощью побитовой операции ^");
+        firstNum = firstNum ^ secondNum;
+        secondNum = firstNum ^ secondNum;
+        firstNum = firstNum ^ secondNum;
+        System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
+        
         System.out.println("\n6. ВЫВОД СИМВОЛОВ И ИХ КОДОВ");
         char dollar = '$';
         char asterisk = '*';
@@ -90,25 +100,25 @@ public class VariablesTheme {
         char caret = '^';
         char tilde = '~';
 
-        System.out.println("Символ dollar = " + dollar +
-                "\n" + "Символ asterisk = " + asterisk +
-                "\n" + "Символ at = " + at +
-                "\n" + "Символ caret = " + caret +
-                "\n" + "Символ tilde = " + tilde);
+        System.out.println("Код " + (int) dollar + " = символу " + dollar + "\n" +
+                "Код " + (int) asterisk + " = символу " + asterisk + "\n" +
+                "Код " + (int) at + " = символу " + at + "\n" +
+                "Код " + (int) caret + " = символу " + caret + "\n" +
+                "Код " + (int) tilde + " = символу " + tilde);
 
         System.out.println("\n7. ВЫВОД В КОНСОЛЬ ASCII-АРТ ДЮКА");
-        char forwardSlash = '/';
-        char backSlash = '\\';
+        char slash = '/';
+        char backslash = '\\';
         char underscore = '_';
         char leftParenthesis = '(';
         char rightParenthesis = ')';
-        System.out.println("    " + forwardSlash + backSlash + "\n" +
-                "   " + forwardSlash + "  " + backSlash + "\n" +
-                "  " + forwardSlash + underscore + leftParenthesis + " " +
-                rightParenthesis + backSlash + "\n" + " " + forwardSlash +
-                "      " + backSlash + "\n" + forwardSlash + underscore +
-                underscore + underscore + underscore + forwardSlash + backSlash +
-                underscore + underscore + backSlash);
+        System.out.println("    " + slash + backslash + "\n" +
+                "   " + slash + "  " + backslash + "\n" +
+                "  " + slash + underscore + leftParenthesis + " " +
+                rightParenthesis + backslash + "\n" + " " + slash +
+                "      " + backslash + "\n" + slash + underscore +
+                underscore + underscore + underscore + slash + backslash +
+                underscore + underscore + backslash);
 
         System.out.println("\n8. МАНИПУЛЯЦИИ С СОТНЯМИ, ДЕСЯТКАМИ И ЕДИНИЦАМИ ЧИСЛА");
         int originalNum = 123;
@@ -135,11 +145,11 @@ public class VariablesTheme {
         BigDecimal penPrice2 = new BigDecimal("105.5");
         BigDecimal bookPrice2 = new BigDecimal("235.83");
         BigDecimal discount2 = new BigDecimal("0.11");
-        BigDecimal basePrice2 = penPrice2.add(bookPrice2).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal discountSum2 = basePrice2.multiply(discount2);
-        BigDecimal discountPrice2 = basePrice2.subtract(discountSum2);
+        BigDecimal baseSum2 = penPrice2.add(bookPrice2).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountSum2 = baseSum2.multiply(discount2).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountPrice2 = baseSum2.subtract(discountSum2).setScale(2, RoundingMode.HALF_UP);
 
-        System.out.println("Стоимость товаров без скидки = " + basePrice2 + " руб." +
+        System.out.println("Стоимость товаров без скидки = " + baseSum2 + " руб." +
                 "\nСумма скидки = " + discountSum2 + " руб." +
                 "\nСтоимость товаров со скидкой = " + discountPrice2 + " руб.\n");
     }
