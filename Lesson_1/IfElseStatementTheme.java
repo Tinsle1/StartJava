@@ -51,31 +51,34 @@ public class IfElseStatementTheme {
 
         if (originalNum == 0) {
             System.out.println("Число = " + originalNum);
-        } 
-        if (originalNum % 2 == 0) {
-            System.out.print(originalNum + " является четным и ");
         } else {
-            System.out.print(originalNum + " является нечетным и ");
-        } 
-        if (originalNum > 0) {
-            System.out.println("положительным");
-        } else {
-            System.out.println("отрицательным");
+            if (originalNum % 2 == 0) {
+                System.out.print(originalNum + " является четным и ");
+            } else {
+                System.out.print(originalNum + " является нечетным и ");
+            } 
+            if (originalNum > 0) {
+                System.out.println("положительным");
+            } else {
+                System.out.println("отрицательным");
+            }
         }
 
         System.out.println("\n4. ПОИСК ОДИНАКОВЫХ ЦИФР В ЧИСЛАХ");
         firstNum = 123;
         secondNum = 223;
+        boolean isEqualHundreds = firstNum / 100 == secondNum / 100;
+        boolean isEqualTens = firstNum / 10 % 10 == secondNum / 10 % 10;
+        boolean isEqualOnes = firstNum % 10 == secondNum % 10;
         System.out.println("Исходные числа: " + firstNum + ", " + secondNum);
-        if (firstNum / 100 == secondNum / 100 || firstNum / 10 % 10 == secondNum /
-                10 % 10 || (firstNum % 10 == secondNum % 10)) {
-            if (firstNum / 100 == secondNum / 100) {
+        if (isEqualHundreds || isEqualTens || isEqualOnes) {
+            if (isEqualHundreds) {
                 System.out.println("Разряды сотен одинаковы = " + secondNum / 100);
             }
-            if (firstNum / 10 % 10 == secondNum / 10 % 10) {
+            if (isEqualTens) {
                 System.out.println("Разряды десяток одинаковы = " + secondNum / 10 % 10);
             }
-            if (firstNum % 10 == secondNum % 10) {
+            if (isEqualOnes) {
                 System.out.println("Разряды единиц одинаковы = " + secondNum % 10);
             }
         } else {
@@ -97,22 +100,18 @@ public class IfElseStatementTheme {
 
         System.out.println("\n6. ПОДСЧЕТ НАЧИСЛЕННЫХ БАНКОМ %");
         double depositSum = 321123.59;
-        double sumRangeTop = 300000;
-        double sumRangeBottom = 100000;
-        double depositInterestSum = 0;
-        double generalSum = 0;
-        double depositInterest = 0;
+        double rangeTopSum = 300000;
+        double rangeBottomSum = 100000;
+        double depositInterest = 0.05;
 
-        if (depositSum > sumRangeTop) {
+        if (depositSum > rangeTopSum) {
             depositInterest = 0.1;
-        } else if (depositSum < sumRangeTop && depositSum > sumRangeBottom) {
+        } else if (depositSum < rangeTopSum && depositSum > rangeBottomSum) {
             depositInterest = 0.07;
-        } else if (depositSum < sumRangeBottom) {
-            depositInterest = 0.05;
         } 
 
-        depositInterestSum = depositInterest * depositSum;
-        generalSum = depositSum + depositInterestSum;
+        double depositInterestSum = depositInterest * depositSum;
+        double generalSum = depositSum + depositInterestSum;
         System.out.println("Сумма вклада = " + depositSum + "\n" +
                 "Сумма начисленного % = " + depositInterestSum + "\n" +
                 "Итоговая сумма с % = " + generalSum);
@@ -140,12 +139,12 @@ public class IfElseStatementTheme {
             programmingGrade = 3;
         } 
 
-        double medianRate = (historyRate + programmingRate) / 2.0;
-        double medianGrade = (historyGrade + programmingGrade) / 2.0;
+        double averageRate = (historyRate + programmingRate) / 2.0;
+        double averageGrade = (historyGrade + programmingGrade) / 2.0;
         System.out.println("Оценка по истории = " + historyGrade +
                 "\nОценка по программированию = " + programmingGrade +
-                "\nСредний балл оценок = " + medianGrade +
-                "\nСредний % по предметам = " + medianRate);
+                "\nСредний балл оценок = " + averageGrade +
+                "\nСредний % по предметам = " + averageRate);
 
         System.out.println("\n8. РАСЧЕТ ГОДОВОЙ ПРИБЫЛИ");
         double monthRevenue = 13025.233;
@@ -176,23 +175,19 @@ public class IfElseStatementTheme {
 
         System.out.println("\n10. *ПОДСЧЕТ НАЧИСЛЕННЫХ БАНКОМ % C BigDecimal");
         BigDecimal depositSum2 = new BigDecimal("321123.59");
-        BigDecimal sumRangeTop2 = new BigDecimal("300000");
-        BigDecimal sumRangeBottom2 = new BigDecimal("100000");
-        BigDecimal depositInterest2 = new BigDecimal(0);
-        BigDecimal generalSum2 = new BigDecimal(0);
-        BigDecimal depositInterestSum2 = new BigDecimal(0);
+        BigDecimal rangeTopSum2 = new BigDecimal("300000");
+        BigDecimal rangeBottomSum2 = new BigDecimal("100000");
+        BigDecimal depositInterest2 = new BigDecimal("0.05");
 
-        if (depositSum2.compareTo(sumRangeTop2) == 1) {
+        if (depositSum2.compareTo(rangeTopSum2) == 1) {
             depositInterest2 = new BigDecimal("0.1");
-        } else if (depositSum2.compareTo(sumRangeTop2) == -1 &&
-                depositSum2.compareTo(sumRangeBottom2) == 1) {
+        } else if (depositSum2.compareTo(rangeTopSum2) == -1 &&
+                depositSum2.compareTo(rangeBottomSum2) == 1) {
             depositInterest2 = new BigDecimal("0.07");
-        } else if (depositSum2.compareTo(sumRangeBottom2) == -1) {
-            depositInterest2 = new BigDecimal("0.05");
         } 
 
-        depositInterestSum2 = depositInterest2.multiply(depositSum2);
-        generalSum2 = depositSum2.add(depositInterest2);
+        BigDecimal depositInterestSum2 = depositInterest2.multiply(depositSum2);
+        BigDecimal generalSum2 = depositSum2.add(depositInterest2);
         System.out.println("Сумма вклада = " + depositSum2.setScale(2, RoundingMode.HALF_UP) +
                 "\n" + "Сумма начисленного % = " +
                 depositInterestSum2.setScale(2, RoundingMode.HALF_UP) +
