@@ -46,28 +46,17 @@ public class VariablesTheme {
                 "  JJ  a     a  V  a     a\n");
 
         System.out.println("4. ВЫВОД MIN И MAX ЗНАЧЕНИЙ ЦЕЛЫХ ЧИСЛОВЫХ ТИПОВ");
-        byte maxByteValue = 127;
-        byte minByteValue = -128;
-        short maxShortValue = 32_767;
-        short minShortValue = -32_768;
-        int maxIntValue = 2_147_483_647;
-        int minIntValue = -2_147_483_648;
-        long maxLongValue = 9_223_372_036_854_775_807L;
-        long minLongValue = -9_223_372_036_854_775_808L;
-        char maxCharValue = 65_535;
-        char minCharValue = 0;
-        System.out.println(maxByteValue + ", " + ++maxByteValue + ", " + --maxByteValue);
-        System.out.println(minByteValue + ", " + ++minByteValue + ", " + --minByteValue);
-        System.out.println(maxShortValue + ", " + ++maxShortValue + ", " + --maxShortValue);
-        System.out.println(minShortValue + ", " + ++minShortValue + ", " + --minShortValue);
-        System.out.println(maxIntValue + ", " + ++maxIntValue + ", " + --maxIntValue);
-        System.out.println(minIntValue + ", " + ++minIntValue + ", " + --minIntValue);
-        System.out.println(maxLongValue + ", " + ++maxLongValue + ", " + --maxLongValue);
-        System.out.println(minLongValue + ", " + ++minLongValue + ", " + --minLongValue);
-        System.out.println((int) maxCharValue + ", " + (int) ++maxCharValue + ", " +
-                (int) --maxCharValue);
-        System.out.println((int) minCharValue + ", " + (int) ++minCharValue + ", " +
-                (int) --minCharValue);
+        byte extremesByteValue = 127;
+        short extremesShortValue = 32_767;
+        int extremesIntValue = 2_147_483_647;
+        long extremesLongValue = 9_223_372_036_854_775_807L;
+        char extremesCharValue = 65_535;
+        System.out.println(extremesByteValue + ", " + ++extremesByteValue + ", " + --extremesByteValue);
+        System.out.println(extremesShortValue + ", " + ++extremesShortValue + ", " + --extremesShortValue);
+        System.out.println(extremesIntValue + ", " + ++extremesIntValue + ", " + --extremesIntValue);
+        System.out.println(extremesLongValue + ", " + ++extremesLongValue + ", " + --extremesLongValue);
+        System.out.println((int) extremesCharValue + ", " + (int) ++extremesCharValue + ", " +
+                (int) --extremesCharValue);
 
         System.out.println("\n5. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ПЕРЕМЕННЫХ");
         int firstNum = 2;
@@ -75,22 +64,22 @@ public class VariablesTheme {
         System.out.println("Исходные значения переменных: firstNum = " +
                 firstNum + ", secondNum = " + secondNum);
 
-        System.out.println("\n5.1. Перестановка с помощью третей переменной thirdNum");        
-        int thirdNum = firstNum;
+        System.out.println("\n5.1. Перестановка с помощью третей переменной tmp");        
+        int tmp = firstNum;
         firstNum = secondNum;
-        secondNum = thirdNum;
+        secondNum = tmp;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
                 
         System.out.println("\n5.2. Перестановка с помощью арифметических операций");       
-        firstNum = firstNum + secondNum;
+        firstNum += secondNum;
         secondNum = firstNum - secondNum;
-        firstNum = firstNum - secondNum;
+        firstNum -= secondNum;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
 
         System.out.println("\n5.3. Перестановка с помощью побитовой операции ^");
-        firstNum = firstNum ^ secondNum;
+        firstNum ^= secondNum;
         secondNum = firstNum ^ secondNum;
-        firstNum = firstNum ^ secondNum;
+        firstNum ^= secondNum;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
         
         System.out.println("\n6. ВЫВОД СИМВОЛОВ И ИХ КОДОВ");
@@ -114,10 +103,9 @@ public class VariablesTheme {
         char rightParenthesis = ')';
         System.out.println("    " + slash + backslash + "\n" +
                 "   " + slash + "  " + backslash + "\n" +
-                "  " + slash + underscore + leftParenthesis + " " +
-                rightParenthesis + backslash + "\n" + " " + slash +
-                "      " + backslash + "\n" + slash + underscore +
-                underscore + underscore + underscore + slash + backslash +
+                "  " + slash + underscore + leftParenthesis + " " + rightParenthesis + backslash + "\n" +
+                " " + slash + "      " + backslash + "\n" +
+                slash + underscore + underscore + underscore + underscore + slash + backslash +
                 underscore + underscore + backslash);
 
         System.out.println("\n8. МАНИПУЛЯЦИИ С СОТНЯМИ, ДЕСЯТКАМИ И ЕДИНИЦАМИ ЧИСЛА");
