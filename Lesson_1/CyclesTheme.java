@@ -57,6 +57,7 @@ public class CyclesTheme {
         System.out.println(reverseDigitsSum);
 
         System.out.println("\n4. ВЫВОД ЧИСЕЛ В НЕСКОЛЬКО СТРОК");
+        // над этой еще туплю
 
         System.out.println("\n5. ПРОВЕРКА КОЛИЧЕСТВА ДВОЕК ЧИСЛА НА ЧЕТНОСТЬ/НЕЧЕТНОСТЬ");
         int originalNum5 = 3242592;
@@ -109,9 +110,56 @@ public class CyclesTheme {
             System.out.println();
         }
 
-        System.out.println("6.2 Равнобедренный треугольник");
+        System.out.println("6.3 Равнобедренный треугольник");
+        // над этой еще туплю
 
-        System.out.println("\n9. ПРОВЕРКА, ЯВЛЯЕТСЯ ЛИ ЧИСЛО ПАЛИНДРОМОМ");
+        System.out.println("\n7. ВЫВОД ASCII-СИМВОЛОВ\n");
+
+        System.out.printf("%-10s%-12s%s", "DECIMAL", "CHARACTER", "DESCRIPTION" + "\n");
+        char asciiChar;
+
+        for (int i = 0; i < 255; i++) {
+            asciiChar = (char) i;
+            if (Character.isDigit(asciiChar) == true) {
+                break;
+            } else if (i > 33 && i % 2 != 0 && Character.isLetterOrDigit(asciiChar) == false) {
+                for (int j = 0; j < 3; j++) {
+                    if (j == 0) {
+                        System.out.printf("%4d", (int) asciiChar);
+                    } else if (j == 1) {
+                        System.out.printf("%11c", asciiChar);
+                    } else {
+                        int spaceCount = 12;
+                        for (int k = 0; k < 12; k++) {
+                            System.out.print(" ");
+                        }
+                        System.out.print(Character.getName(asciiChar));
+                    }
+                }
+                System.out.println();
+            }
+        }
+
+        for (int i = 0; i < 255; i++) {
+            asciiChar = (char) i;
+            if (i % 2 == 0 && asciiChar >= 'a' && asciiChar <= 'z') {
+                for (int j = 0; j < 3; j++) {
+                    if (j == 0) {
+                        System.out.printf("%4d", (int) asciiChar);
+                    } else if (j == 1) {
+                        System.out.printf("%11c", asciiChar);
+                    } else {
+                        for (int z = 0; z < 12; z++) {
+                            System.out.print(" ");
+                        }
+                        System.out.print(Character.getName(asciiChar));
+                    }
+                }
+                System.out.println();
+            }
+        }
+            
+        System.out.println("\n8. ПРОВЕРКА, ЯВЛЯЕТСЯ ЛИ ЧИСЛО ПАЛИНДРОМОМ");
         int originalNum9 = 1234321;
         int num9Copy = originalNum9;
         int reverseNum9 = 0;
@@ -159,6 +207,40 @@ public class CyclesTheme {
             System.out.println("Число " + sixDigitsNum + " не счастливое" + "\n" +
                     "Сумма цифр " + secondHalfNum + " = " + secondHalfSum + "\n" +
                     "Сумма цифр " + firstHalfNum + " = " + firstHalfSum);
+        }
+
+        System.out.println("\n10. ВЫВОД ТАБЛИЦЫ УМНОЖЕНИЯ ПИФАГОРА \n");
+        int digitTwo = 2;
+        int digitNine = 9;
+
+        for (int i = digitTwo - 1; i <= digitNine; i++) {
+            if (i == 1) {
+                System.out.printf("%3c", '|');
+            } else {
+                System.out.printf("%3d", i);
+            }
+        }
+        System.out.println();
+
+        for (int i = digitTwo - 1; i <= digitNine; i++) {
+            if (i == 1) {
+                System.out.print("--+");
+            } else {
+                System.out.print("---");
+            }
+        }
+
+        System.out.println();
+
+        for (int i = digitTwo; i <= digitNine; i++) {
+            for (int j = digitTwo - 1; j <= digitNine; j++) {
+                if (j == 1) {
+                    System.out.print(i * j + " |");
+                } else {
+                    System.out.printf("%3d", i * j);
+                }
+            }
+            System.out.println();
         }
     }
 }
