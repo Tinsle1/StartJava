@@ -57,9 +57,25 @@ public class CyclesTheme {
         System.out.println(reverseDigitsSum);
 
         System.out.println("\n4. ВЫВОД ЧИСЕЛ В НЕСКОЛЬКО СТРОК");
-        // над этой еще туплю
+        int numberCount = 0;
 
-        System.out.println("\n5. ПРОВЕРКА КОЛИЧЕСТВА ДВОЕК ЧИСЛА НА ЧЕТНОСТЬ/НЕЧЕТНОСТЬ");
+        for (int i = 1; i < 24; i += 2) {
+            System.out.printf("%5d", i);
+            numberCount++;
+
+            if (numberCount % 5 == 0) {
+                System.out.println();
+            }
+        }
+
+        int blankNumbers = 5 - (numberCount % 5);
+        if (blankNumbers < 5) {
+            for (int i = 0; i < blankNumbers; i++) {
+                System.out.printf("%5d", 0);
+            }
+        }
+
+        System.out.println("\n\n5. ПРОВЕРКА КОЛИЧЕСТВА ДВОЕК ЧИСЛА НА ЧЕТНОСТЬ/НЕЧЕТНОСТЬ");
         int originalNum5 = 3242592;
         int num5Condition = originalNum5;
         int lastDigit;
