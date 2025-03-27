@@ -5,25 +5,25 @@ public class Calculator {
         Scanner console = new Scanner(System.in);
         System.out.print("Введите числа: ");
         int firstOperand = console.nextInt();
-        char charOperator = console.next().charAt(0);
+        char mathSign = console.next().charAt(0);
         int secondOperand = console.nextInt();
         int result = firstOperand + secondOperand;
       
-        if (charOperator == '-') {
+        if (mathSign == '-') {
             result = firstOperand - secondOperand;
-        } else if (charOperator == '*') {
+        } else if (mathSign == '*') {
             result = firstOperand * secondOperand;
-        } else if (charOperator == '/') {
+        } else if (mathSign == '/') {
             result = firstOperand / secondOperand;
-        } else if (charOperator == '%') {
+        } else if (mathSign == '%') {
             result = firstOperand % secondOperand;
-        } else if (charOperator == '^') {
+        } else if (mathSign == '^') {
             result = 1;
             for (int i = 0; i < secondOperand; i++) {
-                result = result * firstOperand;
+                result *= firstOperand;
             }
         }
-        System.out.println(firstOperand + " " + charOperator + " " +
+        System.out.println(firstOperand + " " + mathSign + " " +
                 secondOperand + " = " + result);
     } 
 }
