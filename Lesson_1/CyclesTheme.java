@@ -19,7 +19,34 @@ public class CyclesTheme {
         System.out.println("В отрезке " + "[" + segmentStart + "," + segmentEnd + "]" +
                 " сумма четных чисел = " + evenSum + ", а нечетных = " + oddSum);
 
+        // новое решение
         System.out.println("\n2. ВЫВОД ЧИСЕЛ МЕЖДУ MIN И MAX В ПОРЯДКЕ УБЫВАНИЯ");
+        int maxNumber = 10;   
+        int numberB = 5;
+        int minNumber = -1;
+
+        if (numberB > maxNumber && maxNumber > minNumber) {
+            maxNumber = numberB;
+        } else if (numberB < minNumber && minNumber < maxNumber) {
+            minNumber = numberB;
+        } else if (numberB > minNumber && minNumber > maxNumber) {
+            minNumber = maxNumber;
+            maxNumber = numberB;
+        } else if (numberB < maxNumber && maxNumber < minNumber) {
+            maxNumber = minNumber;
+            minNumber = numberB;
+        } else if (maxNumber < numberB && numberB < minNumber) {
+            numberB = minNumber;
+            minNumber = maxNumber;
+            maxNumber = numberB;
+        }
+
+        for (int i = --maxNumber; i > minNumber; i--) {
+            System.out.print(i + " ");
+        }
+
+        // старое решение
+        System.out.println("\n\n2. ВЫВОД ЧИСЕЛ МЕЖДУ MIN И MAX В ПОРЯДКЕ УБЫВАНИЯ");
         int numA = -1;
         int numB = 10;
         int numC = 5;
@@ -85,8 +112,8 @@ public class CyclesTheme {
         int twoCount = 0;
 
         while (currNum % 10 > 0) {
-            if (currNum % 10 == 2) {
-                int lastDigit = currNum % 10; 
+            int lastDigit = currNum % 10;
+            if (lastDigit == 2) {
                 twoCount++;
             }
             currNum /= 10;
@@ -178,15 +205,13 @@ public class CyclesTheme {
         int secondNumCopy = secondNum;
 
         for (int j = 0; j < 6; j++) {
-            if (j < 3) {
-                reversed = firstNumCopy % 10;
-                firstNumCopy /= 10;
-                firstNumSum += reversed;
-            } else {
-                reversed = secondNumCopy % 10;
-                secondNumCopy /= 10;
-                secondNumSum += reversed;
-            }
+            reversed = firstNumCopy % 10;
+            firstNumCopy /= 10;
+            firstNumSum += reversed;
+
+            reversed = secondNumCopy % 10;
+            secondNumCopy /= 10;
+            secondNumSum += reversed;
         }
         System.out.print("Число " + originalNum + " - ");
 
@@ -199,21 +224,12 @@ public class CyclesTheme {
                 "Сумма цифр " + secondNum + " = " + secondNumSum);
 
         System.out.println("\n10. ВЫВОД ТАБЛИЦЫ УМНОЖЕНИЯ ПИФАГОРА \n");
-        int digitTwo = 2;
-        int digitNine = 9;
 
-        for (int i = digitTwo - 1; i <= digitNine; i++) {
-            if (i == 1) {
-                System.out.printf("%3c", '|');
-            } else {
-                System.out.printf("%3d", i);
-            }
-        }
+        System.out.println("  |  2  3  4  5  6  7  8  9\n" +
+                "--+------------------------");
 
-        System.out.println("\n--+------------------------");
-
-        for (int i = digitTwo; i <= digitNine; i++) {
-            for (int j = digitTwo - 1; j <= digitNine; j++) {
+        for (int i = 2; i <= 9; i++) {
+            for (int j = 2 - 1; j <= 9; j++) {
                 if (j == 1) {
                     System.out.print(i * j + " |");
                 } else {
