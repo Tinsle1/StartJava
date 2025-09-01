@@ -1,144 +1,191 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalTime;
 
 public class VariablesTheme {
     public static void main(String[] args) {
-        System.out.println("1. ВЫВОД ХАРАКТЕРИСТИК КОМПЬЮТЕРА");
-        byte coreCount = 5; 
-        System.out.println("Количество ядер процессора = " + coreCount);
+        LocalTime timeNow1 = LocalTime.now();
+        long startTime = System.nanoTime();
 
-        short windowsEdition = 11;
-        System.out.println("Версия Windows = " + windowsEdition + " Pro");
+        System.out.println("1. ВЫВОД ASCII-ГРАФИКИ\n");
 
-        int pcPrice = 120_000;
-        System.out.println("Стоимость ПК = " + pcPrice);
+        System.out.println("1.1 Вывод с помощью конкатенации");
+        System.out.println("                     /\\\n" +
+                "   J    a  v     v  /  \\\n" +
+                "   J   a a  v   v  /_( )\\\n" +
+                "J  J  aaaaa  V V  /      \\\n" +
+                " JJ  a     a  V  /___/\\___\\\n");
 
-        long productId = 330_524_547;
-        System.out.println("ID продукта = " + productId);
+        System.out.println("1.2 Вывод с помощью строкового литерала");
+        String block = """
+                         /\\            
+                   J    /  \\  v     v  a
+                   J   /_( )\\  v   v  a a
+                J  J  /      \\  V V  aaaaa
+                 JJ  /___/\\___\\  V  a     a
+                """;
+        System.out.println(block);
 
-        float ramCapacity = 16.0F;
-        System.out.println("Емкость оперативной памяти = " + ramCapacity + " ГБ");
-
-        double osBuild = 22631.4751;
-        System.out.println("OS Build = " + osBuild);
-
-        boolean isProWindows = true;
-        System.out.println("Это версия Pro? = " + isProWindows);
-
-        char windowsSymbol = 0x57;
-        System.out.println("Знак Windows = " + windowsSymbol + "\n");
-
-        System.out.println("2. РАСЧЕТ СТОИМОСТИ ТОВАРА СО СКИДКОЙ");
-        double penPrice = 105.5;
-        double bookPrice = 235.83;
-        double discount = 0.11;       
-        double baseSum = penPrice + bookPrice;
-        double discountSum = baseSum * discount;
-        double discountPrice = baseSum - discountSum;
+        System.out.println("\n\n2. РАСЧЕТ СТОИМОСТИ ТОВАРА");
+        System.out.println("\n1-й способ решения");
+        float penPrice = 105.5F;
+        float bookPrice = 235.23F;
+        float discount = 0.11F;       
+        float baseSum = penPrice + bookPrice;
+        float discountSum = baseSum * discount;
+        float discountPrice = baseSum - discountSum;
         System.out.println("Стоимость товаров без скидки = " + baseSum + " руб." +
                 "\nСумма скидки = " + discountSum + " руб." +
                 "\nСтоимость товаров со скидкой = " + discountPrice + " руб.\n");
 
-        System.out.println("3. ВЫВОД СЛОВА JAVA\n");
-        System.out.println("    J    a  v     v  a\n" +
-                "    J   a a  v   v  a a\n" +
-                " J  J  aaaaa  V V  aaaaa\n" +
-                "  JJ  a     a  V  a     a\n");
+        System.out.println("2-й способ решения");
+        BigDecimal penPriceBd = BigDecimal.valueOf(105.5);
+        BigDecimal bookPriceBd = BigDecimal.valueOf(235.23);
+        BigDecimal discountBd = BigDecimal.valueOf(0.11);
+        BigDecimal baseSumBd = penPriceBd.add(bookPriceBd).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountSumBd = baseSumBd.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountPriceBd = baseSumBd.subtract(discountSumBd).setScale(2, RoundingMode.HALF_UP);
 
-        System.out.println("4. ВЫВОД MIN И MAX ЗНАЧЕНИЙ ЦЕЛЫХ ЧИСЛОВЫХ ТИПОВ");
-        byte extremesByteValue = 127;
-        short extremesShortValue = 32_767;
-        int extremesIntValue = 2_147_483_647;
-        long extremesLongValue = 9_223_372_036_854_775_807L;
-        char extremesCharValue = 65_535;
-        System.out.println(extremesByteValue + ", " + ++extremesByteValue + ", " + --extremesByteValue);
-        System.out.println(extremesShortValue + ", " + ++extremesShortValue + ", " + --extremesShortValue);
-        System.out.println(extremesIntValue + ", " + ++extremesIntValue + ", " + --extremesIntValue);
-        System.out.println(extremesLongValue + ", " + ++extremesLongValue + ", " + --extremesLongValue);
-        System.out.println((int) extremesCharValue + ", " + (int) ++extremesCharValue + ", " +
-                (int) --extremesCharValue);
+        System.out.println("Стоимость товаров без скидки = " + baseSumBd + " руб." +
+                "\nСумма скидки = " + discountSumBd + " руб." +
+                "\nСтоимость товаров со скидкой = " + discountPriceBd + " руб.\n");
 
-        System.out.println("\n5. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ПЕРЕМЕННЫХ");
+        System.out.println("\n3. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ЯЧЕЕК В ТАБЛИЦЕ");
         int firstNum = 2;
         int secondNum = 5;
         System.out.println("Исходные значения переменных: firstNum = " +
                 firstNum + ", secondNum = " + secondNum);
 
-        System.out.println("\n5.1. Перестановка с помощью третей переменной tmp");        
+        System.out.println("\n3.1. Перестановка с помощью третей переменной tmp");        
         int tmp = firstNum;
         firstNum = secondNum;
         secondNum = tmp;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
                 
-        System.out.println("\n5.2. Перестановка с помощью арифметических операций");       
+        System.out.println("\n3.2. Перестановка с помощью арифметических операций");       
         firstNum += secondNum;
         secondNum = firstNum - secondNum;
         firstNum -= secondNum;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
 
-        System.out.println("\n5.3. Перестановка с помощью побитовой операции ^");
+        System.out.println("\n3.3. Перестановка с помощью побитовой операции ^");
         firstNum ^= secondNum;
         secondNum = firstNum ^ secondNum;
         firstNum ^= secondNum;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
-        
-        System.out.println("\n6. ВЫВОД СИМВОЛОВ И ИХ КОДОВ");
-        char dollar = '$';
-        char asterisk = '*';
-        char at = '@';
-        char caret = '^';
-        char tilde = '~';
 
-        System.out.println("Код " + (int) dollar + " = символу " + dollar + "\n" +
-                "Код " + (int) asterisk + " = символу " + asterisk + "\n" +
-                "Код " + (int) at + " = символу " + at + "\n" +
-                "Код " + (int) caret + " = символу " + caret + "\n" +
-                "Код " + (int) tilde + " = символу " + tilde);
+        System.out.println("\n\n4. ДЕКОДИРОВАНИЕ СООБЩЕНИЯ");
+        int code1 = 1055;
+        int code2 = 1088;
+        int code3 = 1080;
+        int code4 = 1074;
+        int code5 = 1077;
+        int code6 = 1090;
 
-        System.out.println("\n7. ВЫВОД В КОНСОЛЬ ASCII-АРТ ДЮКА");
-        char slash = '/';
-        char backslash = '\\';
-        char underscore = '_';
-        char leftParenthesis = '(';
-        char rightParenthesis = ')';
-        System.out.println("    " + slash + backslash + "\n" +
-                "   " + slash + "  " + backslash + "\n" +
-                "  " + slash + underscore + leftParenthesis + " " + rightParenthesis + backslash + "\n" +
-                " " + slash + "      " + backslash + "\n" +
-                slash + underscore + underscore + underscore + underscore + slash + backslash +
-                underscore + underscore + backslash);
+        System.out.printf("%4d%8d%8d%8d%8d%8d%n", code1, code2, code3, code4, code5, code6);
+        System.out.printf("%3c%8c%8c%8c%8c%8c", (char) code1, (char) code2, (char) code3,
+                (char) code4, (char) code5, (char) code6);
 
-        System.out.println("\n8. МАНИПУЛЯЦИИ С СОТНЯМИ, ДЕСЯТКАМИ И ЕДИНИЦАМИ ЧИСЛА");
-        int originalNum = 123;
-        int hundredCount = originalNum / 100;
-        int tenCount = originalNum / 10 % 10;
-        int oneCount = originalNum % 100 % 10;
-        int sum = hundredCount + tenCount + oneCount;
-        int multiplication = hundredCount * tenCount * oneCount;
-        System.out.println("Число 123 содержит:\n" +
-                "  сотен - " + hundredCount + "\n" +
-                "  десятков - " + tenCount + "\n" +
-                "  единиц - " + oneCount + "\n" +
-                "Сумма разрядов = " + sum +
-                "\n" + "Произведение разрядов = " + multiplication);
+        System.out.println("\n\n5. АНАЛИЗ КОДА ТОВАРА");
+        int productCode = 123;
+        int category = productCode / 100;
+        int subcategory = productCode / 10 % 10;
+        int packageType = productCode % 100 % 10;
+        int sum = category + subcategory + packageType;
+        int multiplication = category * subcategory * packageType;
+        System.out.println("Код товара: " + productCode + "\n" +
+                "  категория товара - " + category + "\n" +
+                "  подкатегория - " + subcategory + "\n" +
+                "  тип упаковки - " + packageType + "\n" +
+                "Контрольная сумма = " + sum + "\n" +
+                "Проверочный код = " + multiplication);
 
-        System.out.println("\n9. ПЕРЕВОД СЕКУНД В ЧАСЫ, МИНУТЫ И СЕКУНДЫ");
-        int allSeconds = 86399;
-        int ss = allSeconds % 60;
-        int mm = allSeconds / 60 % 60;
-        int hh = allSeconds / 3600;
-        System.out.println(hh + ":" + mm + ":" + ss);
+        System.out.println("\n\n6. ТЕСТИРОВАНИЕ ДАТЧИКОВ ПЕРЕД ЗАПУСКОМ РАКЕТЫ");
+        byte temperature = Byte.MAX_VALUE;
+        System.out.printf("""
+                [Температура, °C]:
+                  Исходное: %d
+                  +1: %d
+                  -1: %d
+                """, temperature, ++temperature, --temperature);
 
-        System.out.println("\n10. *РАСЧЕТ СТОИМОСТИ ТОВАРА СО СКИДКОЙ");
-        BigDecimal penPrice2 = new BigDecimal("105.5");
-        BigDecimal bookPrice2 = new BigDecimal("235.83");
-        BigDecimal discount2 = new BigDecimal("0.11");
-        BigDecimal baseSum2 = penPrice2.add(bookPrice2).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal discountSum2 = baseSum2.multiply(discount2).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal discountPrice2 = baseSum2.subtract(discountSum2).setScale(2, RoundingMode.HALF_UP);
+        short pressure = Short.MAX_VALUE;
+        System.out.printf("""
+                [Давление, Па]:
+                  Исходное: %d
+                  +1: %d
+                  -1: %d
+                """, pressure, ++pressure, --pressure);
 
-        System.out.println("Стоимость товаров без скидки = " + baseSum2 + " руб." +
-                "\nСумма скидки = " + discountSum2 + " руб." +
-                "\nСтоимость товаров со скидкой = " + discountPrice2 + " руб.\n");
+        int distance = Integer.MAX_VALUE;
+        System.out.printf("""
+                [Пройденное расстояние, км]:
+                  Исходное: %d
+                  +1: %d
+                  -1: %d
+                """, distance, ++distance, --distance);
+
+        long duration = Long.MAX_VALUE;
+        System.out.printf("""
+                [Время с момента старта, ч]:
+                  Исходное: %d
+                  +1: %d
+                  -1: %d
+                """, duration, ++duration, --duration);
+
+        char status = Character.MAX_VALUE;
+        System.out.printf("""
+                [Код состояния системы]:
+                  Исходное: %d
+                  +1: %d
+                  -1: %d
+                """, (int) status, (int) ++status, (int) --status);
+
+        System.out.println("\n\n7. ВЫВОД ПАРАМЕТРОВ JVM И ОС");
+        Runtime runTime = Runtime.getRuntime();
+    
+        double toMegaByte = 1024 * 1024;
+        int coreCount = runTime.availableProcessors();
+    
+        double totalMemory = runTime.totalMemory() / toMegaByte;
+        double freeMemory = runTime.freeMemory() / toMegaByte;
+        double maxMemory = runTime.maxMemory() / toMegaByte;
+        double usedMemory = totalMemory - freeMemory;
+
+        String javaHome = System.getProperty("java.home");
+        String osVersion = System.getProperty("os.version");
+        String javaVersion = System.getProperty("java.version");
+        String pathSeparator = System.getProperty("path.separator");
+   
+        System.out.printf("""
+                ХАРАКТЕРИСТИКИ JVM: 
+                доступное число ядер - %d
+                выделенная память (МБ) - %.1f
+                свободная память (Мб) - %.1f
+                используемая память (Мб) - %.1f
+                максимально доступная для \
+                выделения память (Мб) - %.1f%n
+                """, 
+                coreCount, totalMemory, freeMemory, 
+                maxMemory, usedMemory);
+           
+        System.out.printf("""
+                ПАРАМЕТРЫ ОС: 
+                системный диск - %s
+                версия ОС - %s
+                версия Java - %s
+                символ разделения пути (сепаратор) - %s""", 
+                        javaHome, osVersion, javaVersion, 
+                        pathSeparator);
+
+        System.out.println("\n\n8. ЗАМЕР ВРЕМЕНИ РАБОТЫ КОДА");
+        LocalTime timeNow2 = LocalTime.now();
+        long endTime = System.nanoTime();
+        float difference = (endTime - startTime) / 1_000_000_000;
+
+        System.out.printf("""
+        Старт проверки: %tT.%1$tL
+        Финиш проверки: %tT.%1$tL
+        Время работы:   %.3f""", timeNow1, timeNow2, difference);
     }
 }
