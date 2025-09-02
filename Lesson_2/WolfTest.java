@@ -7,14 +7,11 @@ public class WolfTest {
         wolfOne.setAge(14);
         wolfOne.setColour("gray");
 
-        String wolfOneGender = wolfOne.getGender();
-        String wolfOneNickname = wolfOne.getNickname();
-        float wolfOneWeight = wolfOne.getWeight();
-        int wolfOneAge = wolfOne.getAge();
-        String wolfOneColour = wolfOne.getColour();
-
-        System.out.println(wolfOneGender + ", " + wolfOneNickname + ", " + wolfOneWeight +
-                ", " + wolfOneAge + ", " + wolfOneColour + "\n");
+        System.out.println("Gender: " + wolfOne.getGender() + 
+                "\nName: " + wolfOne.getNickname() +
+                "\nWeight: " + wolfOne.getWeight() +
+                "\nAge: " + wolfOne.getAge() +
+                "\nColour " + wolfOne.getColour());
 
         wolfOne.go();
         wolfOne.sit();
