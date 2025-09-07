@@ -38,8 +38,8 @@ public class CyclesTheme {
 
         System.out.println("\n\n3. ВЫВОД ТАБЛИЦЫ УМНОЖЕНИЯ ПИФАГОРА");
         System.out.print("""
-                |  2  3  4  5  6  7  8  9
-              --+------------------------
+                  |  2  3  4  5  6  7  8  9
+                --+------------------------
                 """);
         for (int i = 2; i <= 9; i++) {
             for (int j = 1; j <= 9; j++) {
