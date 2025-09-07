@@ -26,20 +26,20 @@ public class IfElseStatementTheme {
         }
 
         System.out.println("\n\n2. ПОИСК БОЛЬШЕГО ЧИСЛА ШАГОВ");
-        int firstDaySteps = 10000;
-        int secondDaySteps = 60000;
-        int totalSteps = firstDaySteps + secondDaySteps;
+        int stepsToday = 10000;
+        int stepsYesterday = 60000;
+        int totalSteps = stepsToday + stepsYesterday;
         double averageSteps = totalSteps / 2.0;
 
         System.out.println("Всего шагов за два дня: " + totalSteps);
-        if (firstDaySteps == secondDaySteps) {
-            System.out.println("Равное количество шагов в оба дня: " + firstDaySteps);
-        } else if (firstDaySteps > secondDaySteps) {
-            System.out.println("В первый день больше шагов(" + firstDaySteps +
-                    "), чем во второй(" + secondDaySteps + ")");
+        if (stepsToday == stepsYesterday) {
+            System.out.println("Равное количество шагов в оба дня: " + stepsToday);
+        } else if (stepsToday > stepsYesterday) {
+            System.out.println("Сегодня шагов больше (" + stepsToday +
+                    "), чем во вчера(" + stepsYesterday + ")");
         } else {
-            System.out.println("Во второй день больше шагов(" + secondDaySteps +
-                    "), чем в первый(" + firstDaySteps + ")");
+            System.out.println("Вчера шагов больше (" + stepsYesterday +
+                    "), чем сегодня(" + stepsToday + ")");
         }
         System.out.println("В среднем шагов в день: " + averageSteps);
 
@@ -51,11 +51,9 @@ public class IfElseStatementTheme {
         } else if (guestsAmount < 0) {
             System.out.println("Число гостей не может быть отрицательным. Введите повторно");
         } else if (guestsAmount % 2 == 0) {
-            System.out.println("Записалось " + guestsAmount +
-                    " гостей. Можно формировать пары для конкурсов.");
+            System.out.println("Записалось " + guestsAmount + " гостей. Можно формировать пары для конкурсов.");
         } else {
-            System.out.println("Записалось " + guestsAmount +
-                    " гостей. Нужны индивидуальные задания.");
+            System.out.println("Записалось " + guestsAmount + " гостей. Нужны индивидуальные задания.");
         }
 
         System.out.println("\n\n4. ОПРЕДЕЛЕНИЕ ПЕРВОГО СИМВОЛА НИКНЕЙМА");
@@ -63,11 +61,11 @@ public class IfElseStatementTheme {
         char firstLetter = name.charAt(0);
 
         System.out.println("Первый способ");
-        if (firstLetter > 96 && firstLetter < 123) {
+        if (firstLetter > '`' && firstLetter < '{') {
             System.out.println(firstLetter + " = маленькая буква");
-        } else if (firstLetter > 64 && firstLetter < 91) {
+        } else if (firstLetter > '@' && firstLetter < '[') {
             System.out.println(firstLetter + " = большая буква");
-        } else if (firstLetter > 47 && firstLetter < 58) {
+        } else if (firstLetter > '/' && firstLetter < ':') {
             System.out.println(firstLetter + " = цифра");
         } else {
             System.out.println(firstLetter + " = прочий символ");
@@ -85,75 +83,109 @@ public class IfElseStatementTheme {
         }
 
         System.out.println("\n\n5. ИНВЕНТАРИЗАЦИЯ");
-        int firstNum = 623;
-        int secondNum = 623;
-        boolean isEqualHundreds = firstNum / 100 == secondNum / 100;
-        boolean isEqualTens = firstNum / 10 % 10 == secondNum / 10 % 10;
-        boolean isEqualOnes = firstNum % 10 == secondNum % 10;
-        System.out.println("Исходные числа: " + firstNum + ", " + secondNum);
-        if (firstNum == secondNum) {
-            System.out.println("Числа равны");
+        int serialNum = 863;
+        int officeDeskNum = 863;
+                
+        int serialNumHundreds = serialNum / 100;
+        int serialNumTens = serialNum / 10 % 10;
+        int serialNumOnes = serialNum % 10;
+                
+        int officeDeskNumHundreds = officeDeskNum / 100;
+        int officeDeskNumTens = officeDeskNum / 10 % 10;
+        int officeDeskNumOnes = officeDeskNum % 10;
+              
+        boolean isEqualHundreds = serialNumHundreds == officeDeskNumHundreds;
+        boolean isEqualTens = serialNumTens == officeDeskNumTens;
+        boolean isEqualOnes = serialNumOnes == officeDeskNumOnes;
+                
+        String hundredsOrNot = (isEqualHundreds) ? "" + officeDeskNumHundreds : "" + '_';
+        String tensOrNot = (isEqualTens) ? "" + officeDeskNumTens : "" + '_';
+        String onesOrNot = (isEqualOnes) ? "" + officeDeskNumOnes : "" + '_';
+        String officeDeskNumToString = hundredsOrNot + tensOrNot + onesOrNot;
+
+        if (serialNum == officeDeskNum) {
+            System.out.printf("""
+                    [№%03d]: компьютер на 3-м этаже в кабинете 2
+                    """, serialNum);
         } else if (isEqualHundreds || isEqualTens || isEqualOnes) {
             System.out.printf("""
-                        Нет полного совпадения:
-                        База данных: [№%03d]
-                        Фактический: [№%03d]
-                    """, firstNum, secondNum);
+                    Нет полного совпадения:
+                    База данных: [№%d]
+                    Фактический: [№%s]
+                    """, serialNum, officeDeskNumToString);
+        } else {
+            System.out.printf("""
+                    [№%03d]: оборудование не идентифицировано
+                    """, serialNum);
         } 
 
         System.out.println("\n\n6. ПОДСЧЕТ НАЧИСЛЕННЫХ БАНКОМ %");
         System.out.println("\n1-й способ решения");
-        float penPrice = 105.5F;
-        float bookPrice = 235.23F;
-        float discount = 0.11F;       
-        float baseSum = penPrice + bookPrice;
-        float discountSum = baseSum * discount;
-        float discountPrice = baseSum - discountSum;
-        System.out.println("Стоимость товаров без скидки = " + baseSum + " руб." +
-                "\nСумма скидки = " + discountSum + " руб." +
-                "\nСтоимость товаров со скидкой = " + discountPrice + " руб.\n");
+        float depositSum = 321123.79F;
+        float interest = 0.05F;
 
-        System.out.println("2-й способ решения");
-        BigDecimal penPriceBd = BigDecimal.valueOf(105.5);
-        BigDecimal bookPriceBd = BigDecimal.valueOf(235.23);
-        BigDecimal discountBd = BigDecimal.valueOf(0.11);
-        BigDecimal baseSumBd = penPriceBd.add(bookPriceBd).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal discountSumBd = baseSumBd.multiply(discountBd).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal discountPriceBd = baseSumBd.subtract(discountSumBd).setScale(2, RoundingMode.HALF_UP);
+        if (depositSum > 100_000 && depositSum < 300_000) {
+            interest = 0.07F;
+        } else if (depositSum > 300_000) {
+            interest = 0.1F;
+        }
 
-        System.out.println("Стоимость товаров без скидки = " + baseSumBd + " руб." +
-                "\nСумма скидки = " + discountSumBd + " руб." +
-                "\nСтоимость товаров со скидкой = " + discountPriceBd + " руб.");
+        float interestSum = depositSum * interest;
+        float generalSum = interestSum + depositSum;
+
+        System.out.printf("""
+                Сумма вклада: %f руб.
+                Сумма начисленного %c: %f руб.
+                Итоговая сумма с %c: %f руб.
+                """, depositSum, '%', interestSum, '%', generalSum);
+
+        System.out.println("\n2-й способ решения");
+        BigDecimal depositSumBd = BigDecimal.valueOf(321123.79);
+        BigDecimal interestBd = BigDecimal.valueOf(0.05);
+
+        if (depositSumBd.compareTo(BigDecimal.valueOf(100000)) == 1 && 
+                depositSumBd.compareTo(BigDecimal.valueOf(300000)) == -1) {
+            interestBd = BigDecimal.valueOf(0.07);
+        } else if (depositSumBd.compareTo(BigDecimal.valueOf(300000)) == 1) {
+            interestBd = BigDecimal.valueOf(0.1);
+        }
+
+        BigDecimal interestSumBd = depositSumBd.multiply(interestBd).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal generalSumBd = interestSumBd.add(depositSumBd).setScale(2, RoundingMode.HALF_UP);
+
+        System.out.println("Сумма вклада: " + depositSumBd + " руб." +
+                "\nСумма начисленного %: " + interestSumBd + " руб." +
+                "\nИтоговая сумма с %: " + generalSumBd + " руб.");
 
         System.out.println("\n\n7. ОПРЕДЕЛЕНИЕ ОЦЕНКИ ПО ПРЕДМЕТАМ");
-        int historyRate = 59;
+        int historyPercent = 59;
         int historyGrade = 2;
 
-        if (historyRate > 91) {
+        if (historyPercent > 91) {
             historyGrade = 5;
-        } else if (historyRate > 73) {
+        } else if (historyPercent > 73) {
             historyGrade = 4;
-        } else if (historyRate > 60) {
+        } else if (historyPercent > 60) {
             historyGrade = 3;
         } 
 
-        int programmingRate = 92;
+        int programmingPercent = 92;
         int programmingGrade = 2;
 
-        if (programmingRate > 91) {
+        if (programmingPercent > 91) {
             programmingGrade = 5;
-        } else if (programmingRate > 73) {
+        } else if (programmingPercent > 73) {
             programmingGrade = 4;
-        } else if (programmingRate > 60) {
+        } else if (programmingPercent > 60) {
             programmingGrade = 3;
         } 
 
-        double averageRate = (historyRate + programmingRate) / 2.0;
+        double averagePercent = (historyPercent + programmingPercent) / 2.0;
         double averageGrade = (historyGrade + programmingGrade) / 2.0;
         System.out.println("Оценка по истории = " + historyGrade +
                 "\nОценка по программированию = " + programmingGrade +
                 "\nСредний балл оценок = " + averageGrade +
-                "\nСредний % по предметам = " + averageRate);
+                "\nСредний % по предметам = " + averagePercent);
 
         System.out.println("\n\n8. РАСЧЕТ ГОДОВОЙ ПРИБЫЛИ С BigDecimal");
         BigDecimal monthRevenue = BigDecimal.valueOf(13025.233);

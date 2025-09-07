@@ -143,8 +143,8 @@ public class VariableNamesTheme {
         System.out.println("Новое? = " + isNew);
 
         // электронная почта действительная?
-        boolean isEmailValid = true;
-        System.out.println("Электронная почта действительная? = " + isEmailValid);
+        boolean isValidEmail = true;
+        System.out.println("Электронная почта действительная? = " + isValidEmail);
 
         // имеются уникальные строки?
         boolean hasUniqueStrings = false;
@@ -172,8 +172,8 @@ public class VariableNamesTheme {
         System.out.println("Сокращенный uniform resource locator = " + shortUrl);
 
         // новый идентификатор клиента
-        int newId = 748393;
-        System.out.println("Новый идентификатор клиента = " + newId);
+        int newCid = 748393;
+        System.out.println("Новый идентификатор клиента = " + newCid);
 
         // american standard code for information interchange
         String ascii = "ASCII";

@@ -11,39 +11,30 @@ public class CyclesTheme {
             boolean isTrueCondition = (i > 32 && i < 48 && i % 2 != 0) ||
                     (i > 96 && i < 123 && i % 2 == 0);
             if (isTrueCondition) {
-                for (int j = 0; j < 3; j++) {
-                    if (j == 0) {
-                        System.out.printf("%4d", (int) asciiChar);
-                    } else if (j == 1) {
-                        System.out.printf("%11c", asciiChar);
-                    } else {
-                        System.out.printf("%12s%s", " ", Character.getName(asciiChar));
-                    }
-                }
-                System.out.println();
+                System.out.printf("%-10d%-12c%s%n", (int) asciiChar, asciiChar, Character.getName(asciiChar));
             }
         }
 
         System.out.println("\n\n2. ВЫВОД ГЕОМЕТРИЧЕСКИХ ФИГУР");
 
-        System.out.println("Прямоугольник");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 1; i < 6; i++) {
             for (int j = 0; j < 10; j++) {
                 System.out.print("-");
             }
-            System.out.println();
-        }
-
-        System.out.println("\nПрямоугольный треугольник");
-        for (int i = 0; i < 5; i++) {
-            for (int j = 5 - i; j > 0; j--) {
+            
+            System.out.print(" ");
+            
+            for (int j = 6 - i; j > 0; j--) {
                 System.out.print("*");
             }
+            System.out.print(" ");
+            
+            for (int j = 1; j < i * 2; j++) {
+                System.out.print("^");
+            }
+            
             System.out.println();
-        }
-
-        System.out.println("\nРавнобедренный треугольник");
-        // тут пока не додумалась, пропускаю 
+        } 
 
         System.out.println("\n\n3. ВЫВОД ТАБЛИЦЫ УМНОЖЕНИЯ ПИФАГОРА");
         System.out.print("""
@@ -63,18 +54,19 @@ public class CyclesTheme {
 
         System.out.println("\n\n4. ВЫВОД ЧИСЕЛ В НЕСКОЛЬКО СТРОК");
         int numberCount = 0;
+        int numbersCountInLine = 5;
 
         for (int i = 1; i < 24; i += 2) {
             System.out.printf("%5d", i);
             numberCount++;
 
-            if (numberCount % 5 == 0) {
+            if (numberCount % numbersCountInLine == 0) {
                 System.out.println();
             }
         }
 
-        int zeroCount = 5 - (numberCount % 5);
-        if (zeroCount < 5) {
+        int zeroCount = numbersCountInLine - (numberCount % numbersCountInLine);
+        if (zeroCount < numbersCountInLine) {
             for (int i = 0; i < zeroCount; i++) {
                 System.out.printf("%5d", 0);
             }
@@ -108,87 +100,89 @@ public class CyclesTheme {
         System.out.println("\n\n\n6. РАЗНЫЕ ОПЕРАЦИИ НАД ЧИСЛОМ");
         int originalNum = 2234321;
         int currNum = originalNum;
-        int reversed = 0;
+        int reversedNum = 0;
         int twoCount = 0;
-      
+
         while (currNum > 0) {
-            if (currNum % 10 == 2) {
+            int remainder = currNum % 10;
+            if (remainder == 2) {
                 twoCount++;
             }  
-            
-            reversed = reversed * 10 + currNum % 10;
+            reversedNum = reversedNum * 10 + remainder;
             currNum /= 10;
         }
         
-        String palindorm = (originalNum == reversed) ? " - палиндром" : " - не палиндром";
-        String evenness = (twoCount % 2 == 0) ?
-                " с четным (" + twoCount + ") количеством + двоек"
-                : " с нечетным (" + twoCount + ") количеством двоек";
-        System.out.println(originalNum + palindorm + evenness);
+        String palindorme = (originalNum == reversedNum) ? " - палиндром" : " - не палиндром";
+        String evenOrOdd = (twoCount > 0) ?
+                (twoCount % 2 == 0) ? " с четным (" + twoCount + ") количеством + двоек"
+                : " с нечетным (" + twoCount + ") количеством двоек" : " без двоек";
+              
+        System.out.println(reversedNum + palindorme + evenOrOdd);
 
         System.out.println("\n\n7. ПРОВЕРКА СЧАСТЛИВОГО ЧИСЛА");
-        originalNum = 104002;
-        int firstNum = originalNum / 1000;
-        int firstNumSum = 0;
-        int secondNum = originalNum % 1000;
-        int secondNumSum = 0;
-        int firstNumCopy = firstNum;
-        int secondNumCopy = secondNum;
+        originalNum = 104005;
+        int leftHalfNum = originalNum / 1000;
+        int leftHalfSum = 0;
+        int rightHalfNum = originalNum % 1000;
+        int rightHalfSum = 0;
+        int leftHalfCopy = leftHalfNum;
+        int rightHalfCopy = rightHalfNum;
 
-        for (int j = 0; j < 6; j++) {
-            reversed = firstNumCopy % 10;
-            firstNumCopy /= 10;
-            firstNumSum += reversed;
+        for (int j = 0; j < 3; j++) {
+            int remainder = leftHalfCopy % 10;
+            leftHalfCopy /= 10;
+            leftHalfSum += remainder;
 
-            reversed = secondNumCopy % 10;
-            secondNumCopy /= 10;
-            secondNumSum += reversed;
+            remainder = rightHalfCopy % 10;
+            rightHalfCopy /= 10;
+            rightHalfSum += remainder;
         }
 
-        String happyNum = (firstNumSum == secondNumSum) ? " счастливое число" : " не счастливое число";
+        String happyNum = (leftHalfSum == rightHalfSum) ? " счастливое число" : " не счастливое число";
    
         System.out.printf("""
-        %d - %s
-        Сумма цифр %03d = %d
-        Сумма цифр %03d = %d
-                """, originalNum, happyNum, firstNum, firstNumSum, secondNum, secondNumSum);
+                %d - %s
+                Сумма цифр %03d = %d
+                Сумма цифр %03d = %d
+                """, originalNum, happyNum, leftHalfNum, leftHalfSum, rightHalfNum, rightHalfSum);
 
         System.out.println("\n\n8. ГЕНЕРАТОР ПАРОЛЯ");
         Random random = new Random();
         String password = "";
-        String passwordStatus = "Слабый";
-        int countDigit = 0;
-        int countLowerCase = 0;
-        int countUpperCase = 0;
-        int countSpecChar = 0;
+        boolean hasDigit = false;
+        boolean hasLowerCase = false;
+        boolean hasUpperCase = false;
+        boolean hasSpecChar = false;
 
         for (int i = 0; i < 8; i++) {
             char currChar = (char) random.nextInt(33, 127);
             password += currChar;
             
             if (Character.isUpperCase(currChar)) {
-                countUpperCase++;
+                hasUpperCase = true;
             } else if (Character.isLowerCase(currChar)) {
-                countLowerCase++;
+                hasLowerCase = true;
             } else if (!Character.isLetterOrDigit(currChar)) {
-                countSpecChar++;
+                hasSpecChar = true;
             } else if (Character.isDigit(currChar)) {
-                countDigit++;
+                hasDigit = true;
             }        
         }
             
-        boolean isStrong = (countLowerCase > 0 && countUpperCase > 0 && countSpecChar > 0);
-        boolean isGood = ((countUpperCase + countDigit) > 0);
+        boolean isStrong = (hasLowerCase && hasUpperCase && hasSpecChar);
+        boolean isGood = (hasUpperCase || hasDigit);
+
+        String passwordStrength = "Слабый";
             
         if (isStrong) {
-            passwordStatus = "Надежный";
+            passwordStrength = "Надежный";
         } else if (isGood) {
-            passwordStatus = "Средний";
+            passwordStrength = "Средний";
         } 
             
         System.out.printf("""
                 Пароль: %s
                 Надежность: %s
-                 """, password, passwordStatus);
+                """, password, passwordStrength);
     }
 }

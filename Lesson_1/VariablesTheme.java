@@ -10,7 +10,8 @@ public class VariablesTheme {
         System.out.println("1. ВЫВОД ASCII-ГРАФИКИ\n");
 
         System.out.println("1.1 Вывод с помощью конкатенации");
-        System.out.println("                     /\\\n" +
+        System.out.println(
+                "                     /\\\n" +
                 "   J    a  v     v  /  \\\n" +
                 "   J   a a  v   v  /_( )\\\n" +
                 "J  J  aaaaa  V V  /      \\\n" +
@@ -53,8 +54,8 @@ public class VariablesTheme {
         System.out.println("\n3. ПЕРЕСТАНОВКА ЗНАЧЕНИЙ ЯЧЕЕК В ТАБЛИЦЕ");
         int firstNum = 2;
         int secondNum = 5;
-        System.out.println("Исходные значения переменных: firstNum = " +
-                firstNum + ", secondNum = " + secondNum);
+        System.out.println("Исходные значения переменных: firstNum = " + firstNum +
+                        ", secondNum = " + secondNum);
 
         System.out.println("\n3.1. Перестановка с помощью третей переменной tmp");        
         int tmp = firstNum;
@@ -70,7 +71,7 @@ public class VariablesTheme {
 
         System.out.println("\n3.3. Перестановка с помощью побитовой операции ^");
         firstNum ^= secondNum;
-        secondNum = firstNum ^ secondNum;
+        secondNum ^= firstNum;
         firstNum ^= secondNum;
         System.out.println("Новые значения: firstNum = " + firstNum + ", secondNum = " + secondNum);
 
@@ -83,22 +84,23 @@ public class VariablesTheme {
         int code6 = 1090;
 
         System.out.printf("%4d%8d%8d%8d%8d%8d%n", code1, code2, code3, code4, code5, code6);
-        System.out.printf("%3c%8c%8c%8c%8c%8c", (char) code1, (char) code2, (char) code3,
-                (char) code4, (char) code5, (char) code6);
+        System.out.printf("%3c%8c%8c%8c%8c%8c", code1, code2, code3, code4, code5, code6);
 
         System.out.println("\n\n5. АНАЛИЗ КОДА ТОВАРА");
         int productCode = 123;
         int category = productCode / 100;
         int subcategory = productCode / 10 % 10;
         int packageType = productCode % 100 % 10;
-        int sum = category + subcategory + packageType;
-        int multiplication = category * subcategory * packageType;
-        System.out.println("Код товара: " + productCode + "\n" +
-                "  категория товара - " + category + "\n" +
-                "  подкатегория - " + subcategory + "\n" +
-                "  тип упаковки - " + packageType + "\n" +
-                "Контрольная сумма = " + sum + "\n" +
-                "Проверочный код = " + multiplication);
+        int checksum = category + subcategory + packageType;
+        int verificationCode = category * subcategory * packageType;
+        System.out.printf("""
+                Код товара: %d 
+                   категория товара - %d 
+                   подкатегория - %d 
+                   тип упаковки - %d
+                Контрольная сумма = %d 
+                Проверочный код = %d""", productCode, category, subcategory,
+                packageType, checksum, verificationCode);
 
         System.out.println("\n\n6. ТЕСТИРОВАНИЕ ДАТЧИКОВ ПЕРЕД ЗАПУСКОМ РАКЕТЫ");
         byte temperature = Byte.MAX_VALUE;
@@ -142,20 +144,20 @@ public class VariablesTheme {
                 """, (int) status, (int) ++status, (int) --status);
 
         System.out.println("\n\n7. ВЫВОД ПАРАМЕТРОВ JVM И ОС");
-        Runtime runTime = Runtime.getRuntime();
+        Runtime rt = Runtime.getRuntime();
     
         double toMegaByte = 1024 * 1024;
-        int coreCount = runTime.availableProcessors();
+        int coreCount = rt.availableProcessors();
     
-        double totalMemory = runTime.totalMemory() / toMegaByte;
-        double freeMemory = runTime.freeMemory() / toMegaByte;
-        double maxMemory = runTime.maxMemory() / toMegaByte;
+        double totalMemory = rt.totalMemory() / toMegaByte;
+        double freeMemory = rt.freeMemory() / toMegaByte;
+        double maxMemory = rt.maxMemory() / toMegaByte;
         double usedMemory = totalMemory - freeMemory;
 
         String javaHome = System.getProperty("java.home");
         String osVersion = System.getProperty("os.version");
         String javaVersion = System.getProperty("java.version");
-        String pathSeparator = System.getProperty("path.separator");
+        String fileSeparator = System.getProperty("file.separator");
    
         System.out.printf("""
                 ХАРАКТЕРИСТИКИ JVM: 
@@ -166,8 +168,7 @@ public class VariablesTheme {
                 максимально доступная для \
                 выделения память (Мб) - %.1f%n
                 """, 
-                coreCount, totalMemory, freeMemory, 
-                maxMemory, usedMemory);
+                coreCount, totalMemory, freeMemory, usedMemory, maxMemory);
            
         System.out.printf("""
                 ПАРАМЕТРЫ ОС: 
@@ -175,17 +176,17 @@ public class VariablesTheme {
                 версия ОС - %s
                 версия Java - %s
                 символ разделения пути (сепаратор) - %s""", 
-                        javaHome, osVersion, javaVersion, 
-                        pathSeparator);
+                        javaHome.substring(0, 1), osVersion, javaVersion, fileSeparator);
 
         System.out.println("\n\n8. ЗАМЕР ВРЕМЕНИ РАБОТЫ КОДА");
-        LocalTime timeNow2 = LocalTime.now();
+        
         long endTime = System.nanoTime();
-        float difference = (endTime - startTime) / 1_000_000_000;
-
+        double difference = (endTime - startTime) / 1e9;
+        LocalTime timeNow2 = LocalTime.now();
         System.out.printf("""
-        Старт проверки: %tT.%1$tL
-        Финиш проверки: %tT.%1$tL
-        Время работы:   %.3f""", timeNow1, timeNow2, difference);
+                Старт проверки: %tT.%1$tL
+                Финиш проверки: %tT.%2$tL
+                Время работы:   %.3f сек
+                """, timeNow1, timeNow2, difference);
     }
 }
