@@ -9,6 +9,7 @@ public class CalculatorTest {
         do {
             System.out.print("Введите первое число: ");
             calculator.setFirstOperand(console.nextInt());
+            console.nextLine();
             int firstOperand = calculator.getFirstOperand();
 
             char mathSign;
@@ -19,6 +20,7 @@ public class CalculatorTest {
         
             System.out.print("Введите второе число: ");
             calculator.setSecondOperand(console.nextInt());
+            console.nextLine();
             int secondOperand = calculator.getSecondOperand();
 
             calculator.calculate();
