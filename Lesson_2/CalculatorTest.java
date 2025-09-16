@@ -5,25 +5,28 @@ public class CalculatorTest {
         Scanner console = new Scanner(System.in);
         Calculator calculator = new Calculator();
 
-        String calcUserAnswer = "yes";
-        boolean calcIsTrueMathSign;
-        char calcMathSign;
-        int calcFirstOperand;
-        int calcSecondOperand;
-
+        String userAnswer;
         do {
             System.out.print("Введите первое число: ");
-            calcFirstOperand = calculator.getOperand(1);
+            calculator.setFirstOperand(console.nextInt());
+            int firstOperand = calculator.getFirstOperand();
 
-            System.out.print("Введите знак операции (+, -, *, /, ^, %): ");
-            calcMathSign = calculator.getMathSign();
-
+            char mathSign;
+            do {
+                System.out.print("Введите знак операции (+, -, *, /, ^, %): ");
+                mathSign = console.next().charAt(0);
+            } while (!calculator.setMathSign(mathSign));
+        
             System.out.print("Введите второе число: ");
-            calcSecondOperand = calculator.getOperand(2);
-            calculator.calculate(calcFirstOperand, calcMathSign, calcSecondOperand);
+            calculator.setSecondOperand(console.nextInt());
+            int secondOperand = calculator.getSecondOperand();
 
-            System.out.print("Хотите продолжить вычисления? [yes/no]: ");
-            calcUserAnswer = console.nextLine();
-        } while (!calcUserAnswer.equalsIgnoreCase("no"));
+            calculator.calculate();
+
+            do {
+                System.out.print("Хотите продолжить вычисления? [yes/no]: ");
+                userAnswer = console.nextLine();
+            } while (!userAnswer.equalsIgnoreCase("yes") && !userAnswer.equalsIgnoreCase("no"));
+        } while (userAnswer.equalsIgnoreCase("yes"));
     }
 }

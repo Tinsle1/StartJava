@@ -2,24 +2,14 @@ public class JaegerTest {
     public static void main(String[] args) {
         Jaeger chernoAlpha = new Jaeger();
 
-        Jaeger coyoteTango = new Jaeger("COYOTE TANGO", "Mark-1", "Japan",
-                "Destroyed", 280f, 2.312f, 7, 5);
-
         // задаем значения chernoAlpha
         chernoAlpha.setModelName("CHERNO ALPHA");
-
         chernoAlpha.setMark("Mark-1");
-
         chernoAlpha.setOrigin("Russia");
-
         chernoAlpha.setStatus("Destroyed");
-
         chernoAlpha.setHeight(280f);
-
         chernoAlpha.setWeight(2.412f);
-
         chernoAlpha.setStrength(10);
-
         chernoAlpha.setSpeed(5);
 
         // выводим значения chernoAlpha
@@ -39,6 +29,9 @@ public class JaegerTest {
                 chernoAlpha.getStrength(), chernoAlpha.getSpeed());
 
         System.out.println(chernoAlphaContent);
+
+        Jaeger coyoteTango = new Jaeger("COYOTE TANGO", "Mark-1", "Japan",
+                "Destroyed", 280f, 2.312f, 7, 5);
 
         // выводим значения coyoteTango
         System.out.println(coyoteTango);
