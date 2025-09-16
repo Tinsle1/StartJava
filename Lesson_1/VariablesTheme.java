@@ -55,7 +55,7 @@ public class VariablesTheme {
         int firstNum = 2;
         int secondNum = 5;
         System.out.println("Исходные значения переменных: firstNum = " + firstNum +
-                        ", secondNum = " + secondNum);
+                ", secondNum = " + secondNum);
 
         System.out.println("\n3.1. Перестановка с помощью третей переменной tmp");        
         int tmp = firstNum;
@@ -153,11 +153,6 @@ public class VariablesTheme {
         double freeMemory = rt.freeMemory() / toMegaByte;
         double maxMemory = rt.maxMemory() / toMegaByte;
         double usedMemory = totalMemory - freeMemory;
-
-        String javaHome = System.getProperty("java.home");
-        String osVersion = System.getProperty("os.version");
-        String javaVersion = System.getProperty("java.version");
-        String fileSeparator = System.getProperty("file.separator");
    
         System.out.printf("""
                 ХАРАКТЕРИСТИКИ JVM: 
@@ -167,16 +162,20 @@ public class VariablesTheme {
                 используемая память (Мб) - %.1f
                 максимально доступная для \
                 выделения память (Мб) - %.1f%n
-                """, 
-                coreCount, totalMemory, freeMemory, usedMemory, maxMemory);
+                """, coreCount, totalMemory, freeMemory, usedMemory, maxMemory);
+
+        String javaHome = System.getProperty("java.home");
+        String osVersion = System.getProperty("os.version");
+        String javaVersion = System.getProperty("java.version");
+        String fileSeparator = System.getProperty("file.separator");
            
         System.out.printf("""
                 ПАРАМЕТРЫ ОС: 
                 системный диск - %s
                 версия ОС - %s
                 версия Java - %s
-                символ разделения пути (сепаратор) - %s""", 
-                        javaHome.substring(0, 1), osVersion, javaVersion, fileSeparator);
+                символ разделения пути (сепаратор) - %s
+                """, javaHome.charAt(0), osVersion, javaVersion, fileSeparator);
 
         System.out.println("\n\n8. ЗАМЕР ВРЕМЕНИ РАБОТЫ КОДА");
         

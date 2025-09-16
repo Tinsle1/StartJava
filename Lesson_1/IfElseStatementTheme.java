@@ -33,10 +33,10 @@ public class IfElseStatementTheme {
 
         System.out.println("Всего шагов за два дня: " + totalSteps);
         if (stepsToday == stepsYesterday) {
-            System.out.println("Равное количество шагов в оба дня: " + stepsToday);
+            System.out.println("Равное количество шагов за оба дня: " + stepsToday);
         } else if (stepsToday > stepsYesterday) {
             System.out.println("Сегодня шагов больше (" + stepsToday +
-                    "), чем во вчера(" + stepsYesterday + ")");
+                    "), чем вчера(" + stepsYesterday + ")");
         } else {
             System.out.println("Вчера шагов больше (" + stepsYesterday +
                     "), чем сегодня(" + stepsToday + ")");
@@ -61,11 +61,11 @@ public class IfElseStatementTheme {
         char firstLetter = name.charAt(0);
 
         System.out.println("Первый способ");
-        if (firstLetter > '`' && firstLetter < '{') {
+        if (firstLetter >= 'a' && firstLetter <= 'z') {
             System.out.println(firstLetter + " = маленькая буква");
-        } else if (firstLetter > '@' && firstLetter < '[') {
+        } else if (firstLetter >= 'A' && firstLetter <= 'Z') {
             System.out.println(firstLetter + " = большая буква");
-        } else if (firstLetter > '/' && firstLetter < ':') {
+        } else if (firstLetter >= '0' && firstLetter <= '9') {
             System.out.println(firstLetter + " = цифра");
         } else {
             System.out.println(firstLetter + " = прочий символ");
@@ -83,42 +83,44 @@ public class IfElseStatementTheme {
         }
 
         System.out.println("\n\n5. ИНВЕНТАРИЗАЦИЯ");
-        int serialNum = 863;
-        int officeDeskNum = 863;
-                
-        int serialNumHundreds = serialNum / 100;
-        int serialNumTens = serialNum / 10 % 10;
-        int serialNumOnes = serialNum % 10;
-                
-        int officeDeskNumHundreds = officeDeskNum / 100;
-        int officeDeskNumTens = officeDeskNum / 10 % 10;
-        int officeDeskNumOnes = officeDeskNum % 10;
-              
-        boolean isEqualHundreds = serialNumHundreds == officeDeskNumHundreds;
-        boolean isEqualTens = serialNumTens == officeDeskNumTens;
-        boolean isEqualOnes = serialNumOnes == officeDeskNumOnes;
-                
-        String hundredsOrNot = (isEqualHundreds) ? "" + officeDeskNumHundreds : "" + '_';
-        String tensOrNot = (isEqualTens) ? "" + officeDeskNumTens : "" + '_';
-        String onesOrNot = (isEqualOnes) ? "" + officeDeskNumOnes : "" + '_';
-        String officeDeskNumToString = hundredsOrNot + tensOrNot + onesOrNot;
+        int dbSerialNumber = 863;
+        int assetNumber = 863;
 
-        if (serialNum == officeDeskNum) {
+        if (dbSerialNumber == assetNumber) {
             System.out.printf("""
                     [№%03d]: компьютер на 3-м этаже в кабинете 2
-                    """, serialNum);
-        } else if (isEqualHundreds || isEqualTens || isEqualOnes) {
-            System.out.printf("""
-                    Нет полного совпадения:
-                    База данных: [№%d]
-                    Фактический: [№%s]
-                    """, serialNum, officeDeskNumToString);
+                    """, dbSerialNumber);
         } else {
-            System.out.printf("""
-                    [№%03d]: оборудование не идентифицировано
-                    """, serialNum);
-        } 
+            int dbSerialNumHundreds = dbSerialNumber / 100;
+            int dbSerialNumTens = dbSerialNumber / 10 % 10;
+            int dbSerialNumOnes = dbSerialNumber % 10;
+                    
+            int assetNumberHundreds = assetNumber / 100;
+            int assetNumberTens = assetNumber / 10 % 10;
+            int assetNumberOnes = assetNumber % 10;
+                  
+            boolean isEqualHundreds = dbSerialNumHundreds == assetNumberHundreds;
+            boolean isEqualTens = dbSerialNumTens == assetNumberTens;
+            boolean isEqualOnes = dbSerialNumOnes == assetNumberOnes;
+                    
+            String hundredsOrNot = (isEqualHundreds) ? "" + assetNumberHundreds : "" + '_';
+            String tensOrNot = (isEqualTens) ? "" + assetNumberTens : "" + '_';
+            String onesOrNot = (isEqualOnes) ? "" + assetNumberOnes : "" + '_';
+            String assetNumberToString = hundredsOrNot + tensOrNot + onesOrNot;
 
+            if (isEqualHundreds || isEqualTens || isEqualOnes) {
+                System.out.printf("""
+                        Нет полного совпадения:
+                        База данных: [№%d]
+                        Фактический: [№%s]
+                        """, dbSerialNumber, assetNumberToString);
+            } else {
+                System.out.printf("""
+                        [№%03d]: оборудование не идентифицировано
+                        """, dbSerialNumber);
+            } 
+        }
+                
         System.out.println("\n\n6. ПОДСЧЕТ НАЧИСЛЕННЫХ БАНКОМ %");
         System.out.println("\n1-й способ решения");
         float depositSum = 321123.79F;
