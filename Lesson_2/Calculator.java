@@ -3,32 +3,14 @@ public class Calculator {
     private char mathSign;
     private int secondOperand;
 
-    // геттер для firstOperand
-    public int getFirstOperand() {
-        return firstOperand;
-    }
-
-    // сеттер для firstOperand
     public void setFirstOperand(int firstOperand) {
         this.firstOperand = firstOperand;
     }
 
-    // геттер для secondOperand
-    public int getSecondOperand() {
-        return secondOperand;
-    }
-
-    // сеттер для secondOperand
     public void setSecondOperand(int secondOperand) {
         this.secondOperand = secondOperand;
     }
 
-    // геттер для mathSign
-    public char getMathSign() {
-        return mathSign;
-    }
-
-    // сеттер для mathSign
     public boolean setMathSign(char mathSign) {
         if (mathSign == '+' || mathSign == '-' || mathSign == '*' ||
                 mathSign == '/' || mathSign == '%' || mathSign == '^') {
@@ -40,7 +22,6 @@ public class Calculator {
         }
     }
 
-    // метод для вычисления и вывода результата
     public void calculate() {
         int result = 0;
         double negativePowerResult = 1;

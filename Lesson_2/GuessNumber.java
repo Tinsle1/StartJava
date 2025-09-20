@@ -1,13 +1,38 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class GuessNumber {
-    Random random = new Random();
+    private Player player1;
+    private Player player2;
+    private int secretNumber;
+    private Scanner console = new Scanner(System.in);
 
-    public int generateSecretNumber() {
-        return random.nextInt(0, 101);
-    } 
+    public GuessNumber(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+    }
 
-    public boolean guessNumber(int secretNumber, int playerNumber, Player currentPlayer, Player nextPlayer) {
+    public void playGame() {
+        secretNumber = new Random().nextInt(101); 
+        System.out.println("Компьютер загадал число от 0 до 100. Попробуйте угадать!");
+
+        boolean isGameOn = false;
+
+        while (!isGameOn) {
+            // Ход первого игрока
+            System.out.print("Ход " + player1.getName() + ": ");
+            int player1Move = console.nextInt();
+            isGameOn = checkNumber(player1Move, player1, player2);
+            if (isGameOn) break;
+
+            // Ход второго игрока
+            System.out.print("Ход " + player2.getName() + ": ");
+            int player2Move = console.nextInt();
+            isGameOn = checkNumber(player2Move, player2, player1);
+        }
+    }
+
+    private boolean checkNumber(int playerNumber, Player currentPlayer, Player nextPlayer) {
         if (secretNumber < playerNumber) {
             System.out.println(playerNumber + " больше того, что загадал компьютер");
             System.out.println("Ход переходит к игроку " + nextPlayer.getName());
@@ -23,4 +48,3 @@ public class GuessNumber {
         }
     }
 }
-        
