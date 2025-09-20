@@ -12,14 +12,14 @@ public class Calculator {
     }
 
     public boolean setMathSign(char mathSign) {
-        if (mathSign == '+' || mathSign == '-' || mathSign == '*' ||
-                mathSign == '/' || mathSign == '%' || mathSign == '^') {
-            this.mathSign = mathSign;
-            return true;
-        } else {
+        if (mathSign != '+' && mathSign != '-' && mathSign != '*' &&
+                mathSign != '/' && mathSign != '%' && mathSign != '^') {
             System.out.println("Ошибка: операция '" + mathSign + "' не поддерживается");
             return false;
         }
+        
+        this.mathSign = mathSign;
+        return true;
     }
 
     public void calculate() {

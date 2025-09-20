@@ -1,56 +1,54 @@
 public class BooleanMethods {
-    MethodName methodName = new MethodName();
-    
-    public Boolean shouldProgramEnd() {
-        System.out.print(methodName.getCurrent() +
+    public boolean shouldProgramEnd() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> программа выполняется далее или завершается? ");
         return true;
     }
 
-    public Boolean hasUniqueDigit() {
-        System.out.print(methodName.getCurrent() +
+    public boolean hasUniqueDigit() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> последовательность содержит уникальную цифру? ");
         return false;
     }
 
-    public Boolean isDigit() {
-        System.out.print(methodName.getCurrent() +
+    public boolean isDigit() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> пользователь ввел букву или что-то другое? ");
         return true;
     }
 
-    public Boolean hasEqualDigits() {
-        System.out.print(methodName.getCurrent() +
+    public boolean hasEqualDigits() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> в проверяемых числах, есть равные цифры? ");
         return false;
     }
 
-    public Boolean hasMoreTry() {
-        System.out.print(methodName.getCurrent() +
+    public boolean hasMoreTry() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> в игре \"Марио\" остались попытки? ");
         return true;
     }
 
-    public Boolean isEmptyLineOrSpaces() {
-        System.out.print(methodName.getCurrent() +
+    public boolean isEmptyLineOrSpaces() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> пользователь ввёл пустую строку или из одних пробелов? ");
         return false;
     }
 
-    public Boolean isEvenNumber() {
-        System.out.print(methodName.getCurrent() +
+    public boolean isEvenNumber() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> на кубике, который бросил компьютер, выпало четное число? ");
         return true;
     }
 
-    public Boolean isValidPath() {
-        System.out.print(methodName.getCurrent() +
+    public boolean isValidPath() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> путь до файла, который вы ищите на ssd, действительный? ");
         return false;
     }
 
-    public Boolean isExist() {
-        System.out.print(methodName.getCurrent() +
+    public boolean isExist() {
+        System.out.print(MethodName.getCurrent() +
                 "() -> файл по указанному адресу существует? ");
         return true;
     }
