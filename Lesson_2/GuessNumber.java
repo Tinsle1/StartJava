@@ -20,29 +20,29 @@ public class GuessNumber {
 
         while (!isGameOn) {
             System.out.print("Ход " + player1.getName() + ": ");
-            int player1Move = console.nextInt();
-            isGameOn = checkNumber(player1Move, player1, player2);
+            int player1Number = console.nextInt();
+            isGameOn = isGuessed(player1Number, player1);
             if (isGameOn) break;
 
             System.out.print("Ход " + player2.getName() + ": ");
-            int player2Move = console.nextInt();
-            isGameOn = checkNumber(player2Move, player2, player1);
+            int player2Number = console.nextInt();
+            isGameOn = isGuessed(player2Number, player2);
         }
     }
 
-    private boolean checkNumber(int playerNumber, Player currentPlayer, Player nextPlayer) {
-        if (secretNumber < playerNumber) {
-            System.out.println(playerNumber + " больше того, что загадал компьютер");
-            return false;
-        } 
-
-        if (secretNumber > playerNumber) {
-            System.out.println(playerNumber + " меньше того, что загадал компьютер");
-            return false;
+    private boolean isGuessed(int playerNumber, Player currentPlayer) {
+        if (secretNumber == playerNumber) {
+            System.out.println(playerNumber + " = " + secretNumber);
+            System.out.println("Победил " + currentPlayer.getName() + "!");
+            return true;  
         }
 
-        System.out.println(playerNumber + " = " + secretNumber);
-        System.out.println("Победил " + currentPlayer.getName() + "!");
-        return true;
+        if (secretNumber < playerNumber) {
+            System.out.println(playerNumber + " больше того, что загадал компьютер");
+        } else {
+            System.out.println(playerNumber + " меньше того, что загадал компьютер");
+        }
+
+        return false; 
     }
 }

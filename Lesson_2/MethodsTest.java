@@ -5,38 +5,38 @@ public class MethodsTest {
         methodsTest.doBooleanMethods();
     }
 
-    public void doNonBooleanMethods() {
+    private void doNonBooleanMethods() {
         System.out.println("HЕ BOOLEAN-МЕТОДЫ");
-        NonBooleanMethods nonBooleanMethods = new NonBooleanMethods();
+        NonBooleanMethods nonBm = new NonBooleanMethods();
 
-        nonBooleanMethods.findLongestWord();
-        nonBooleanMethods.getMenuItem();
-        nonBooleanMethods.calculateAverageGrade();
-        nonBooleanMethods.countUniqueWords();
-        nonBooleanMethods.printError();
-        nonBooleanMethods.syncWithCloud();
-        nonBooleanMethods.restoreBackup();
-        nonBooleanMethods.pauseLoading();
-        nonBooleanMethods.resetToFactorySettings();
-        nonBooleanMethods.saveFileToUsb();
-        nonBooleanMethods.celsiusToFahrenheit();
-        nonBooleanMethods.printMathExpresion();
-        nonBooleanMethods.findWinner();
-        nonBooleanMethods.findBooksByAuthor();
+        nonBm.findLongestWord();
+        nonBm.getMenuItem();
+        nonBm.calculateAverageGrade();
+        nonBm.countUniqueWords();
+        nonBm.printError();
+        nonBm.syncWithCloud();
+        nonBm.restoreBackup();
+        nonBm.pauseLoading();
+        nonBm.resetToFactorySettings();
+        nonBm.saveFileToUsb();
+        nonBm.celsiusToFahrenheit();
+        nonBm.printMathExpresion();
+        nonBm.findWinner();
+        nonBm.findBooksByAuthor();
     }
 
-    public void doBooleanMethods() {
+    private void doBooleanMethods() {
         System.out.println("\n\nBOOLEAN-МЕТОДЫ");
-        BooleanMethods booleanMethods = new BooleanMethods();
+        BooleanMethods bm = new BooleanMethods();
 
-        System.out.println(booleanMethods.shouldProgramEnd());
-        System.out.println(booleanMethods.hasUniqueDigit());
-        System.out.println(booleanMethods.isDigit());
-        System.out.println(booleanMethods.hasEqualDigits());
-        System.out.println(booleanMethods.hasMoreTry());
-        System.out.println(booleanMethods.isEmptyLineOrSpaces());
-        System.out.println(booleanMethods.isEvenNumber());
-        System.out.println(booleanMethods.isValidPath());
-        System.out.println(booleanMethods.isExist());
+        System.out.println(bm.shouldProgramEnd());
+        System.out.println(bm.hasUniqueDigit());
+        System.out.println(bm.isDigit());
+        System.out.println(bm.hasEqualDigits());
+        System.out.println(bm.hasMoreTry());
+        System.out.println(bm.isEmptyLineOrSpaces());
+        System.out.println(bm.isEvenNumber());
+        System.out.println(bm.isValidPath());
+        System.out.println(bm.isExist());
     }
 }
