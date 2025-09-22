@@ -36,7 +36,6 @@ public class GuessNumber {
             System.out.println("Победил " + currentPlayer.getName() + "!");
             return true;  
         }
-
         if (secretNumber < playerNumber) {
             System.out.println(playerNumber + " больше того, что загадал компьютер");
         } else {

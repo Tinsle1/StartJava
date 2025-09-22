@@ -26,7 +26,7 @@ public class MethodsTest {
     }
 
     private void doBooleanMethods() {
-        System.out.println("\n\nBOOLEAN-МЕТОДЫ");
+        System.out.println("\nBOOLEAN-МЕТОДЫ");
         BooleanMethods bm = new BooleanMethods();
 
         System.out.println(bm.shouldProgramEnd());
