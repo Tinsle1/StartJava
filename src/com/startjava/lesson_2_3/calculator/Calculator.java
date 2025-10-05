@@ -1,3 +1,5 @@
+package com.startjava.lesson_1.calculator;
+
 public class Calculator {
     private int firstOperand;
     private char mathSign;

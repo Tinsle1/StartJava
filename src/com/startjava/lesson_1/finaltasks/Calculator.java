@@ -1,3 +1,5 @@
+package com.startjava.lesson_1.finaltasks;
+
 import java.util.Scanner;
 
 public class Calculator {

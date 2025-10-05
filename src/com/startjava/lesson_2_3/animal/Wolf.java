@@ -1,3 +1,5 @@
+package com.startjava.lesson_1.animal;
+
 public class Wolf {
     private String gender;
     private String nickname;
