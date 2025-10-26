@@ -1,14 +1,16 @@
 package com.startjava.lesson_2_3_4.array;
 
+import java.util.Arrays;
+
 public class ReversedTransactionsPrinter {
     public static void main(String[] args) {
-        int[] transactions1 = new int[0];
-        int[] transactions2 = null;
-        int[] transactions3 = {5};
-        int[] transactions4 = {6, 8, 9, 1};
-        int[] transactions5 = {13, 8, 5, 3, 2, 1, 1};
-        int[][] transactions = {transactions1, transactions2, transactions3,
-                transactions4, transactions5};
+        int[][] transactions = {
+                {},
+                null,
+                {5},
+                {6, 8, 9, 1},
+                {13, 8, 5, 3, 2, 1, 1}
+        };
 
         for (int[] currentTransaction : transactions) {
             if (currentTransaction == null) {
@@ -17,27 +19,19 @@ public class ReversedTransactionsPrinter {
             }
 
             if (currentTransaction.length == 0) {
-                System.out.println("Данных о транзакциях нет\n");
+                System.out.println("Нет данных для вычисления\n");
                 continue;
             }
 
-            printTransactions("Исходные транзакции: ", currentTransaction);
             int[] reverseTransactions = reverseTransactions(currentTransaction);
             printTransactions(" В обратном порядке: ", reverseTransactions);
+            printTransactions("Исходные транзакции: ", currentTransaction);
             System.out.println();
         }
     }
 
     private static void printTransactions(String text, int[] transactions) {
-        System.out.print(text + "[");
-
-        for (int i = 0; i < transactions.length; i++) {
-            System.out.print(transactions[i]);
-            if (i < transactions.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
+        System.out.println(text + Arrays.toString(transactions));
     }
 
     private static int[] reverseTransactions(int[] transactions) {
