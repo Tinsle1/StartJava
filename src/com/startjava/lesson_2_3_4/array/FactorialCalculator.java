@@ -4,61 +4,81 @@ import java.util.Arrays;
 
 public class FactorialCalculator {
     public static void main(String[] args) {
-        calculateFactorials(
-                new int[]{},
+
+        int[][] numberSet = {
+                {},
                 null,
-                new int[]{-5},
-                new int[]{21, 0, 7},
-                new int[]{1, 20, 5, -3}
-        );
+                {-5},
+                {21, 0, 7},
+                {1, 20, 5, -3}
+        };
+
+        for (int[] numbers : numberSet) {
+            printFactorials(numbers);
+        }
     }
 
-    private static void calculateFactorials(int[]... numbersArrayList) {
-        for (int[] numbersArray : numbersArrayList) {
-            System.out.println(Arrays.toString(numbersArray));
+    private static long[] calculateFactorials(int[] numbers) {
+        long[] factorials = new long[numbers.length];
 
-            if (numbersArray == null) {
-                System.out.println("Ошибка в данных\n");
+        for (int i = 0; i < numbers.length; i++) {
+            int number = numbers[i];
+
+            if (number < 0 || number > 20) {
                 continue;
             }
 
-            if (numbersArray.length == 0) {
-                System.out.println("Нет данных для вычисления\n");
-                continue;
+            long factorial = 1;
+
+            for (int j = 2; j <= number; j++) {
+                factorial *= j;
             }
-
-            long[] factorialArray = new long[numbersArray.length];
-
-            for (int i = 0; i < numbersArray.length; i++) {
-                int number = numbersArray[i];
-
-                long factorial = 1;
-
-                if (number == 0) {
-                    factorialArray[i] = 1;
-                } else if (number < 0) {
-                    System.out.printf("Ошибка: факториал %d! не определен\n", number);
-                    continue;
-                } else if (number > 20) {
-                    System.out.printf("Ошибка: факториал %d! слишком велик (максимум 20!)\n", number);
-                    continue;
-                }
-
-                String factorialExpression = "";
-
-                for (int j = 1; j <= number; j++) {
-                    factorial *= j;
-                    factorialExpression += (j == number) ? j : j + " * ";
-                }
-                factorialArray[i] = factorial;
-
-                String factorialResult = (number == 0)
-                        ? "0! = 1"
-                        : number + "! = " + factorialExpression + " = " + factorial;
-
-                System.out.println(factorialResult);
-            }
-            System.out.println();
+            factorials[i] = factorial;
         }
+        return factorials;
+    }
+
+    private static void printFactorials (int[] numbers) {
+        System.out.println(Arrays.toString(numbers));
+
+        if (numbers == null) {
+            System.out.println("Ошибка в данных\n");
+            return;
+        }
+
+        if (numbers.length == 0) {
+            System.out.println("Нет данных для вычисления\n");
+            return;
+        }
+
+        long[] factorials =  calculateFactorials(numbers);
+
+        for (int i = 0; i < numbers.length; i++) {
+            int number = numbers[i];
+            long factorial = factorials[i];
+
+            if (number < 0) {
+                System.out.printf("Ошибка: факториал %d! не определен%n", number);
+                continue;
+            }
+
+            if (number > 20) {
+                System.out.printf("Ошибка: факториал %d! не определен%n", number);
+                continue;
+            }
+
+            StringBuilder factorialExpression = new StringBuilder ();
+
+            for (int j = 1; j <= number; j++) {
+                factorialExpression.append(j < number ? j + " * ": j );
+            }
+
+            String expression = (number == 0 || number == 1) ?
+                    number + "! = 1":
+                    number + "! = " + factorialExpression + " = " + factorial;
+
+            System.out.println(expression);
+        }
+        System.out.println();
     }
 }
