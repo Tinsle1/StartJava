@@ -14,11 +14,16 @@ public class FactorialCalculator {
         };
 
         for (int[] numbers : numberSet) {
-            printFactorials(numbers);
+            if (numbers == null) {
+                printFactorials(null, null);
+                continue;
+            }
+            long[] factorials = calculateFactorials(numbers);
+            printFactorials(numbers, factorials);
         }
     }
 
-    private static long[] calculateFactorials(int[] numbers) {
+    private static long[] calculateFactorials(int... numbers) {
         long[] factorials = new long[numbers.length];
 
         for (int i = 0; i < numbers.length; i++) {
@@ -29,7 +34,6 @@ public class FactorialCalculator {
             }
 
             long factorial = 1;
-
             for (int j = 2; j <= number; j++) {
                 factorial *= j;
             }
@@ -38,7 +42,7 @@ public class FactorialCalculator {
         return factorials;
     }
 
-    private static void printFactorials (int[] numbers) {
+    private static void printFactorials (int[] numbers, long[] factorials) {
         System.out.println(Arrays.toString(numbers));
 
         if (numbers == null) {
@@ -51,8 +55,6 @@ public class FactorialCalculator {
             return;
         }
 
-        long[] factorials =  calculateFactorials(numbers);
-
         for (int i = 0; i < numbers.length; i++) {
             int number = numbers[i];
             long factorial = factorials[i];
@@ -63,7 +65,7 @@ public class FactorialCalculator {
             }
 
             if (number > 20) {
-                System.out.printf("Ошибка: факториал %d! не определен%n", number);
+                System.out.printf("Факториал %d! слишком велик (максимум 20!)%n", number);
                 continue;
             }
 
