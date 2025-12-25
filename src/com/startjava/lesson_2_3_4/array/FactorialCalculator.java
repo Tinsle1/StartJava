@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class FactorialCalculator {
     public static void main(String[] args) {
-
         int[][] numberSet = {
                 {},
                 null,
@@ -15,7 +14,7 @@ public class FactorialCalculator {
 
         for (int[] numbers : numberSet) {
             if (numbers == null) {
-                printFactorials(null, null);
+                System.out.println("Ошибка в данных\n");
                 continue;
             }
             long[] factorials = calculateFactorials(numbers);
@@ -42,7 +41,7 @@ public class FactorialCalculator {
         return factorials;
     }
 
-    private static void printFactorials (int[] numbers, long[] factorials) {
+    private static void printFactorials(int[] numbers, long[] factorials) {
         System.out.println(Arrays.toString(numbers));
 
         if (numbers == null) {
@@ -57,7 +56,6 @@ public class FactorialCalculator {
 
         for (int i = 0; i < numbers.length; i++) {
             int number = numbers[i];
-            long factorial = factorials[i];
 
             if (number < 0) {
                 System.out.printf("Ошибка: факториал %d! не определен%n", number);
@@ -69,14 +67,16 @@ public class FactorialCalculator {
                 continue;
             }
 
-            StringBuilder factorialExpression = new StringBuilder ();
+            long factorial = factorials[i];
+g
+            StringBuilder factorialExpression = new StringBuilder();
 
             for (int j = 1; j <= number; j++) {
-                factorialExpression.append(j < number ? j + " * ": j );
+                factorialExpression.append(j < number ? j + " * " : j);
             }
 
             String expression = (number == 0 || number == 1) ?
-                    number + "! = 1":
+                    number + "! = 1" :
                     number + "! = " + factorialExpression + " = " + factorial;
 
             System.out.println(expression);
