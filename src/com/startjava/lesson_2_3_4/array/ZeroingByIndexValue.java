@@ -3,7 +3,7 @@ package com.startjava.lesson_2_3_4.array;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Nullification {
+public class ZeroingByIndexValue {
     private static final int ARRAY_SIZE = 15;
 
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Nullification {
         int[] indexes = {-1, 15, 0, 14};
 
         for (int index : indexes) {
-            float[] changedNumbers = changeNumbers(index, originalNumbers);
+            float[] changedNumbers = zeroGreaterThanIndexValue(index, originalNumbers);
             printNumbers(index, originalNumbers, changedNumbers);
         }
     }
@@ -26,21 +26,21 @@ public class Nullification {
         return numbers;
     }
 
-    private static float[] changeNumbers(int index, float[] numbers) {
-        float[] changedNumbers = Arrays.copyOf(numbers, numbers.length);
+    private static float[] zeroGreaterThanIndexValue(int index, float[] numbers) {
+        float[] changedByIndexNumbers = Arrays.copyOf(numbers, numbers.length);
 
         if (index < 0 || index >= numbers.length) {
-            return changedNumbers;
+            return changedByIndexNumbers;
         }
 
-        float changedNumber = changedNumbers[index];
+        float changedNumber = changedByIndexNumbers[index];
 
-        for (int i = 0; i < changedNumbers.length; i++) {
-            if (changedNumbers[i] > changedNumber) {
-                changedNumbers[i] = 0;
+        for (int i = 0; i < changedByIndexNumbers.length; i++) {
+            if (changedByIndexNumbers[i] > changedNumber) {
+                changedByIndexNumbers[i] = 0;
             }
         }
-        return changedNumbers;
+        return changedByIndexNumbers;
     }
 
     private static void printNumbers(int index, float[] originalNumbers, float[] changedNumbers) {
