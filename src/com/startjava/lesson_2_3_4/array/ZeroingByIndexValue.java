@@ -7,8 +7,7 @@ public class Nullification {
     private static final int ARRAY_SIZE = 15;
 
     public static void main(String[] args) {
-        float[] originalNumbers = addFloatNumbers();
-
+        float[] originalNumbers = createRandomNumbers();
         int[] indexes = {-1, 15, 0, 14};
 
         for (int index : indexes) {
@@ -17,7 +16,7 @@ public class Nullification {
         }
     }
 
-    private static float[] addFloatNumbers() {
+    private static float[] createRandomNumbers() {
         float[] numbers = new float[ARRAY_SIZE];
         Random random = new Random();
 
@@ -56,6 +55,8 @@ public class Nullification {
 
         System.out.println("\nИзмененный массив");
         printArray(changedNumbers);
+
+        System.out.printf("\nЗначение из ячейки [%d]: %.3f%n", index, changedNumbers[index]);
     }
 
     private static void printArray(float[] array) {

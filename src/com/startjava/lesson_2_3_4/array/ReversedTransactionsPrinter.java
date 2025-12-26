@@ -24,14 +24,10 @@ public class ReversedTransactionsPrinter {
             }
 
             int[] reverseTransactions = reverseTransactions(currentTransaction);
-            printTransactions(" В обратном порядке: ", reverseTransactions);
             printTransactions("Исходные транзакции: ", currentTransaction);
+            printTransactions(" В обратном порядке: ", reverseTransactions);
             System.out.println();
         }
-    }
-
-    private static void printTransactions(String text, int[] transactions) {
-        System.out.println(text + Arrays.toString(transactions));
     }
 
     private static int[] reverseTransactions(int[] transactions) {
@@ -42,6 +38,10 @@ public class ReversedTransactionsPrinter {
             reversedTransactions[--length] = reversedTransaction;
         }
         return reversedTransactions;
+    }
+
+    private static void printTransactions(String text, int[] transactions) {
+        System.out.println(text + Arrays.toString(transactions));
     }
 }
 
