@@ -68,7 +68,7 @@ public class FactorialCalculator {
             }
 
             long factorial = factorials[i];
-g
+
             StringBuilder factorialExpression = new StringBuilder();
 
             for (int j = 1; j <= number; j++) {
