@@ -11,7 +11,7 @@ public class ZeroingByIndexValue {
         int[] indexes = {-1, 15, 0, 14};
 
         for (int index : indexes) {
-            float[] changedNumbers = zeroGreaterThanIndexValue(index, originalNumbers);
+            float[] changedNumbers = zeroOutGreaterValues(index, originalNumbers);
             printNumbers(index, originalNumbers, changedNumbers);
         }
     }
@@ -26,7 +26,7 @@ public class ZeroingByIndexValue {
         return numbers;
     }
 
-    private static float[] zeroGreaterThanIndexValue(int index, float[] numbers) {
+    private static float[] zeroOutGreaterValues(int index, float[] numbers) {
         float[] changedByIndexNumbers = Arrays.copyOf(numbers, numbers.length);
 
         if (index < 0 || index >= numbers.length) {
