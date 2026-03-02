@@ -2,17 +2,17 @@ package com.startjava.lesson_2_3_4.array;
 
 public class TriangleBuilder {
     public static void main(String[] args) {
-        char[][] segmentBoundariesSet = {
+        char[][] charBounds = {
                 {'0', '9'},
                 {'/', '!'},
                 {'A', 'J'}
         };
 
-        boolean[] sortTypesSet = {true, false, false};
+        boolean[] sortTypes = {true, false, false};
 
-        for (int i = 0; i < segmentBoundariesSet.length; i++) {
-            char lowerBound = segmentBoundariesSet[i][0];
-            char upperBound = segmentBoundariesSet[i][1];
+        for (int i = 0; i < charBounds.length; i++) {
+            char lowerBound = charBounds[i][0];
+            char upperBound = charBounds[i][1];
 
             if (lowerBound > upperBound) {
                 System.out.printf("Ошибка: левая граница (%d) > правой (%d)%n%n",
@@ -20,34 +20,39 @@ public class TriangleBuilder {
                         (int) upperBound);
                 continue;
             }
-            char[] charSet = makeCharSet(segmentBoundariesSet[i], sortTypesSet[i]);
-            System.out.println(buildTriangle(charSet));
+            char[] charRange = createCharRange(charBounds[i], sortTypes[i]);
+            String triangle = buildTriangle(charRange);
+            printTriangle(triangle);
         }
     }
 
-    private static char[] makeCharSet(char[] segmentBoundaries, boolean sortType) {
+    private static char[] createCharRange(char[] segmentBoundaries, boolean ascending) {
         int length = segmentBoundaries[1] - segmentBoundaries[0] + 1;
-        char[] charSet = new char[length];
+        char[] charRange = new char[length];
 
-        for (int i = 0; i < charSet.length; i++) {
-            if (sortType) {
-                charSet[i] = (char) (segmentBoundaries[0] + i);
+        for (int i = 0; i < charRange.length; i++) {
+            if (ascending) {
+                charRange[i] = (char) (segmentBoundaries[0] + i);
             } else {
-                charSet[i] = (char) (segmentBoundaries[1] - i);
+                charRange[i] = (char) (segmentBoundaries[1] - i);
             }
         }
-        return charSet;
+        return charRange;
     }
 
-    private static String buildTriangle(char[] charSet) {
-        StringBuilder result = new StringBuilder();
+    private static String buildTriangle(char[] charRange) {
+        StringBuilder triangle = new StringBuilder();
 
-        for (int i = 0; i < charSet.length; i++) {
-            result
-                    .append(" ".repeat(charSet.length - (i + 1)))
-                    .append(String.valueOf(charSet[i]).repeat((i * 2) + 1))
+        for (int i = 0; i < charRange.length; i++) {
+            triangle
+                    .append(" ".repeat(charRange.length - (i + 1)))
+                    .append(String.valueOf(charRange[i]).repeat((i * 2) + 1))
                     .append('\n');
         }
-        return result.toString();
+        return triangle.toString();
+    }
+
+    private static void printTriangle(String string) {
+        System.out.println(string);
     }
 }
