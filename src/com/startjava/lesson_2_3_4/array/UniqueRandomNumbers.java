@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class UniqueRandomNumbers {
     public static void main(String[] args) {
-        int[][] numbersSet = {
+        int[][] boundsWithCount = {
                 {-30, -10, 23},
                 {10, 50, 10},
                 {-34, -34, 1},
@@ -13,7 +13,7 @@ public class UniqueRandomNumbers {
                 {5, -8, 2}
         };
 
-        for (int[] numbers : numbersSet) {
+        for (int[] numbers : boundsWithCount) {
             int lowerBound = numbers[0];
             int upperBound = numbers[1];
             int numbersPerLine = numbers[2];
@@ -32,28 +32,23 @@ public class UniqueRandomNumbers {
                 continue;
             }
 
-            int[] uniqueRandomNumbers = createUniqueRandomNumbers(lowerBound, upperBound);
-
-            if (uniqueRandomNumbers == null) {
-                continue;
-            }
-
-            printAscendingNumbers(uniqueRandomNumbers, numbersPerLine);
-            System.out.println();
+            int[] uniqueRandomNumbers = createSortedUniqueRandomNumbers(lowerBound, upperBound);
+            System.out.println(printAscendingNumbers(uniqueRandomNumbers, numbersPerLine));
         }
     }
 
-    private static int[] createUniqueRandomNumbers(int lowerBound, int upperBound) {
+    private static int[] createSortedUniqueRandomNumbers(int lowerBound, int upperBound) {
         int segmentLength = upperBound - lowerBound + 1;
         int length = (int) (segmentLength * 0.75);
 
-        if (length <= 0) {
+        int[] uniqueNumbers = new int[length];
+
+        if (length == 0) {
             System.out.printf(
-                    "Ошибка: длина массива должна быть > 0 (%d)%n", length);
-            return null;
+                    "Ошибка: длина массива должна быть > 0 (%d)", length);
+            return new int[0];
         }
 
-        int[] uniqueNumbers = new int[length];
         Random random = new Random();
 
         for (int i = 0; i < uniqueNumbers.length; i++) {
@@ -75,18 +70,18 @@ public class UniqueRandomNumbers {
                 }
             }
         }
-
+        Arrays.sort(uniqueNumbers);
         return uniqueNumbers;
     }
 
-    private static void printAscendingNumbers(int[] numbers, int numbersPerLine) {
-        Arrays.sort(numbers);
-
+    private static String printAscendingNumbers(int[] numbers, int numbersPerLine) {
+        StringBuilder lineConstructor = new StringBuilder();
         for (int i = 0; i < numbers.length; i++) {
-            System.out.print(numbers[i] + " ");
+            lineConstructor.append(numbers[i]).append(" ");
             if ((i + 1) % numbersPerLine == 0) {
-                System.out.println();
+                lineConstructor.append("\n");
             }
         }
+        return lineConstructor.toString();
     }
 }
