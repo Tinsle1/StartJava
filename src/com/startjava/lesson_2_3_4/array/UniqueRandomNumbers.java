@@ -33,14 +33,13 @@ public class UniqueRandomNumbers {
             }
 
             int[] uniqueRandomNumbers = createSortedUniqueRandomNumbers(lowerBound, upperBound);
-            System.out.println(printAscendingNumbers(uniqueRandomNumbers, numbersPerLine));
+            printNumbers(uniqueRandomNumbers, numbersPerLine);
         }
     }
 
     private static int[] createSortedUniqueRandomNumbers(int lowerBound, int upperBound) {
         int segmentLength = upperBound - lowerBound + 1;
         int length = (int) (segmentLength * 0.75);
-
         int[] uniqueNumbers = new int[length];
 
         if (length == 0) {
@@ -74,14 +73,14 @@ public class UniqueRandomNumbers {
         return uniqueNumbers;
     }
 
-    private static String printAscendingNumbers(int[] numbers, int numbersPerLine) {
-        StringBuilder lineConstructor = new StringBuilder();
+    private static void printNumbers(int[] numbers, int numbersPerLine) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < numbers.length; i++) {
-            lineConstructor.append(numbers[i]).append(" ");
+            sb.append(numbers[i]).append(" ");
             if ((i + 1) % numbersPerLine == 0) {
-                lineConstructor.append("\n");
+                sb.append("\n");
             }
         }
-        return lineConstructor.toString();
+        System.out.println(sb);
     }
 }
