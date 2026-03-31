@@ -6,12 +6,13 @@ import java.util.Random;
 public class PasswordCracker {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     public static void main(String[] args) throws InterruptedException {
         char[][] passwords = {
                 "123456".toCharArray(),
-                makePassword(),
-                makePassword()
+                genPassword(),
+                genPassword()
         };
 
         for (char[] password : passwords) {
@@ -21,13 +22,36 @@ public class PasswordCracker {
         }
     }
 
-    private static char[] makePassword() {
+    private static char[] genPassword() {
         Random random = new Random();
         char[] password = new char[random.nextInt(6, 13)];
         for (int i = 0; i < password.length; i++) {
             password[i] = (char) random.nextInt(33, 127);
         }
         return password;
+    }
+
+    private static void showSpinner() throws InterruptedException {
+        char[] spins = {'-', '\\', '|', '/'};
+
+        for (int i = 0; i < 12; i++) { // 12 = 3 "оборота" по 4 символа
+            char c = spins[i % spins.length];
+            System.out.print("\rCracking password: " + c);
+            Thread.sleep(100);
+        }
+
+        System.out.print("\r   \r");
+    }
+
+    public static boolean isWeakPassword(char[] password) {
+        if (isEmpty(password)) return true;
+        if (isInBlacklist(password)) return true;
+        if (isNotLongEnough(password)) return true;
+        if (hasDigitsOnly(password)) return true;
+        if (hasLettersOnly(password)) return true;
+        if (hasSpecCharsOnly(password)) return true;
+        if (hasNoSpecChars(password)) return true;
+        return hasNoUpperAndLowerCase(password);
     }
 
     private static boolean isInBlacklist(char[] password) {
@@ -39,7 +63,8 @@ public class PasswordCracker {
 
         for (char[] blacklistValue : blacklist) {
             if (Arrays.equals(password, blacklistValue)) {
-                System.out.println("Не используйте пароли из списка популярных: https://nordpass.com/most-common-passwords-list");
+                System.out.println("Не используйте пароли из списка популярных:" +
+                        "\nhttps://nordpass.com/most-common-passwords-list");
                 return true;
             }
         }
@@ -54,7 +79,7 @@ public class PasswordCracker {
         return false;
     }
 
-    private static boolean isLessThan8(char[] password) {
+    private static boolean isNotLongEnough(char[] password) {
         if (password.length < 8) {
             System.out.println("Пароль должен быть не менее 8 символов");
             return true;
@@ -120,38 +145,13 @@ public class PasswordCracker {
             System.out.println("Пароль должен содержать и верхний, и нижний регистр");
             return true;
         }
-
         return false;
     }
 
-    public static boolean isWeakPassword(char[] password) {
-        if (isInBlacklist(password)) return true;
-        if (isEmpty(password)) return true;
-        if (isLessThan8(password)) return true;
-        if (hasDigitsOnly(password)) return true;
-        if (hasLettersOnly(password)) return true;
-        if (hasSpecCharsOnly(password)) return true;
-        if (hasNoSpecChars(password)) return true;
-        return hasNoUpperAndLowerCase(password);
-    }
-
     private static void printPasswordStatus(char[] password, boolean isWeak) {
-        if (isWeak) {
-            System.out.printf(ANSI_RED + "✓ Password cracked: %s%n%n", new String(password));
-        } else {
-            System.out.printf(ANSI_GREEN + "✗ Strong password: %s%n%n", new String(password));
-        }
-    }
-
-    private static void showSpinner() throws InterruptedException {
-        char[] spinner = {'-', '\\', '|', '/'};
-
-        for (int i = 0; i < 3; i++) {
-            for (char c : spinner) {
-                System.out.print("\r" + c);
-                Thread.sleep(100);
-            }
-        }
-        System.out.print("\r   \r");
+        System.out.printf(
+                (isWeak ? ANSI_RED + "✓ Password cracked: %s%n%n"
+                        : ANSI_GREEN + "✗ Strong password: %s%n%n") +
+                        ANSI_RESET, new String(password));
     }
 }
