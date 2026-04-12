@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class PasswordCracker {
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     public static final String ANSI_RED = "\u001B[31m";
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     public static final String ANSI_GREEN = "\u001B[32m";
+    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
     public static final String ANSI_RESET = "\u001B[0m";
 
     public static void main(String[] args) throws InterruptedException {
@@ -34,7 +37,7 @@ public class PasswordCracker {
     private static void showSpinner() throws InterruptedException {
         char[] spins = {'-', '\\', '|', '/'};
 
-        for (int i = 0; i < 12; i++) { // 12 = 3 "оборота" по 4 символа
+        for (int i = 0; i < spins.length * 3; i++) { // 12 = 3 "оборота" по 4 символа
             char c = spins[i % spins.length];
             System.out.print("\rCracking password: " + c);
             Thread.sleep(100);
@@ -43,14 +46,13 @@ public class PasswordCracker {
         System.out.print("\r   \r");
     }
 
-    public static boolean isWeakPassword(char[] password) {
+    private static boolean isWeakPassword(char[] password) {
         if (isEmpty(password)) return true;
         if (isInBlacklist(password)) return true;
         if (isNotLongEnough(password)) return true;
-        if (hasDigitsOnly(password)) return true;
-        if (hasLettersOnly(password)) return true;
-        if (hasSpecCharsOnly(password)) return true;
-        if (hasNoSpecChars(password)) return true;
+        if (!hasDigit(password)) return true;
+        if (!hasLetter(password)) return true;
+        if (!hasSpecChar(password)) return true;
         return hasNoUpperAndLowerCase(password);
     }
 
@@ -87,44 +89,34 @@ public class PasswordCracker {
         return false;
     }
 
-    private static boolean hasDigitsOnly(char[] password) {
+    private static boolean hasDigit(char[] password) {
         for (char symbol : password) {
-            if (!Character.isDigit(symbol)) {
-                return false;
+            if (Character.isDigit(symbol)) {
+                return true;
             }
         }
-        System.out.println("Пароль содержит только цифры");
-        return true;
+        System.out.println("Пароль не содержит ни одной цифры");
+        return false;
     }
 
-    private static boolean hasLettersOnly(char[] password) {
+    private static boolean hasLetter(char[] password) {
         for (char symbol : password) {
-            if (!Character.isLetter(symbol)) {
-                return false;
+            if (Character.isLetter(symbol)) {
+                return true;
             }
         }
-        System.out.println("Пароль содержит только буквы");
-        return true;
+        System.out.println("Пароль не содержит ни одной буквы");
+        return false;
     }
 
-    private static boolean hasSpecCharsOnly(char[] password) {
-        for (char symbol : password) {
-            if (Character.isLetterOrDigit(symbol)) {
-                return false;
-            }
-        }
-        System.out.println("Пароль содержит только спец. символы");
-        return true;
-    }
-
-    private static boolean hasNoSpecChars(char[] password) {
+    private static boolean hasSpecChar(char[] password) {
         for (char symbol : password) {
             if (!Character.isLetterOrDigit(symbol)) {
-                return false;
+                return true;
             }
         }
-        System.out.println("Пароль не содержит спец. символы");
-        return true;
+        System.out.println("Пароль не содержит ни одного спец. символа");
+        return false;
     }
 
     private static boolean hasNoUpperAndLowerCase(char[] password) {
