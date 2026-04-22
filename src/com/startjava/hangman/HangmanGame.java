@@ -4,10 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class HangmanGame {
-    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
-    public static final String ANSI_RED = "\u001B[31m";
-    @SuppressWarnings("checkstyle:AvoidEscapedUnicodeCharacters")
-    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "[31m";
+    public static final String ANSI_RESET = "[0m";
 
     private static final String[] GUESSED_WORDS = {
             "картошка",
@@ -17,7 +15,7 @@ public class HangmanGame {
             "грач"
     };
 
-    private final String[] gallows = {
+    private static final String[] GALLOWS = {
             "_______",
             "|     |",
             "|     @",
@@ -28,47 +26,35 @@ public class HangmanGame {
 
     private final StringBuilder wrongLetters = new StringBuilder();
     private final Scanner console = new Scanner(System.in);
+    private final String guessedWord;
+    private final char[] mask;
 
-    private String guessedWord;
-    private char[] mask;
-    private int mistake;
-    private char letter;
+    private int mistakes;
+
+    public HangmanGame() {
+        Random random = new Random();
+        guessedWord = GUESSED_WORDS[random.nextInt(GUESSED_WORDS.length)];
+        mask = "*".repeat(guessedWord.length()).toCharArray();
+    }
 
     public void start() {
-        resetGameStatus();
-        chooseRandomWord();
-        mask = turnWordToMask(guessedWord);
-        System.out.println("Угадайте слово: " + new String(mask));
+        System.out.println("Угадайте слово: " + String.valueOf(mask));
 
-        while (!isGuessed()) {
+        do {
             inputLetter();
-            validateWord(letter);
-        }
+        } while (!isGuessed());
+
         System.out.println("Игра окончена!");
         System.out.printf("Загаданное слово: %s%n", guessedWord);
     }
 
-    private void resetGameStatus() {
-        mistake = 0;
-        wrongLetters.setLength(0);
-    }
-
-    private void chooseRandomWord() {
-        Random random = new Random();
-        guessedWord = GUESSED_WORDS[random.nextInt(GUESSED_WORDS.length)];
-    }
-
-    private char[] turnWordToMask(String word) {
-        return "*".repeat(word.length()).toCharArray();
-    }
-
     private boolean isGuessed() {
-        if (mistake == gallows.length) {
+        if (mistakes == GALLOWS.length) {
             System.out.println("\nВы проиграли!");
             return true;
         }
 
-        if (new String(mask).toLowerCase().equals(guessedWord)) {
+        if (String.valueOf(mask).toLowerCase().equals(guessedWord)) {
             System.out.println("\nВы выиграли!");
             return true;
         }
@@ -76,20 +62,13 @@ public class HangmanGame {
         return false;
     }
 
-    private void validateWord(char letter) {
-        boolean hasLetter = hasLetter(letter);
-
-        if (hasLetter) {
-            if (mistake > 0) {
-                mistake--;
-            }
-        } else {
-            addWrongLetters(letter);
-            mistake++;
-        }
-
-        printHangman();
-        printGameStatus();
+    private void inputLetter() {
+        char letter;
+        do {
+            System.out.print("Введите букву: ");
+            letter = Character.toUpperCase(console.next().charAt(0));
+        } while (!isCyrillic(letter) || isRepeated(letter));
+        validateWord(letter);
     }
 
     private boolean hasLetter(char letter) {
@@ -104,38 +83,41 @@ public class HangmanGame {
         return hasLetter;
     }
 
-    private void inputLetter() {
-        do {
-            System.out.print("Введите букву: ");
-            letter = Character.toUpperCase(console.next().charAt(0));
-        } while (!isCyrillic(letter) || isRepeated(letter));
+    private void validateWord(char letter) {
+        boolean hasLetter = hasLetter(letter);
+
+        if (hasLetter) {
+            if (mistakes > 0) {
+                mistakes--;
+            }
+        } else {
+            addWrongLetters(letter);
+            mistakes++;
+        }
+
+        printGallows();
+        printGameStatus();
     }
 
     private boolean isCyrillic(char letter) {
-        boolean isCyrillic = Character.UnicodeBlock.of(letter) ==
-                Character.UnicodeBlock.CYRILLIC;
-        if (!isCyrillic) {
+        if (!String.valueOf(letter).matches("[А-Я]")) {
             System.out.println("!Вводите только буквы кириллицы");
+            return false;
         }
-        return isCyrillic;
+        return true;
     }
 
     private boolean isRepeated(char letter) {
-        boolean isRepeatedLetter = wrongLetters.toString().contains(letter + "") ||
-                new String(mask).contains(letter + "");
-        if (isRepeatedLetter) {
+        if (wrongLetters.indexOf(String.valueOf(letter)) > -1 || String.valueOf(mask).indexOf(letter) > -1) {
             System.out.println("!Вы уже вводили эту букву");
+            return true;
         }
-        return isRepeatedLetter;
+        return false;
     }
 
-    private void printHangman() {
-        if (mistake > 0) {
-            for (int i = 0; i < mistake; i++) {
-                System.out.println(ANSI_RED + gallows[i] + ANSI_RESET);
-            }
-        } else {
-            System.out.print("");
+    private void printGallows() {
+        for (int i = 0; i < mistakes; i++) {
+            System.out.println(ANSI_RED + GALLOWS[i] + ANSI_RESET);
         }
     }
 
@@ -147,9 +129,9 @@ public class HangmanGame {
     }
 
     private void printGameStatus() {
-        System.out.println("\rСлово: " + new String(mask));
+        System.out.println("\rСлово: " + String.valueOf(mask));
 
-        System.out.printf("Осталось попыток: %d%n", gallows.length - mistake);
+        System.out.printf("Осталось попыток: %d%n", GALLOWS.length - mistakes);
 
         if (!(wrongLetters.toString()).isEmpty()) {
             System.out.printf("Все ошибочные буквы: %s%n%n", ANSI_RED + wrongLetters + ANSI_RESET);
