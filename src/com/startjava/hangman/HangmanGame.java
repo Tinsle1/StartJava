@@ -39,23 +39,23 @@ public class HangmanGame {
     }
 
     public void start() {
-        System.out.println("Угадайте слово: " + mask.toString());
+        System.out.println("Угадайте слово: " + mask);
 
         do {
-            inputLetter();
+            validateWord(inputLetter());
         } while (!isGuessed());
 
         System.out.println("Игра окончена!");
         System.out.printf("Загаданное слово: %s%n", guessedWord);
     }
 
-    private void inputLetter() {
+    private char inputLetter() {
         char letter;
         do {
             System.out.print("Введите букву: ");
             letter = Character.toUpperCase(console.next().charAt(0));
         } while (!isCyrillic(letter) || isRepeated(letter));
-        validateWord(letter);
+        return letter;
     }
 
     private boolean isCyrillic(char letter) {
@@ -75,9 +75,9 @@ public class HangmanGame {
     }
 
     private void validateWord(char letter) {
-        boolean hasLetter = hasLetter(letter);
+        boolean hasLetterInGuessedWord = hasLetter(letter);
 
-        if (hasLetter) {
+        if (hasLetterInGuessedWord) {
             if (attempts > 0) {
                 attempts--;
             }
@@ -117,7 +117,7 @@ public class HangmanGame {
     }
 
     private void addWrongLetters(char letter) {
-        if (!wrongLetters.toString().contains(letter + "")) {
+        if (!isRepeated(letter)) {
             wrongLetters.append(letter).append(" ");
         }
     }
@@ -129,7 +129,7 @@ public class HangmanGame {
     }
 
     private void printGameStatus() {
-        System.out.println("\rСлово: " + mask.toString());
+        System.out.println("\rСлово: " + mask);
 
         System.out.printf("Осталось попыток: %d%n", GALLOWS.length - attempts);
 
