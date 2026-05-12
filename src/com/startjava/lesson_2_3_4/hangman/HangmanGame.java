@@ -1,4 +1,4 @@
-package com.startjava.hangman;
+package com.startjava.lesson_2_3_4.hangman;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -43,6 +43,8 @@ public class HangmanGame {
 
         do {
             validateWord(inputLetter());
+            printGallows();
+            printGameStatus();
         } while (!isGuessed());
 
         System.out.println("Игра окончена!");
@@ -75,9 +77,10 @@ public class HangmanGame {
     }
 
     private void validateWord(char letter) {
-        boolean hasLetterInGuessedWord = hasLetter(letter);
+        boolean isLetterInWord = hasLetterInGuessedWord(letter);
 
-        if (hasLetterInGuessedWord) {
+        if (isLetterInWord) {
+            revealLetterInMask(letter);
             if (attempts > 0) {
                 attempts--;
             }
@@ -85,21 +88,18 @@ public class HangmanGame {
             addWrongLetters(letter);
             attempts++;
         }
-
-        printGallows();
-        printGameStatus();
     }
 
-    private boolean hasLetter(char letter) {
-        boolean hasLetter = false;
+    private boolean hasLetterInGuessedWord(char letter) {
+        return guessedWord.indexOf(letter) >= 0;
+    }
 
+    private void revealLetterInMask(char letter) {
         for (int i = 0; i < guessedWord.length(); i++) {
             if (guessedWord.charAt(i) == letter) {
                 mask.setCharAt(i, letter);
-                hasLetter = true;
             }
         }
-        return hasLetter;
     }
 
     private boolean isGuessed() {
@@ -117,9 +117,7 @@ public class HangmanGame {
     }
 
     private void addWrongLetters(char letter) {
-        if (!isRepeated(letter)) {
-            wrongLetters.append(letter).append(" ");
-        }
+        wrongLetters.append(letter).append(" ");
     }
 
     private void printGallows() {

@@ -1,4 +1,4 @@
-package com.startjava.hangman;
+package com.startjava.lesson_2_3_4.hangman;
 
 import java.util.Scanner;
 
@@ -11,14 +11,11 @@ public class HangmanGameMain {
             if (answer.equals("yes")) {
                 HangmanGame game = new HangmanGame();
                 game.start();
+            } else {
+                System.out.println("Введите корректный ответ [yes / no]");
             }
             System.out.print("Хотите продолжить игру? [yes/no]: ");
             answer = console.next().toLowerCase();
-
-            if (!answer.equals("yes") && !answer.equals("no")) {
-                System.out.print("Введите корректный ответ [yes / no]: ");
-                answer = console.next().toLowerCase();
-            }
         } while (!answer.equals("no"));
     }
 }
