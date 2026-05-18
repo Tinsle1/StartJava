@@ -11,10 +11,11 @@ public class HangmanGameMain {
             if (answer.equals("yes")) {
                 HangmanGame game = new HangmanGame();
                 game.start();
+
+                System.out.print("Хотите продолжить игру? [yes/no]: ");
             } else {
-                System.out.println("Введите корректный ответ [yes / no]");
+                System.out.print("Введите корректный ответ [yes / no]: ");
             }
-            System.out.print("Хотите продолжить игру? [yes/no]: ");
             answer = console.next().toLowerCase();
         } while (!answer.equals("no"));
     }
