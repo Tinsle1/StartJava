@@ -1,67 +1,74 @@
 package com.startjava.lesson_2_3_4.calculator;
 
-public class Calculator {
-    private static final String ANSI_RED = "[31m";
-    private static final String ANSI_RESET = "[0m";
-    private static final int ARGUMENTS_COUNT = 3;
+import java.text.DecimalFormat;
 
-    public double calc(String expression) {
+public class Calculator {
+    private static final int ARGUMENTS_COUNT = 3;
+    private static final DecimalFormat DF = new DecimalFormat("#.###");
+
+    public static double calculate(String expression) {
         String[] tokens = tokenize(expression);
 
-        if (!hasValidArgumentsCount(tokens)) {
-            return Double.NaN;
-        }
+        checkArgumentsCount(tokens);
 
-        int firstOperand = Integer.parseInt(tokens[0]);
-        int secondOperand = Integer.parseInt(tokens[2]);
-        char mathSign = tokens[1].charAt(0);
+        int firstOperand = parseOperand(tokens[0]);
+        int secondOperand = parseOperand(tokens[2]);
+        String mathSign = tokens[1];
 
         return calculate(firstOperand, mathSign, secondOperand);
     }
 
-    private String[] tokenize(String expression) {
+    private static double calculate(int firstOperand, String mathSign, int secondOperand) {
+        return switch (mathSign) {
+            case "+" -> firstOperand + secondOperand;
+            case "-" -> firstOperand - secondOperand;
+            case "*" -> firstOperand * secondOperand;
+            case "%" -> {
+                checkDivisionByZero(secondOperand);
+                yield Math.floorMod(firstOperand, secondOperand);
+            }
+            case "^" -> Math.pow(firstOperand, secondOperand);
+            case "/" -> {
+                checkDivisionByZero(secondOperand);
+                yield (double) firstOperand / secondOperand;
+            }
+            default ->
+                throw new UnsupportedOperationException(
+                        "Ошибка: " + "операция " + mathSign +
+                                " не поддерживается");
+        };
+    }
+
+    private static int parseOperand(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(
+                    "Ошибка: " + value + " не является целым числом");
+        }
+    }
+
+    private static String[] tokenize(String expression) {
         return expression.trim().split("\\s+");
     }
 
-    private boolean hasValidArgumentsCount(String[] tokens) {
+    private static void checkArgumentsCount(String[] tokens) {
         if (tokens.length != ARGUMENTS_COUNT) {
-            System.out.println(ANSI_RED + "Ошибка: неверный формат" + ANSI_RESET);
-            return false;
+            throw new IllegalArgumentException(
+                    "Ошибка: неверный формат выражения"
+            );
         }
-        return true;
     }
 
-    private double calculate(int firstOperand, char mathSign, int secondOperand) {
-        return switch (mathSign) {
-            case '+' -> firstOperand + secondOperand;
-            case '-' -> firstOperand - secondOperand;
-            case '*' -> firstOperand * secondOperand;
-            case '%' -> {
-                if (secondOperand == 0) {
-                    System.out.println(ANSI_RED +
-                            "Ошибка: деление на ноль запрещено" +
-                            ANSI_RESET);
+    private static void checkDivisionByZero(int secondOperand) {
+        if (secondOperand == 0) {
+            throw new ArithmeticException(
+                    "Деление на ноль запрещено"
+            );
+        }
+    }
 
-                    yield Double.NaN;
-                }
-
-                yield Math.floorMod(firstOperand, secondOperand);
-            }
-            case '^' -> Math.pow(firstOperand, secondOperand);
-            case '/' -> {
-                if (secondOperand == 0) {
-                    System.out.println(ANSI_RED +
-                            "Ошибка: деление на ноль запрещено" +
-                            ANSI_RESET);
-                    yield Double.NaN;
-                }
-                yield (double) firstOperand / secondOperand;
-            }
-            default -> {
-                System.out.println(ANSI_RED + "Ошибка: операция '" +
-                        mathSign + "' не поддерживается" + ANSI_RESET);
-                yield Double.NaN;
-            }
-        };
+    public static void printResult(String expression, double result) {
+        System.out.printf("%s = %s%n", String.join(" ", tokenize(expression)), DF.format(result));
     }
 }
