@@ -1,15 +1,12 @@
 package com.startjava.lesson_2_3_4.calculator;
 
-import java.text.DecimalFormat;
-
 public class Calculator {
-    private static final int ARGUMENTS_COUNT = 3;
-    private static final DecimalFormat DF = new DecimalFormat("#.###");
+    private static final int EXPRESSION_TOKENS_COUNT = 3;
 
     public static double calculate(String expression) {
         String[] tokens = tokenize(expression);
 
-        checkArgumentsCount(tokens);
+        throwIfInvalidTokensCount(tokens);
 
         int firstOperand = parseOperand(tokens[0]);
         int secondOperand = parseOperand(tokens[2]);
@@ -23,20 +20,35 @@ public class Calculator {
             case "+" -> firstOperand + secondOperand;
             case "-" -> firstOperand - secondOperand;
             case "*" -> firstOperand * secondOperand;
-            case "%" -> {
-                checkDivisionByZero(secondOperand);
-                yield Math.floorMod(firstOperand, secondOperand);
-            }
+            case "%", "/" ->
+                    calculateDivisionOrModulo(firstOperand,
+                            mathSign, secondOperand);
+
             case "^" -> Math.pow(firstOperand, secondOperand);
-            case "/" -> {
-                checkDivisionByZero(secondOperand);
-                yield (double) firstOperand / secondOperand;
-            }
             default ->
                 throw new UnsupportedOperationException(
-                        "Ошибка: " + "операция " + mathSign +
+                        "операция " + mathSign +
                                 " не поддерживается");
         };
+    }
+
+    private static String[] tokenize(String expression) {
+        return expression.trim().split("\\s+");
+    }
+
+    private static void throwIfInvalidTokensCount(String[] tokens) {
+        if (tokens.length != EXPRESSION_TOKENS_COUNT) {
+            throw new IllegalArgumentException(
+                    "неверный формат выражения"
+            );
+        }
+
+        if ("0".equals(tokens[2]) && ("%".equals(tokens[1]) ||
+                "/".equals(tokens[1]))) {
+            throw new ArithmeticException(
+                    "Деление на ноль запрещено"
+            );
+        }
     }
 
     private static int parseOperand(String value) {
@@ -44,31 +56,15 @@ public class Calculator {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             throw new NumberFormatException(
-                    "Ошибка: " + value + " не является целым числом");
+                    value + " не является целым числом");
         }
     }
 
-    private static String[] tokenize(String expression) {
-        return expression.trim().split("\\s+");
-    }
-
-    private static void checkArgumentsCount(String[] tokens) {
-        if (tokens.length != ARGUMENTS_COUNT) {
-            throw new IllegalArgumentException(
-                    "Ошибка: неверный формат выражения"
-            );
+    private static double calculateDivisionOrModulo(int firstOperand,
+                                                    String mathSign, int secondOperand) {
+        if ("%".equals(mathSign)) {
+            return Math.floorMod(firstOperand, secondOperand);
         }
-    }
-
-    private static void checkDivisionByZero(int secondOperand) {
-        if (secondOperand == 0) {
-            throw new ArithmeticException(
-                    "Деление на ноль запрещено"
-            );
-        }
-    }
-
-    public static void printResult(String expression, double result) {
-        System.out.printf("%s = %s%n", String.join(" ", tokenize(expression)), DF.format(result));
+        return (double) firstOperand / secondOperand;
     }
 }

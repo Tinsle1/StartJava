@@ -1,10 +1,12 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class CalculatorTest {
     private static final String ANSI_RED = "[31m";
     private static final String ANSI_RESET = "[0m";
+    private static final DecimalFormat DF = new DecimalFormat("#.###");
 
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
@@ -16,8 +18,8 @@ public class CalculatorTest {
                 String expression = console.nextLine();
                 try {
                     double result = Calculator.calculate(expression);
-                    Calculator.printResult(expression, result);
-                } catch (Exception e) {
+                    printResult(expression, result);
+                } catch (RuntimeException e) {
                     System.out.println(ANSI_RED +
                             "Ошибка: " + e.getMessage() +
                             ANSI_RESET);
@@ -29,5 +31,13 @@ public class CalculatorTest {
             }
             answer = console.nextLine().toLowerCase();
         } while (!answer.equals("no"));
+    }
+
+    public static void printResult(String expression, double result) {
+        String formattedExpression = String.join(" ",
+                expression.trim().split("\\s+"));
+
+        System.out.printf("%s = %s%n",
+                formattedExpression, DF.format(result));
     }
 }
