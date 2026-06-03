@@ -5,17 +5,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
-    private static final String ANSI_YELLOW = "[0;33m";
-    private static final String ANSI_RED = "[31m";
-    private static final String ANSI_GREEN = "[32m";
-    private static final String ANSI_RESET = "[0m";
-
-    private static final int MAX_ATTEMPTS_AMOUNT = 10;
+    public static final int MAX_ATTEMPTS_AMOUNT = 10;
 
     private final Scanner console = new Scanner(System.in);
     private final Player[] players;
+    private final int secretNumber;
 
-    private int secretNumber;
     private int attempt;
 
     public GuessNumber(Player player1, Player player2) {
@@ -23,10 +18,16 @@ public class GuessNumber {
                 player1,
                 player2
         };
+
+        secretNumber = new Random().nextInt(101);
+    }
+
+    public static void printGameInfo() {
+        System.out.println("\nКомпьютер загадал число от 0 до 100. Попробуйте угадать!");
     }
 
     public void play() {
-        secretNumber = new Random().nextInt(101);
+        System.out.println("\nИгра началась! У каждого игрока по 10 попыток");
         attempt = 1;
         int outOfAttemptPlayersAmount = 0;
 
@@ -42,16 +43,16 @@ public class GuessNumber {
                 isGameOn = isGuessed(playerNumber, player);
                 if (isGameOn) break;
 
-                if (attempt == MAX_ATTEMPTS_AMOUNT) {
-                    System.out.printf(ANSI_RED + "У %s закончились попытки!%n%n" +
-                            ANSI_RESET, player.getName());
+                if (isNoAttemptsLeft()) {
+                    System.out.printf(AnsiColor.RED + "У %s закончились попытки!%n%n" +
+                            AnsiColor.RESET, player.getName());
                     outOfAttemptPlayersAmount++;
                 }
             }
             if (isLost(outOfAttemptPlayersAmount)) {
-                System.out.printf(ANSI_RED +
+                System.out.printf(AnsiColor.RED +
                         "Ни один из игроков не угадал число %d%n%n" +
-                        ANSI_RESET, secretNumber);
+                        AnsiColor.RESET, secretNumber);
                 break;
             }
             attempt++;
@@ -63,10 +64,20 @@ public class GuessNumber {
         while (true) {
             try {
                 int playerNumber = console.nextInt();
+
+                for (int number : player.getNumbers()) {
+                    if (number == playerNumber) {
+                        throw new IllegalArgumentException(
+                                AnsiColor.YELLOW + "Вы уже вводили это число.\n" +
+                                        "Попробуйте еще раз:" + AnsiColor.RESET
+                        );
+                    }
+                }
+
                 player.addNumber(playerNumber);
                 return playerNumber;
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(AnsiColor.RED + e.getMessage() + AnsiColor.RESET);
             }
         }
     }
@@ -81,14 +92,19 @@ public class GuessNumber {
     }
 
     public void printWinnerInfo(Player currentPlayer) {
-        System.out.printf(ANSI_GREEN + "%s угадал число %d с %d-й попытки%n%n" +
-                ANSI_RESET, currentPlayer.getName(), secretNumber, attempt);
+        System.out.printf(AnsiColor.GREEN + "%s угадал число %d с %d-й попытки%n%n" +
+                AnsiColor.RESET, currentPlayer.getName(), secretNumber, attempt);
     }
 
     public void printHint(int playerNumber) {
         String hint = secretNumber > playerNumber ?
                 "больше" : "меньше";
-        System.out.printf(ANSI_YELLOW + "Загаданное число %s %d%n" + ANSI_RESET, hint, playerNumber);
+        System.out.printf(AnsiColor.YELLOW + "Загаданное число %s %d%n" +
+                AnsiColor.RESET, hint, playerNumber);
+    }
+
+    private boolean isNoAttemptsLeft() {
+        return attempt == MAX_ATTEMPTS_AMOUNT;
     }
 
     private boolean isLost(int outOfAttemptPlayersAmount) {

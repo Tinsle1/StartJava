@@ -6,19 +6,13 @@ public class GuessNumberTest {
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
         String playerAnswer = "yes";
-        Player player1;
-        Player player2;
 
         do {
             if (playerAnswer.equals("yes")) {
-                System.out.println("\nКомпьютер загадал число от 0 до 100. " +
-                        "Попробуйте угадать!");
-
-                player1 = createPlayer(console, "первого");
-                player2 = createPlayer(console, "второго");
-
+                GuessNumber.printGameInfo();
+                Player player1 = createPlayer(console, "первого");
+                Player player2 = createPlayer(console, "второго");
                 GuessNumber game = new GuessNumber(player1, player2);
-                System.out.println("\nИгра началась! У каждого игрока по 10 попыток");
                 game.play();
                 System.out.print("\nХотите продолжить игру? [yes/no]: ");
             } else {
@@ -36,9 +30,10 @@ public class GuessNumberTest {
             try {
                 return new Player(console.nextLine());
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(AnsiColor.RED + e.getMessage() +
+                        AnsiColor.RESET);
             }
         }
     }
-} 
+}
 
