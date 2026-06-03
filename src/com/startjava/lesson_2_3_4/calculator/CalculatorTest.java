@@ -34,8 +34,8 @@ public class CalculatorTest {
     }
 
     public static void printResult(String expression, double result) {
-        String formattedExpression = String.join(" ",
-                expression.trim().split("\\s+"));
+        String formattedExpression = expression.trim()
+                .replaceAll("\\s+", " ");
 
         System.out.printf("%s = %s%n",
                 formattedExpression, DF.format(result));
