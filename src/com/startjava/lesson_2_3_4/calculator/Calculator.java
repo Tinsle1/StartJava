@@ -7,7 +7,6 @@ public class Calculator {
         String[] tokens = tokenize(expression);
 
         throwIfInvalidTokensCount(tokens);
-        throwIfDivByZero(tokens);
 
         int firstOperand = parseOperand(tokens[0]);
         int secondOperand = parseOperand(tokens[2]);
@@ -28,15 +27,6 @@ public class Calculator {
         }
     }
 
-    private static void throwIfDivByZero(String[] tokens) {
-        if ("0".equals(tokens[2]) && ("%".equals(tokens[1]) ||
-                "/".equals(tokens[1]))) {
-            throw new ArithmeticException(
-                    "Деление на ноль запрещено"
-            );
-        }
-    }
-
     private static int parseOperand(String value) {
         try {
             return Integer.parseInt(value);
@@ -46,7 +36,8 @@ public class Calculator {
         }
     }
 
-    private static double evaluate(int firstOperand, String mathSign, int secondOperand) {
+    private static double evaluate(int firstOperand, String mathSign,
+            int secondOperand) {
         return switch (mathSign) {
             case "+" -> firstOperand + secondOperand;
             case "-" -> firstOperand - secondOperand;
@@ -63,11 +54,19 @@ public class Calculator {
         };
     }
 
-    private static double calculateDivOrMod(int firstOperand,
-                                                    String mathSign, int secondOperand) {
-        if ("%".equals(mathSign)) {
-            return Math.floorMod(firstOperand, secondOperand);
+    private static double calculateDivOrMod(int firstOperand, String mathSign,
+            int secondOperand) {
+        throwIfDivByZero(secondOperand);
+
+        return ("%".equals(mathSign)) ? Math.floorMod(firstOperand, secondOperand) :
+                (double) firstOperand / secondOperand;
+    }
+
+    private static void throwIfDivByZero(int secondOperand) {
+        if (0 == secondOperand) {
+            throw new ArithmeticException(
+                    "Деление на ноль запрещено"
+            );
         }
-        return (double) firstOperand / secondOperand;
     }
 }
