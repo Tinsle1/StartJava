@@ -11,7 +11,7 @@ public class GuessNumber {
     private final Player[] players;
     private final int secretNumber;
 
-    private int attempt;
+    private int currentAttempt;
 
     public GuessNumber(Player player1, Player player2) {
         players = new Player[] {
@@ -19,22 +19,19 @@ public class GuessNumber {
                 player2
         };
 
-        secretNumber = new Random().nextInt(101);
-    }
-
-    public static void printGameInfo() {
-        System.out.println("\nКомпьютер загадал число от 0 до 100. Попробуйте угадать!");
+        secretNumber = new Random().nextInt(Player.MAX_GUESSED_NUMBER + 1);
     }
 
     public void play() {
-        System.out.println("\nИгра началась! У каждого игрока по 10 попыток");
-        attempt = 1;
+        System.out.printf("\nИгра началась! У каждого игрока по %d попыток",
+                MAX_ATTEMPTS_AMOUNT);
+        currentAttempt = 1;
         int outOfAttemptPlayersAmount = 0;
 
         boolean isGameOn = false;
 
         while (!isGameOn) {
-            System.out.println("\nПопытка " + attempt);
+            System.out.println("\nПопытка " + currentAttempt);
 
             for (Player player : players) {
                 System.out.print("Число вводит " + player.getName() + ": ");
@@ -55,7 +52,7 @@ public class GuessNumber {
                         AnsiColor.RESET, secretNumber);
                 break;
             }
-            attempt++;
+            currentAttempt++;
         }
         printPlayersNumbers();
     }
@@ -93,7 +90,7 @@ public class GuessNumber {
 
     public void printWinnerInfo(Player currentPlayer) {
         System.out.printf(AnsiColor.GREEN + "%s угадал число %d с %d-й попытки%n%n" +
-                AnsiColor.RESET, currentPlayer.getName(), secretNumber, attempt);
+                AnsiColor.RESET, currentPlayer.getName(), secretNumber, currentAttempt);
     }
 
     public void printHint(int playerNumber) {
@@ -104,7 +101,7 @@ public class GuessNumber {
     }
 
     private boolean isNoAttemptsLeft() {
-        return attempt == MAX_ATTEMPTS_AMOUNT;
+        return currentAttempt == MAX_ATTEMPTS_AMOUNT;
     }
 
     private boolean isLost(int outOfAttemptPlayersAmount) {
@@ -114,8 +111,8 @@ public class GuessNumber {
     public void printPlayersNumbers() {
         for (Player player : players) {
             String playerAttempts = Arrays.toString(player.getNumbers())
-                            .replace("[", "")
-                                    .replace("]", "");
+                        .replace("[", "")
+                        .replace("]", "");
 
             System.out.printf("Все попытки игрока %s: %s%n", player.getName(),
                     playerAttempts);

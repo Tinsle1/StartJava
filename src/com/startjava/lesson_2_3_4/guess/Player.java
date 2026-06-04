@@ -3,9 +3,11 @@ package com.startjava.lesson_2_3_4.guess;
 import java.util.Arrays;
 
 public class Player {
+    private static final int MIN_GUESSED_NUMBER = 1;
+    public static final int MAX_GUESSED_NUMBER = 100;
+
     private final String name;
-    private static final int MAX_ATTEMPTS_AMOUNT = 10;
-    private final int[] playerNumbers = new int[MAX_ATTEMPTS_AMOUNT ];
+    private final int[] playerNumbers = new int[GuessNumber.MAX_ATTEMPTS_AMOUNT ];
 
     private int currentTry;
 
@@ -23,18 +25,21 @@ public class Player {
         return name;
     }
 
+    public int[] getNumbers() {
+        return Arrays.copyOf(playerNumbers, currentTry);
+    }
+
     public void addNumber(int number) {
-        if (number < 1 || number > 100) {
+        if (number < MIN_GUESSED_NUMBER || number > MAX_GUESSED_NUMBER) {
             throw new IllegalArgumentException(
-                    "Число должно входить в отрезок [1, 100].\n" +
-                            "Попробуйте еще раз:"
+                    String.format(
+                            "Число должно входить в отрезок [%d, %d].\nПопробуйте еще раз:",
+                            MIN_GUESSED_NUMBER,
+                            MAX_GUESSED_NUMBER
+                    )
             );
         }
 
         playerNumbers[currentTry++] = number;
-    }
-
-    public int[] getNumbers() {
-        return Arrays.copyOf(playerNumbers, currentTry);
     }
 }

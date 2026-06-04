@@ -9,7 +9,7 @@ public class GuessNumberTest {
 
         do {
             if (playerAnswer.equals("yes")) {
-                GuessNumber.printGameInfo();
+                printGameInfo();
                 Player player1 = createPlayer(console, "первого");
                 Player player2 = createPlayer(console, "второго");
                 GuessNumber game = new GuessNumber(player1, player2);
@@ -22,6 +22,10 @@ public class GuessNumberTest {
         } while (!playerAnswer.equals("no"));
 
         System.out.println("Игра завершена!");
+    }
+
+    public static void printGameInfo() {
+        System.out.println("\nКомпьютер загадал число от 0 до 100. Попробуйте угадать!");
     }
 
     private static Player createPlayer(Scanner console, String playerNumber) {
