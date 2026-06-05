@@ -22,8 +22,7 @@ public class Calculator {
     private static void throwIfInvalidTokensCount(String[] tokens) {
         if (tokens.length != EXPRESSION_TOKENS_COUNT) {
             throw new IllegalArgumentException(
-                    "неверный формат выражения"
-            );
+                    "неверный формат выражения");
         }
     }
 
@@ -36,37 +35,31 @@ public class Calculator {
         }
     }
 
-    private static double evaluate(int firstOperand, String mathSign,
-            int secondOperand) {
+    private static double evaluate(int firstOperand, String mathSign, int secondOperand) {
         return switch (mathSign) {
             case "+" -> firstOperand + secondOperand;
             case "-" -> firstOperand - secondOperand;
             case "*" -> firstOperand * secondOperand;
-            case "%", "/" ->
-                    calculateDivOrMod(firstOperand,
-                            mathSign, secondOperand);
-
+            case "%", "/" -> calculateDivOrMod(firstOperand, mathSign, secondOperand);
             case "^" -> Math.pow(firstOperand, secondOperand);
             default ->
                 throw new UnsupportedOperationException(
-                        "операция " + mathSign +
-                                " не поддерживается");
+                        "операция " + mathSign + " не поддерживается");
         };
     }
 
-    private static double calculateDivOrMod(int firstOperand, String mathSign,
-            int secondOperand) {
+    private static double calculateDivOrMod(int firstOperand, String mathSign, int secondOperand) {
         throwIfDivByZero(secondOperand);
 
-        return ("%".equals(mathSign)) ? Math.floorMod(firstOperand, secondOperand) :
+        return ("%".equals(mathSign)) ?
+                Math.floorMod(firstOperand, secondOperand) :
                 (double) firstOperand / secondOperand;
     }
 
     private static void throwIfDivByZero(int secondOperand) {
         if (0 == secondOperand) {
             throw new ArithmeticException(
-                    "Деление на ноль запрещено"
-            );
+                    "Деление на ноль запрещено");
         }
     }
 }
