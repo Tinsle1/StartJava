@@ -34,8 +34,7 @@ public class GuessNumberTest {
             try {
                 return new Player(console.nextLine());
             } catch (IllegalArgumentException e) {
-                System.out.println(AnsiColor.RED + e.getMessage() +
-                        AnsiColor.RESET);
+                System.out.println(AnsiColor.RED + e.getMessage() + AnsiColor.RESET);
             }
         }
     }

@@ -23,8 +23,8 @@ public class GuessNumber {
     }
 
     public void play() {
-        System.out.printf("\nИгра началась! У каждого игрока по %d попыток",
-                MAX_ATTEMPTS_AMOUNT);
+        System.out.printf("\nИгра началась! У каждого игрока по %d попыток", MAX_ATTEMPTS_AMOUNT);
+
         currentAttempt = 1;
         int outOfAttemptPlayersAmount = 0;
 
@@ -48,8 +48,7 @@ public class GuessNumber {
             }
             if (isLost(outOfAttemptPlayersAmount)) {
                 System.out.printf(AnsiColor.RED +
-                        "Ни один из игроков не угадал число %d%n%n" +
-                        AnsiColor.RESET, secretNumber);
+                        "Ни один из игроков не угадал число %d%n%n" + AnsiColor.RESET, secretNumber);
                 break;
             }
             currentAttempt++;
@@ -66,8 +65,7 @@ public class GuessNumber {
                     if (number == playerNumber) {
                         throw new IllegalArgumentException(
                                 AnsiColor.YELLOW + "Вы уже вводили это число.\n" +
-                                        "Попробуйте еще раз:" + AnsiColor.RESET
-                        );
+                                        "Попробуйте еще раз:" + AnsiColor.RESET);
                     }
                 }
 
@@ -94,8 +92,7 @@ public class GuessNumber {
     }
 
     public void printHint(int playerNumber) {
-        String hint = secretNumber > playerNumber ?
-                "больше" : "меньше";
+        String hint = secretNumber > playerNumber ? "больше" : "меньше";
         System.out.printf(AnsiColor.YELLOW + "Загаданное число %s %d%n" +
                 AnsiColor.RESET, hint, playerNumber);
     }
@@ -114,8 +111,7 @@ public class GuessNumber {
                         .replace("[", "")
                         .replace("]", "");
 
-            System.out.printf("Все попытки игрока %s: %s%n", player.getName(),
-                    playerAttempts);
+            System.out.printf("Все попытки игрока %s: %s%n", player.getName(), playerAttempts);
         }
     }
 }

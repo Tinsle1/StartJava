@@ -15,8 +15,7 @@ public class Player {
         if (name.isBlank()) {
             throw new IllegalArgumentException(
                     "Имя игрока не должно быть пустым.\n" +
-                            "Введите корректное имя:\r"
-            );
+                            "Введите корректное имя:\r");
         }
         this.name = name;
     }
@@ -34,10 +33,8 @@ public class Player {
             throw new IllegalArgumentException(
                     String.format(
                             "Число должно входить в отрезок [%d, %d].\nПопробуйте еще раз:",
-                            MIN_GUESSED_NUMBER,
-                            MAX_GUESSED_NUMBER
-                    )
-            );
+                            MIN_GUESSED_NUMBER, MAX_GUESSED_NUMBER
+                    ));
         }
 
         playerNumbers[currentTry++] = number;
