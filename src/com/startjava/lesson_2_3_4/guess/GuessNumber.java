@@ -17,17 +17,13 @@ public class GuessNumber {
     private int secretNumber;
     private int currentRoundAttempt;
 
-    public GuessNumber(Player player1, Player player2, Player player3) {
-        players = new Player[] {
-                player1,
-                player2,
-                player3
-        };
+    public GuessNumber(Player[] players) {
+        this.players = players;
     }
 
     public void play() throws InterruptedException {
         castLots();
-        System.out.printf("\nИгра началась! У каждого игрока по %d попыток\n", MAX_ATTEMPTS_AMOUNT);
+        System.out.printf("%nИгра началась! У каждого игрока по %d попыток%n", MAX_ATTEMPTS_AMOUNT);
 
         for (int i = 1; i <= ROUNDS; i++) {
             announceRound(i);
@@ -45,15 +41,15 @@ public class GuessNumber {
 
                     isRoundOn = isGuessed(playerNumber, player);
                     if (isRoundOn) {
-                        player.addScore(1);
+                        player.addScore();
                         break;
                     }
                     if (isNoAttemptsLeft()) {
-                        player.addScore(0);
                         System.out.printf(AnsiColor.RED + "У %s закончились попытки!%n%n" +
                                 AnsiColor.RESET, player.getName());
                         outOfAttemptPlayersAmount++;
                     }
+                    System.out.println();
                 }
                 if (isLost(outOfAttemptPlayersAmount)) {
                     System.out.printf(AnsiColor.RED +
@@ -106,12 +102,12 @@ public class GuessNumber {
     private void startRound() {
         secretNumber = RANDOM.nextInt(1, Player.MAX_GUESSED_NUMBER + 1);
         currentRoundAttempt = 1;
-        clearNumbers();
+        clear();
     }
 
-    public void clearNumbers() {
+    public void clear() {
         for (Player player : players) {
-            player.clearNumbers();
+            player.clear();
         }
     }
 
@@ -131,7 +127,7 @@ public class GuessNumber {
                 player.addNumber(playerNumber);
                 return playerNumber;
             } catch (InputMismatchException e) {
-                System.out.println(AnsiColor.RED + "Введите число" + AnsiColor.RESET);
+                System.out.println(AnsiColor.RED + "Введите целое число:" + AnsiColor.RESET);
                 console.nextLine();
             } catch (IllegalArgumentException e) {
                 System.out.println(AnsiColor.RED + e.getMessage() + AnsiColor.RESET);
@@ -179,10 +175,10 @@ public class GuessNumber {
     }
 
     public void printRoundScores(int round) {
-        System.out.printf("Счет после раунда %d:\n", round);
+        System.out.printf("Счет после раунда %d:%n", round);
 
         for (Player player : players) {
-            System.out.printf("Игрок %s: %d очков\n", player.getName(), player.getScores());
+            System.out.printf("Игрок %s: %d очков%n", player.getName(), player.getScores());
         }
         System.out.println();
     }

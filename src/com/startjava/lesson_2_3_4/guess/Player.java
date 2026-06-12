@@ -7,7 +7,7 @@ public class Player {
     public static final int MAX_GUESSED_NUMBER = 100;
 
     private final String name;
-    private final int[] numbers = new int[GuessNumber.MAX_ATTEMPTS_AMOUNT ];
+    private final int[] numbers = new int[GuessNumber.MAX_ATTEMPTS_AMOUNT];
 
     private int currentTry;
     private int scores = 0;
@@ -15,8 +15,8 @@ public class Player {
     public Player(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(
-                    "Имя игрока не должно быть пустым.\n" +
-                            "Введите корректное имя:\r");
+                    "Имя игрока не должно быть пустым.%n" +
+                    "Введите корректное имя:\r");
         }
         this.name = name;
     }
@@ -33,20 +33,20 @@ public class Player {
         if (number < MIN_GUESSED_NUMBER || number > MAX_GUESSED_NUMBER) {
             throw new IllegalArgumentException(
                     String.format(
-                            "Число должно входить в отрезок [%d, %d].\nПопробуйте еще раз:",
+                            "Число должно входить в отрезок [%d, %d].%nПопробуйте еще раз: ",
                             MIN_GUESSED_NUMBER, MAX_GUESSED_NUMBER));
         }
 
         numbers[currentTry++] = number;
     }
 
-    public void clearNumbers() {
-        Arrays.fill(numbers, 0);
+    public void clear() {
+        Arrays.fill(numbers, currentTry);
         currentTry = 0;
     }
 
-    public void addScore(int score) {
-        scores += score;
+    public void addScore() {
+        scores++;
     }
 
     public int getScores() {
