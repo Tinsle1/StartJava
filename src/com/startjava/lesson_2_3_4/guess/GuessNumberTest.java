@@ -10,10 +10,10 @@ public class GuessNumberTest {
         do {
             if (playerAnswer.equals("yes")) {
                 printGameInfo();
-                Player[] players = createPlayer(console);
-                GuessNumber game = new GuessNumber(players);
+                Player[] players = createPlayers(console);
+                GuessNumber game = new GuessNumber(players, console);
                 game.play();
-                System.out.print("%nХотите продолжить игру? [yes/no]: ");
+                System.out.print("\n\nХотите продолжить игру? [yes/no]: ");
             } else {
                 System.out.print("Введите корректный ответ [yes / no]: ");
             }
@@ -28,9 +28,13 @@ public class GuessNumberTest {
                 Player.MIN_GUESSED_NUMBER, Player.MAX_GUESSED_NUMBER);
     }
 
-    private static Player[] createPlayer(Scanner console) {
+    private static Player[] createPlayers(Scanner console) {
         System.out.print("Введите количество игроков: ");
-        int playersAmount = console.nextInt();
+        int playersAmount;
+
+        do {
+            playersAmount = console.nextInt();
+        } while (!isValidAmount(playersAmount));
         console.nextLine();
 
         Player[] players = new Player[playersAmount];
@@ -42,11 +46,19 @@ public class GuessNumberTest {
                     players[i - 1] = new Player(console.nextLine());
                     break;
                 } catch (IllegalArgumentException e) {
-                    System.out.println(AnsiColor.RED + e.getMessage() + AnsiColor.RESET);
+                    System.out.print(AnsiColor.RED + e.getMessage() + AnsiColor.RESET);
                 }
             }
         }
         return players;
+    }
+
+    private static boolean isValidAmount(int number) {
+        if (number <= 0) {
+            System.out.print(AnsiColor.YELLOW + "Число игроков должно быть больше 0: " + AnsiColor.RESET);
+            return false;
+        }
+        return true;
     }
 }
 

@@ -15,8 +15,8 @@ public class Player {
     public Player(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(
-                    "Имя игрока не должно быть пустым.%n" +
-                    "Введите корректное имя:\r");
+                    "Имя игрока не должно быть пустым.\n" +
+                    "Введите корректное имя: ");
         }
         this.name = name;
     }
@@ -41,7 +41,7 @@ public class Player {
     }
 
     public void clear() {
-        Arrays.fill(numbers, currentTry);
+        Arrays.fill(numbers, 0, currentTry, 0);
         currentTry = 0;
     }
 
