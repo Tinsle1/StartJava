@@ -1,13 +1,15 @@
 package com.startjava.lesson_2_3_4.bookcase;
 
-import com.startjava.lesson_2_3_4.bookcase.exception.BookIsAddedException;
+import com.startjava.lesson_2_3_4.bookcase.exception.AlreadyExistException;
 import com.startjava.lesson_2_3_4.bookcase.exception.BookNotFoundException;
-import com.startjava.lesson_2_3_4.bookcase.exception.BookcaseIsFullException;
+import com.startjava.lesson_2_3_4.bookcase.exception.BookcaseFullException;
 import com.startjava.lesson_2_3_4.bookcase.exception.EmptyAuthorException;
 import com.startjava.lesson_2_3_4.bookcase.exception.EmptyTitleException;
 import com.startjava.lesson_2_3_4.bookcase.exception.EmptyYearException;
 import com.startjava.lesson_2_3_4.bookcase.exception.InvalidYearException;
 import com.startjava.lesson_2_3_4.guess.AnsiColor;
+import java.time.Year;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -63,13 +65,13 @@ public class BookCaseTest {
             return;
         }
 
-        if (Bookcase.getBooksCount() == Bookcase.MAX_BOOKS_COUNT) {
+        if (Bookcase.getBooksCount() == Bookcase.CAPACITY) {
             System.out.println("Книжный шкаф заполнен.");
             return;
         }
 
         System.out.printf("В шкафу книг - %d, свободно полок - %d%n", Bookcase.getBooksCount(),
-                Bookcase.emptyShelvesCount());
+                Bookcase.countEmptyShelves());
     }
 
     private static void printBookshelf() {
@@ -100,7 +102,7 @@ public class BookCaseTest {
             };
         }
 
-        if (Bookcase.getBooksCount() == Bookcase.MAX_BOOKS_COUNT) {
+        if (Bookcase.getBooksCount() == Bookcase.CAPACITY) {
             return new String[]{
                     MenuItems.FIND_BOOK.action,
                     MenuItems.DELETE_BOOK.action,
@@ -181,15 +183,17 @@ public class BookCaseTest {
     private static void addBook() {
         try {
             Bookcase.addBook(createBook());
-        } catch (BookcaseIsFullException | BookIsAddedException e) {
+        } catch (BookcaseFullException | AlreadyExistException e) {
             System.out.println(AnsiColor.YELLOW + e.getMessage() + AnsiColor.RESET);
         }
+        System.out.printf("%nКнига «%s» добавлена в шкаф%n",
+                Bookcase.getBooks()[Bookcase.getBooksCount() - 1]);
     }
 
     public static Book createBook() {
         String title = getTitle();
         String author = getAuthor();
-        int year = getYear();
+        Year year = getYear();
         return new Book(title, author, year);
     }
 
@@ -223,7 +227,7 @@ public class BookCaseTest {
         }
     }
 
-    private static int getYear() {
+    private static Year getYear() {
         System.out.print("Введите год издания книги: ");
         while (true) {
             try {
@@ -233,16 +237,17 @@ public class BookCaseTest {
                     throw new EmptyYearException("Год не может быть пустым: ");
                 }
 
-                int year = Integer.parseInt(input);
+                Year year = Year.parse(input);
 
-                if (year < Book.MIN_YEAR || year > Book.MAX_YEAR) {
-                    throw new InvalidYearException("Год издания должен быть между %d и текущим: "
-                            .formatted(Book.MIN_YEAR));
+                if (year.isBefore(Book.MIN_PUBLICATION_YEAR) || year.isAfter(Book.MAX_PUBLICATION_YEAR)) {
+                    throw new InvalidYearException("Год издания должен быть между %d и %d: "
+                            .formatted(Book.MIN_PUBLICATION_YEAR.getValue(),
+                                    Book.MAX_PUBLICATION_YEAR.getValue()));
                 }
                 return year;
             } catch (EmptyYearException | InvalidYearException e) {
                 System.out.print(AnsiColor.YELLOW + "Ошибка! " + e.getMessage() + AnsiColor.RESET);
-            } catch (NumberFormatException e) {
+            } catch (DateTimeParseException e) {
                 System.out.print(AnsiColor.YELLOW + "Ошибка! Год должен быть числом: " + AnsiColor.RESET);
             }
         }

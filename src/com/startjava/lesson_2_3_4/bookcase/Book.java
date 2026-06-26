@@ -1,17 +1,19 @@
 package com.startjava.lesson_2_3_4.bookcase;
 
+import java.time.Year;
+
 public class Book {
-    public static final int MIN_YEAR = 1800;
-    public static final int MAX_YEAR = 2026;
+    public static final Year MIN_PUBLICATION_YEAR = Year.of(1800);
+    public static final Year MAX_PUBLICATION_YEAR = Year.now();
 
     private final String author;
     private final String title;
-    private final int year;
+    private final Year publicationYear;
 
-    public Book(String title, String author, int year) {
+    public Book(String title, String author, Year year) {
         this.title = title;
         this.author = author;
-        this.year = year;
+        this.publicationYear = year;
     }
 
     public String getTitle() {
@@ -20,6 +22,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return "%s, «%s», %d".formatted(author, title, year);
+        return "%s, «%s», %d".formatted(author, title, publicationYear.getValue());
     }
 }

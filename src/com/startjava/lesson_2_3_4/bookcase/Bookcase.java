@@ -1,37 +1,36 @@
 package com.startjava.lesson_2_3_4.bookcase;
 
-import com.startjava.lesson_2_3_4.bookcase.exception.BookIsAddedException;
+import com.startjava.lesson_2_3_4.bookcase.exception.AlreadyExistException;
 import com.startjava.lesson_2_3_4.bookcase.exception.BookNotFoundException;
-import com.startjava.lesson_2_3_4.bookcase.exception.BookcaseIsFullException;
+import com.startjava.lesson_2_3_4.bookcase.exception.BookcaseFullException;
 import java.util.Arrays;
 
 public class Bookcase {
-    public static final int MAX_BOOKS_COUNT = 10;
-    private static final Book[] BOOKS = new Book[MAX_BOOKS_COUNT];
+    public static final int CAPACITY = 10;
+    private static final Book[] BOOKS = new Book[CAPACITY];
 
     private static int booksCount = 0;
 
     public static void addBook(Book book) {
-        if (booksCount > MAX_BOOKS_COUNT - 1) {
-            throw new BookcaseIsFullException(
-                    "Книжный шкаф переполнен.\n" +
-                    "Освободите полку, чтобы добавить книгу");
+        if (booksCount >= CAPACITY) {
+            throw new BookcaseFullException("""
+                    Книжный шкаф переполнен.
+                    "Освободите полку, чтобы добавить книгу
+                    """);
         }
 
-        if (isBookAdded(book)) {
-            throw new BookIsAddedException("Книга уже добавлена в шкаф");
+        if (hasBook(book)) {
+            throw new AlreadyExistException("Книга уже добавлена в шкаф");
         }
 
         BOOKS[booksCount] = book;
         booksCount++;
-
-        System.out.printf("%nКнига «%s» добавлена в шкаф%n", book.getTitle());
     }
 
-    private static boolean isBookAdded(Book book) {
+    private static boolean hasBook(Book bookToAdd) {
         if (booksCount > 0) {
             for (Book bookInShelf : BOOKS) {
-                if (book.equals(bookInShelf)) {
+                if (bookToAdd.equals(bookInShelf)) {
                     return true;
                 }
             }
@@ -49,7 +48,7 @@ public class Bookcase {
     }
 
     public static void clear() {
-        Arrays.fill(BOOKS, null);
+        Arrays.fill(BOOKS, 0, booksCount + 1, null);
         booksCount = 0;
     }
 
@@ -61,7 +60,7 @@ public class Bookcase {
         return booksCount;
     }
 
-    public static int emptyShelvesCount() {
-        return MAX_BOOKS_COUNT - booksCount;
+    public static int countEmptyShelves() {
+        return CAPACITY - booksCount;
     }
 }
