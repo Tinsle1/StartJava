@@ -7,60 +7,110 @@ import java.util.Arrays;
 
 public class Bookcase {
     public static final int CAPACITY = 10;
-    private static final Book[] BOOKS = new Book[CAPACITY];
 
-    private static int booksCount = 0;
+    private Book[] books = new Book[CAPACITY];
+    private int booksCount = 0;
+    private int bookcaseLength;
 
-    public static void addBook(Book book) {
-        if (booksCount >= CAPACITY) {
+    public Book[] getBooks() {
+        return Arrays.copyOf(books, booksCount);
+    }
+
+    public int getBooksCount() {
+        return booksCount;
+    }
+
+    public int getBookcaseLength() {
+        return bookcaseLength;
+    }
+
+    public void addBook(Book book) {
+        if (isFull()) {
             throw new BookcaseFullException("""
                     Книжный шкаф переполнен.
-                    "Освободите полку, чтобы добавить книгу
+                    Освободите полку, чтобы добавить книгу
                     """);
         }
 
-        if (hasBook(book)) {
-            throw new AlreadyExistException("Книга уже добавлена в шкаф");
+        if (containsBook(book)) {
+            throw new AlreadyExistException("Книга уже добавлена в шкаф: %s".formatted(book));
         }
 
-        BOOKS[booksCount] = book;
+        books[booksCount] = book;
         booksCount++;
+
+        int bookLength = book.toString().length();
+        if (bookLength > bookcaseLength) {
+            bookcaseLength = bookLength;
+        }
     }
 
-    private static boolean hasBook(Book bookToAdd) {
-        if (booksCount > 0) {
-            for (Book bookInShelf : BOOKS) {
-                if (bookToAdd.equals(bookInShelf)) {
-                    return true;
-                }
+    public boolean isFull() {
+        return booksCount >= CAPACITY;
+    }
+
+    private boolean containsBook(Book bookToAdd) {
+        for (int i = 0; i < booksCount; i++) {
+            if (bookToAdd.getTitle().equalsIgnoreCase(books[i].getTitle()) &&
+                    bookToAdd.getAuthor().equalsIgnoreCase(books[i].getAuthor()) &&
+                    bookToAdd.getYear().equals(books[i].getYear())) {
+                return true;
             }
         }
         return false;
     }
 
-    public static Book findBook(String title) {
-        for (Book book : BOOKS) {
+    public Book[] findBooks(String title) {
+        Book[] foundBooks = new Book[booksCount];
+        int index = 0;
+        for (Book book : books) {
             if (book != null && book.getTitle().equalsIgnoreCase(title)) {
-                return book;
+                foundBooks[index] = book;
+                index++;
             }
+        }
+        if (index > 0) {
+            return Arrays.copyOf(foundBooks, index);
         }
         throw new BookNotFoundException("Книга не найдена");
     }
 
-    public static void clear() {
-        Arrays.fill(BOOKS, 0, booksCount + 1, null);
+    public void removeBooksByTitle(String title) {
+        for (int i = 0; i < booksCount; i++) {
+            if (books[i].getTitle().equalsIgnoreCase(title)) {
+                int length = books[i].toString().length();
+
+                System.arraycopy(books, i + 1, books, i, booksCount - i - 1);
+                booksCount--;
+                i--;
+
+                if (length == bookcaseLength) {
+                    bookcaseLength = calculateBookcaseLength();
+                }
+            }
+        }
+    }
+
+    public void clear() {
+        Arrays.fill(books, 0, booksCount, null);
         booksCount = 0;
     }
 
-    public static Book[] getBooks() {
-        return Arrays.copyOf(BOOKS, booksCount);
-    }
-
-    public static int getBooksCount() {
-        return booksCount;
-    }
-
-    public static int countEmptyShelves() {
+    public int countEmptyShelves() {
         return CAPACITY - booksCount;
+    }
+
+    public boolean isEmpty() {
+        return booksCount == 0;
+    }
+
+    public int calculateBookcaseLength() {
+        int maxLength = books[0].toString().length();
+        for (int i = 1; i < booksCount; i++) {
+            if (books[i].toString().length() > maxLength) {
+                maxLength = books[i].toString().length();
+            }
+        }
+        return maxLength;
     }
 }

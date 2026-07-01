@@ -7,45 +7,30 @@ import com.startjava.lesson_2_3_4.bookcase.exception.EmptyAuthorException;
 import com.startjava.lesson_2_3_4.bookcase.exception.EmptyTitleException;
 import com.startjava.lesson_2_3_4.bookcase.exception.EmptyYearException;
 import com.startjava.lesson_2_3_4.bookcase.exception.InvalidYearException;
-import com.startjava.lesson_2_3_4.guess.AnsiColor;
+import com.startjava.lesson_2_3_4.util.AnsiColor;
 import java.time.Year;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class BookCaseTest {
-    public static final Scanner CONSOLE = new Scanner(System.in);
+public class BookcaseTest {
+    private static final Scanner CONSOLE = new Scanner(System.in);
+    private static final Bookcase bookcase = new Bookcase();
 
     public static void main(String[] args) throws InterruptedException {
         printWelcome();
         while (true) {
-            printBookshelfStatus();
-            printBookshelf();
-            String[] menu = getAvailableMenu();
-            printMenu(menu);
+            printBookcaseStatus();
+            printBookcase();
+            Menu.Item[] menu = availableMenu();
+            printMenu(menu, Menu.Number.values());
 
-            int selectedMenuNumber = getMenuNumber(menu);
-            String selectedMenuItem = getSelectedMenuItem(selectedMenuNumber, menu);
-            MenuItems action = findAction(selectedMenuItem);
+            Menu.Item action = findAction(menu);
             boolean shouldExit = processAction(action);
 
             if (shouldExit) {
                 break;
             }
-        }
-    }
-
-    enum MenuItems {
-        ADD_BOOK("Добавить книгу"),
-        FIND_BOOK("Найти книгу"),
-        DELETE_BOOK("Удалить книгу"),
-        CLEAR_BOOKCASE("Очистить весь книжный шкаф"),
-        EXIT("Выйти из книжного шкафа");
-
-        private final String action;
-
-        MenuItems(String action) {
-            this.action = action;
         }
     }
 
@@ -59,84 +44,72 @@ public class BookCaseTest {
         System.out.println();
     }
 
-    private static void printBookshelfStatus() {
-        if (Bookcase.getBooksCount() == 0) {
+    private static void printBookcaseStatus() {
+        if (bookcase.getBooksCount() == 0) {
             System.out.println("Сейчас шкаф пуст. Вы можете добавить в него первую книгу");
             return;
         }
 
-        if (Bookcase.getBooksCount() == Bookcase.CAPACITY) {
-            System.out.println("Книжный шкаф заполнен.");
+        if (bookcase.getBooksCount() == Bookcase.CAPACITY) {
+            System.out.println("Книжный шкаф заполнен.\n");
             return;
         }
 
-        System.out.printf("В шкафу книг - %d, свободно полок - %d%n", Bookcase.getBooksCount(),
-                Bookcase.countEmptyShelves());
+        System.out.printf("В шкафу книг - %d, свободно полок - %d%n%n", bookcase.getBooksCount(),
+                bookcase.countEmptyShelves());
     }
 
-    private static void printBookshelf() {
-        if (Bookcase.getBooksCount() == 0) {
+    private static void printBookcase() {
+        if (bookcase.getBooksCount() == 0) {
             return;
         }
-        Book[] books = Bookcase.getBooks();
-        for (Book book : books) {
-            System.out.println(book);
+
+        for (Book book : bookcase.getBooks()) {
+            int diff = bookcase.getBookcaseLength() - book.toString().length();
+            System.out.printf("|%s", book);
+            System.out.println(" ".repeat(diff) + "|");
+            System.out.println("|" + "-".repeat(bookcase.getBookcaseLength()) + "|");
         }
     }
 
-    // выводим меню
-    private static void printMenu(String[] menu) {
+    private static Menu.Item[] availableMenu() {
+        if (bookcase.isEmpty()) {
+            return new Menu.Item[]{
+                    Menu.Item.ADD_BOOK,
+                    Menu.Item.EXIT
+            };
+        }
+
+        if (bookcase.isFull()) {
+            return new Menu.Item[]{
+                    Menu.Item.FIND_BOOK,
+                    Menu.Item.DELETE_BOOK,
+                    Menu.Item.CLEAR_BOOKCASE,
+                    Menu.Item.EXIT
+            };
+        }
+
+        return Menu.Item.values();
+    }
+
+    private static void printMenu(Menu.Item[] menu, Menu.Number[] number) {
         System.out.println("\n========= МЕНЮ =========");
 
         for (int i = 0; i < menu.length; i++) {
-            System.out.printf("%d. %s%n", i + 1, menu[i]);
+            System.out.printf("%d. %s%n", number[i].menuNumber, menu[i].action);
         }
     }
 
-    // получаем доступное на данный момемент меню
-    private static String[] getAvailableMenu() {
-        if (Bookcase.getBooksCount() == 0) {
-            return new String[]{
-                    MenuItems.ADD_BOOK.action,
-                    MenuItems.EXIT.action
-            };
-        }
-
-        if (Bookcase.getBooksCount() == Bookcase.CAPACITY) {
-            return new String[]{
-                    MenuItems.FIND_BOOK.action,
-                    MenuItems.DELETE_BOOK.action,
-                    MenuItems.CLEAR_BOOKCASE.action,
-                    MenuItems.EXIT.action
-            };
-        }
-
-        MenuItems[] actions = MenuItems.values();
-        String[] menu = new String[actions.length];
-
-        for (int i = 0; i < actions.length; i++) {
-            menu[i] = actions[i].action;
-        }
-        return menu;
-    }
-
-    // получаем пункт текущего меню от пользователя
-    private static int getMenuNumber(String[] menu) {
+    private static Menu.Item findAction(Menu.Item[] menu) {
         System.out.print("\nВведите номер нужного действия из меню: ");
-        int firstMenuItem = 1;
-        int lastMenuItem = menu.length;
+        int actionNumber;
+
         while (true) {
             try {
-                int actionNumber = CONSOLE.nextInt();
+                actionNumber = CONSOLE.nextInt();
                 CONSOLE.nextLine();
-
-                if (actionNumber < firstMenuItem || actionNumber > lastMenuItem) {
-                    throw new IllegalArgumentException(
-                            "неверное значение меню (%d). Допустимые значения [%d - %d]: "
-                                    .formatted(actionNumber, firstMenuItem, lastMenuItem));
-                }
-
-                return actionNumber;
+                Menu.Number.validateMenuNumber(menu, actionNumber);
+                break;
             } catch (InputMismatchException e) {
                 System.out.printf(AnsiColor.YELLOW + "Введенное значение должно быть числом: " +
                         AnsiColor.RESET);
@@ -145,33 +118,17 @@ public class BookCaseTest {
                 System.out.print(AnsiColor.YELLOW + "Ошибка! " + e.getMessage() + AnsiColor.RESET);
             }
         }
+        return menu[actionNumber - 1];
     }
 
-    // извлекаем строку, соответствующую пункту текущего меню
-    private static String getSelectedMenuItem(int number, String[] menu) {
-        return menu[number - 1];
-    }
-
-    // находим соответствующее выбранному пункту константу enum
-    private static MenuItems findAction(String menuItem) {
-        for (MenuItems action : MenuItems.values()) {
-            if (action.action.equals(menuItem)) {
-                return action;
-            }
-        }
-        throw new IllegalArgumentException("Неизвестный пункт меню: " + menuItem);
-    }
-
-    // выполняем соответствующее константе enum действие
-    private static boolean processAction(MenuItems action) {
+    private static boolean processAction(Menu.Item action) {
         boolean shouldExit = false;
         switch (action) {
             case ADD_BOOK -> addBook();
             case FIND_BOOK -> findBook();
-            case DELETE_BOOK -> System.out.println("Удалить книгу");
+            case DELETE_BOOK -> removeBook();
             case CLEAR_BOOKCASE -> clearBookcase();
             case EXIT -> shouldExit = true;
-            default -> System.out.println("Пункт не найден");
         }
         if (!shouldExit) {
             System.out.println("\nОперация выполнена. Нажмите Enter для продолжения...");
@@ -182,22 +139,23 @@ public class BookCaseTest {
 
     private static void addBook() {
         try {
-            Bookcase.addBook(createBook());
+            bookcase.addBook(createBook());
+
+            System.out.printf("%nКнига %s добавлена в шкаф%n",
+                    bookcase.getBooks()[bookcase.getBooksCount() - 1]);
         } catch (BookcaseFullException | AlreadyExistException e) {
             System.out.println(AnsiColor.YELLOW + e.getMessage() + AnsiColor.RESET);
         }
-        System.out.printf("%nКнига «%s» добавлена в шкаф%n",
-                Bookcase.getBooks()[Bookcase.getBooksCount() - 1]);
     }
 
-    public static Book createBook() {
-        String title = getTitle();
-        String author = getAuthor();
-        Year year = getYear();
-        return new Book(title, author, year);
+    private static Book createBook() {
+        String title = readTitle();
+        String author = readAuthor();
+        Year publishedYear = readYear();
+        return new Book(title, author, publishedYear);
     }
 
-    private static String getTitle() {
+    private static String readTitle() {
         System.out.print("Введите название книги: ");
         while (true) {
             try {
@@ -212,7 +170,7 @@ public class BookCaseTest {
         }
     }
 
-    private static String getAuthor() {
+    private static String readAuthor() {
         System.out.print("Введите имя автора: ");
         while (true) {
             try {
@@ -227,7 +185,7 @@ public class BookCaseTest {
         }
     }
 
-    private static Year getYear() {
+    private static Year readYear() {
         System.out.print("Введите год издания книги: ");
         while (true) {
             try {
@@ -239,10 +197,10 @@ public class BookCaseTest {
 
                 Year year = Year.parse(input);
 
-                if (year.isBefore(Book.MIN_PUBLICATION_YEAR) || year.isAfter(Book.MAX_PUBLICATION_YEAR)) {
+                if (year.isBefore(Book.MIN_PUBLISHED_YEAR) || year.isAfter(Book.maxPublishedYear)) {
                     throw new InvalidYearException("Год издания должен быть между %d и %d: "
-                            .formatted(Book.MIN_PUBLICATION_YEAR.getValue(),
-                                    Book.MAX_PUBLICATION_YEAR.getValue()));
+                            .formatted(Book.MIN_PUBLISHED_YEAR.getValue(),
+                                    Book.maxPublishedYear.getValue()));
                 }
                 return year;
             } catch (EmptyYearException | InvalidYearException e) {
@@ -253,17 +211,52 @@ public class BookCaseTest {
         }
     }
 
-    public static void findBook() {
+    private static void findBook() {
         try {
-            Book book = Bookcase.findBook(getTitle());
-            System.out.printf("Найдена книга: %s%n", book);
+            Book[] foundBooks = bookcase.findBooks(readTitle());
+            System.out.printf("%nНайдены книги:%n");
+            for (int i = 0; i < foundBooks.length; i++) {
+                System.out.println(i + 1 + "." + foundBooks[i]);
+            }
         } catch (BookNotFoundException e) {
             System.out.println(AnsiColor.YELLOW + e.getMessage() + AnsiColor.RESET);
         }
     }
 
-    public static void clearBookcase() {
-        Bookcase.clear();
+    private static void removeBook() {
+        try {
+            Book[] booksToRemove = bookcase.findBooks(readTitle());
+            System.out.printf("%nНайдены книги:%n");
+
+            for (int i = 0; i < booksToRemove.length; i++) {
+                System.out.println(i + 1 + "." + booksToRemove[i]);
+            }
+
+            Book bookToRemove = booksToRemove[0];
+
+            String answer = "yes";
+            do {
+                if (answer.equals("yes")) {
+                    System.out.print("\nВы действительно хотите удалить книгу/и? [yes/no]:");
+                } else {
+                    System.out.print("Введите корректный ответ [yes / no]: ");
+                }
+                answer = CONSOLE.nextLine().trim().toLowerCase();
+
+                if (answer.equals("yes")) {
+                    break;
+                }
+            } while (!answer.equals("no"));
+
+            bookcase.removeBooksByTitle(bookToRemove.getTitle());
+            System.out.printf("Удалено книг: %d", booksToRemove.length);
+        } catch (BookNotFoundException e) {
+            System.out.println(AnsiColor.YELLOW + e.getMessage() + AnsiColor.RESET);
+        }
+    }
+
+    private static void clearBookcase() {
+        bookcase.clear();
         System.out.println("Книжный шкаф пуст");
     }
 }

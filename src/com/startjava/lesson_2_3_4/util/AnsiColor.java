@@ -1,4 +1,4 @@
-package com.startjava.lesson_2_3_4.guess;
+package com.startjava.lesson_2_3_4.util;
 
 public final class AnsiColor {
     public static final String RESET = "[0m";

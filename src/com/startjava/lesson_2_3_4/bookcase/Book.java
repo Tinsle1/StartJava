@@ -3,25 +3,33 @@ package com.startjava.lesson_2_3_4.bookcase;
 import java.time.Year;
 
 public class Book {
-    public static final Year MIN_PUBLICATION_YEAR = Year.of(1800);
-    public static final Year MAX_PUBLICATION_YEAR = Year.now();
+    public static final Year MIN_PUBLISHED_YEAR = Year.of(1800);
+    public static Year maxPublishedYear = Year.now();
 
     private final String author;
     private final String title;
-    private final Year publicationYear;
+    private final Year publishedYear;
 
-    public Book(String title, String author, Year year) {
+    public Book(String title, String author, Year publishedYear) {
         this.title = title;
         this.author = author;
-        this.publicationYear = year;
+        this.publishedYear = publishedYear;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public Year getYear() {
+        return publishedYear;
+    }
+
     @Override
     public String toString() {
-        return "%s, «%s», %d".formatted(author, title, publicationYear.getValue());
+        return "%s, «%s», %d".formatted(author, title, publishedYear.getValue());
     }
 }
