@@ -24,7 +24,7 @@ public class Bookcase {
         return bookcaseLength;
     }
 
-    public void addBook(Book book) {
+    public void addBook(Book bookToAdd) {
         if (isFull()) {
             throw new BookcaseFullException("""
                     Книжный шкаф переполнен.
@@ -32,14 +32,17 @@ public class Bookcase {
                     """);
         }
 
-        if (containsBook(book)) {
-            throw new AlreadyExistException("Книга уже добавлена в шкаф: %s".formatted(book));
+        for (int i = 0; i < booksCount; i++) {
+            if (bookToAdd.equals(books[i])) {
+                throw new AlreadyExistException(
+                        "Книга уже добавлена в шкаф: %s".formatted(books[i]));
+            }
         }
 
-        books[booksCount] = book;
+        books[booksCount] = bookToAdd;
         booksCount++;
 
-        int bookLength = book.toString().length();
+        int bookLength = bookToAdd.toString().length();
         if (bookLength > bookcaseLength) {
             bookcaseLength = bookLength;
         }
@@ -47,17 +50,6 @@ public class Bookcase {
 
     public boolean isFull() {
         return booksCount >= CAPACITY;
-    }
-
-    private boolean containsBook(Book bookToAdd) {
-        for (int i = 0; i < booksCount; i++) {
-            if (bookToAdd.getTitle().equalsIgnoreCase(books[i].getTitle()) &&
-                    bookToAdd.getAuthor().equalsIgnoreCase(books[i].getAuthor()) &&
-                    bookToAdd.getYear().equals(books[i].getYear())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Book[] findBooks(String title) {
@@ -75,10 +67,10 @@ public class Bookcase {
         throw new BookNotFoundException("Книга не найдена");
     }
 
-    public void removeBooksByTitle(String title) {
+    public void removeBook(String title) {
         for (int i = 0; i < booksCount; i++) {
             if (books[i].getTitle().equalsIgnoreCase(title)) {
-                int length = books[i].toString().length();
+                int length = books[i].getDisplayLength();
 
                 System.arraycopy(books, i + 1, books, i, booksCount - i - 1);
                 booksCount--;

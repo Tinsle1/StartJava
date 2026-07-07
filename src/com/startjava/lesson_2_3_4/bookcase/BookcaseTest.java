@@ -22,10 +22,10 @@ public class BookcaseTest {
         while (true) {
             printBookcaseStatus();
             printBookcase();
-            Menu.Item[] menu = availableMenu();
-            printMenu(menu, Menu.Number.values());
+            MenuItem[] menu = createAvailableMenu();
+            printMenu(menu);
 
-            Menu.Item action = findAction(menu);
+            MenuItem action = findAction(menu);
             boolean shouldExit = processAction(action);
 
             if (shouldExit) {
@@ -72,35 +72,35 @@ public class BookcaseTest {
         }
     }
 
-    private static Menu.Item[] availableMenu() {
+    private static MenuItem[] createAvailableMenu() {
         if (bookcase.isEmpty()) {
-            return new Menu.Item[]{
-                    Menu.Item.ADD_BOOK,
-                    Menu.Item.EXIT
+            return new MenuItem[]{
+                    MenuItem.ADD_BOOK,
+                    MenuItem.EXIT
             };
         }
 
         if (bookcase.isFull()) {
-            return new Menu.Item[]{
-                    Menu.Item.FIND_BOOK,
-                    Menu.Item.DELETE_BOOK,
-                    Menu.Item.CLEAR_BOOKCASE,
-                    Menu.Item.EXIT
+            return new MenuItem[]{
+                    MenuItem.FIND_BOOK,
+                    MenuItem.DELETE_BOOK,
+                    MenuItem.CLEAR_BOOKCASE,
+                    MenuItem.EXIT
             };
         }
 
-        return Menu.Item.values();
+        return MenuItem.values();
     }
 
-    private static void printMenu(Menu.Item[] menu, Menu.Number[] number) {
+    private static void printMenu(MenuItem[] menu) {
         System.out.println("\n========= МЕНЮ =========");
 
         for (int i = 0; i < menu.length; i++) {
-            System.out.printf("%d. %s%n", number[i].menuNumber, menu[i].action);
+            System.out.printf("%d. %s%n", i + 1, menu[i].action);
         }
     }
 
-    private static Menu.Item findAction(Menu.Item[] menu) {
+    private static MenuItem findAction(MenuItem[] menu) {
         System.out.print("\nВведите номер нужного действия из меню: ");
         int actionNumber;
 
@@ -108,7 +108,7 @@ public class BookcaseTest {
             try {
                 actionNumber = CONSOLE.nextInt();
                 CONSOLE.nextLine();
-                Menu.Number.validateMenuNumber(menu, actionNumber);
+                MenuItem.validateMenuNumber(menu.length, actionNumber);
                 break;
             } catch (InputMismatchException e) {
                 System.out.printf(AnsiColor.YELLOW + "Введенное значение должно быть числом: " +
@@ -121,7 +121,7 @@ public class BookcaseTest {
         return menu[actionNumber - 1];
     }
 
-    private static boolean processAction(Menu.Item action) {
+    private static boolean processAction(MenuItem action) {
         boolean shouldExit = false;
         switch (action) {
             case ADD_BOOK -> addBook();
@@ -248,7 +248,7 @@ public class BookcaseTest {
                 }
             } while (!answer.equals("no"));
 
-            bookcase.removeBooksByTitle(bookToRemove.getTitle());
+            bookcase.removeBook(bookToRemove.getTitle());
             System.out.printf("Удалено книг: %d", booksToRemove.length);
         } catch (BookNotFoundException e) {
             System.out.println(AnsiColor.YELLOW + e.getMessage() + AnsiColor.RESET);
