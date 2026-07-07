@@ -1,5 +1,7 @@
 package com.startjava.lesson_2_3_4.bookcase;
 
+import com.startjava.lesson_2_3_4.bookcase.exception.InvalidMenuNumberException;
+
 public enum MenuItem {
     ADD_BOOK("Добавить книгу"),
     FIND_BOOK("Найти книгу"),
@@ -7,20 +9,19 @@ public enum MenuItem {
     CLEAR_BOOKCASE("Очистить весь книжный шкаф"),
     EXIT("Выйти из книжного шкафа");
 
+    private static final int FIRST_MENU_ITEM = 1;
+
     final String action;
 
     MenuItem(String action) {
         this.action = action;
     }
 
-    public static void validateMenuNumber(MenuItem[] menu, int selectedNumber) {
-        int firstMenuItem = 1;
-        int lastMenuItem = menu.length;
-
-        if (selectedNumber < firstMenuItem || selectedNumber > lastMenuItem) {
-            throw new IllegalArgumentException(
+    public static void validateMenuNumber(int menuItemsCount, int selectedNumber) {
+        if (selectedNumber < FIRST_MENU_ITEM || selectedNumber > menuItemsCount) {
+            throw new InvalidMenuNumberException(
                     "неверное значение меню (%d). Допустимые значения [%d - %d]: "
-                            .formatted(selectedNumber, firstMenuItem, lastMenuItem));
+                            .formatted(selectedNumber, FIRST_MENU_ITEM, menuItemsCount));
         }
     }
 }
